@@ -109,6 +109,7 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import router from '@/router.js'
+import * as firebase from 'firebase/app';
 
 export default {
   data: function() {

@@ -1,5 +1,7 @@
 # KTPoints
 
+Currently, our site is deployed through Netlify and lives at https://angry-hoover-d3b323.netlify.com/
+
 ## Project setup
 ```
 npm install

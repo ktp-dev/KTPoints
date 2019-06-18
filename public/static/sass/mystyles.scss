@@ -1,0 +1,196 @@
+@charset "utf-8";
+
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+//Changing Bulma's global font
+$family-sans-serif: "Nunito", sans-serif;
+
+
+// ===== COLORS =====
+$sky-blue: #59abe3;
+$light-green: #3db64a;
+$gunmetal-blue: #52779c;
+$dark-blue:#2c3e50;
+$slate: #5c6b7a;
+
+// Update Bulma's global Colors
+$primary: $light-green;
+
+// Setting of colors
+.sky-blue-bg {
+    background-color: $sky-blue;
+}
+.light-green-bg {
+    background-color: $light-green;
+}
+.gunmetal-blue-bg {
+    background-color: $gunmetal-blue;
+}
+.dark-blue-bg {
+    background-color: $dark-blue;
+}
+.slate-bg {
+    background-color: $slate;
+}
+
+// ===== END COLORS =====
+
+// ===== SPACING =====
+$size0: 0px;
+$size1: 8px;
+$size2: 16px;
+$size3: 24px;
+$size4: 32px;
+
+.pt0 {
+    padding-top: $size0!important;
+}
+.pb0 {
+    padding-bottom: $size0!important;
+}
+.pr0 {
+    padding-right: $size0!important;
+}
+.pl0 {
+    padding-left: $size0!important;
+}
+
+.pt1 {
+    padding-top: $size1!important;
+}
+.pb1 {
+    padding-bottom: $size1!important;
+}
+.pr1 {
+    padding-right: $size1!important;
+}
+.pl1 {
+    padding-left: $size1!important;
+}
+
+.pt2 {
+    padding-top: $size2!important;
+}
+.pb2 {
+    padding-bottom: $size2!important;
+}
+.pr2 {
+    padding-right: $size2!important;
+}
+.pl2 {
+    padding-left: $size2!important;
+}
+
+.pt3 {
+    padding-top: $size3!important;
+}
+.pb3 {
+    padding-bottom: $size3!important;
+}
+.pr3 {
+    padding-right: $size3!important;
+}
+.pl3 {
+    padding-left: $size3!important;
+}
+
+.pt4 {
+    padding-top: $size4!important;
+}
+.pb4 {
+    padding-bottom: $size4!important;
+}
+.pr4 {
+    padding-right: $size4!important;
+}
+.pl4 {
+    padding-left: $size4!important;
+}
+
+.mt0 {
+    margin-top: $size0!important;
+}
+.mb0 {
+    margin-bottom: $size0!important;
+}
+.mr0 {
+    margin-right: $size0!important;
+}
+.ml0 {
+    margin-left: $size0!important;
+}
+
+.mt1 {
+    margin-top: $size1!important;
+}
+.mb1 {
+    margin-bottom: $size1!important;
+}
+.mr1 {
+    margin-right: $size1!important;
+}
+.ml1 {
+    margin-left: $size1!important;
+}
+
+.mt2 {
+    margin-top: $size2!important;
+}
+.mb2 {
+    margin-bottom: $size2!important;
+}
+.mr2 {
+    margin-right: $size2!important;
+}
+.ml2 {
+    margin-left: $size2!important;
+}
+
+.mt3 {
+    margin-top: $size3!important;
+}
+.mb3 {
+    margin-bottom: $size3!important;
+}
+.mr3 {
+    margin-right: $size3!important;
+}
+.ml3 {
+    margin-left: $size3!important;
+}
+
+.mt4 {
+    margin-top: $size4!important;
+}
+.mb4 {
+    margin-bottom: $size4!important;
+}
+.mr4 {
+    margin-right: $size4!important;
+}
+.ml4 {
+    margin-left: $size4!important;
+}
+
+// ===== END SPACING =====
+
+// ===== CUSTOM CLASSES =====
+.button-background {
+    background-image: linear-gradient(to right, $light-green, $sky-blue);
+    color: #ffffff!important;
+}
+
+.button-text {
+  font-family: "AvenirNext";
+  font-size: 62px!important;
+  font-weight: 600!important;
+}
+
+// ===== END CUSTOM CLASSES =====
+
+
+//========= DO NOT WRITE BELOW THIS LINE ==========
+@import "../../../node_modules/bulma/bulma.sass";
+
+// to compile:
+// sass --sourcemap=none static/sass/mystyles.scss:static/css/bulma.css

@@ -1,6 +1,6 @@
-# ktpoints
+# KTPoints
 
-## Project setup
+## Project setup (will take a bit the first time around)
 ```
 npm install
 ```

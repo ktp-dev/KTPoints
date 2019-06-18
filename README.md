@@ -1,6 +1,6 @@
 # KTPoints
 
-## Project setup (will take a bit the first time around)
+## Project setup
 ```
 npm install
 ```
@@ -13,11 +13,6 @@ npm run serve
 ### Compiles and minifies for production
 ```
 npm run build
-```
-
-### Run your tests
-```
-npm run test
 ```
 
 ### Lints and fixes files

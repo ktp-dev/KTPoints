@@ -1,9 +1,9 @@
 <template>
-<div class="container">
-  <div class="hero is-primary">
+<!-- <div class="container"> -->
+  <div class="hero is-link is-fullheight">
       <p class="title">Hello World, {{$route.params.username}}</p>
   </div>
-</div>
+<!-- </div> -->
 </template>
 
 <script>

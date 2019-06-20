@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import LoginSignup from './views/LoginSignup.vue'
 import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
-// import EventCard from './components/EventCard.vue'
 
 Vue.use(Router)
 
@@ -17,8 +16,8 @@ export default new Router({
       component: LoginSignup
     },
     {
-      path: '/user/:username',
-      name: 'user',
+      path: '/landing',
+      name: 'landing',
       component: Landing
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
@@ -26,7 +25,7 @@ export default new Router({
       // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/events/',
+      path: '/KTP/events',
       name: 'event',
       component: Events
     },

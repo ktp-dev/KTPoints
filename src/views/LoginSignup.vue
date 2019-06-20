@@ -145,7 +145,7 @@ export default {
       .then(() => {
         console.log('we made it');
         this.loggedin = true;
-        router.push('user/' + this.uniqname + '/') // -> /user/myName
+        router.push({ name: 'landing', params: { username: this.uniqname } })
       })
       .catch(function(error) {
         console.log('BAD');
@@ -180,7 +180,7 @@ export default {
       .then(function() {
           console.log("Document successfully written!");
           let username = this.uniqname;
-          router.push({ name: 'user', params: { username } }) // -> /user/myName
+          router.push({ name: 'landing', params: { username: this.uniqname } })
       })
       .catch(function(error) {
           console.error("Error writing document: ", error);

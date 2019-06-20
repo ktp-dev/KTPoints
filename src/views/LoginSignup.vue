@@ -177,10 +177,9 @@ export default {
         points: 0,
         meetings_left: 0,
       })
-      .then(function() {
+      .then(() => {
           console.log("Document successfully written!");
-          let username = this.uniqname;
-          router.push({ name: 'landing', params: { username: this.uniqname } })
+          router.push({ name: 'landing', params: { username: this.uniqname } });
       })
       .catch(function(error) {
           console.error("Error writing document: ", error);

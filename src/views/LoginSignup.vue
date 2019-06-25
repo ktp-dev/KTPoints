@@ -94,6 +94,12 @@
               <button v-on:click="authenticate()" class="button is-large is-rounded button-background is-fullwidth">
                 {{button_name[button_index]}}
               </button>
+              <br>
+              <router-link to="/landing">
+                <button class="button is-large is-rounded button-background is-fullwidth">
+                  Continue As Guest
+                </button>
+              </router-link>
             </div>
           </div>
           

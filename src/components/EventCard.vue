@@ -23,8 +23,9 @@
 
 
 <script>
+import smoothReflow from 'vue-smooth-reflow'
 export default {
-  mixins: [SmoothReflow],
+  mixins: [smoothReflow],
   props: ['event', 'location', 'time', 'date', 'points', 'description'],
   data(){
     return {

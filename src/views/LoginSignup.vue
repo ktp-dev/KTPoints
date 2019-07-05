@@ -1,104 +1,188 @@
 <template>
-  <section id='authenticate'>
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-narrow">
+  <section id='authenticate' class="outer">
+    <div class="container middle">
+      <div class="columns is-centered inner">
+        <div class="column is-narrow ">
           <!-- Level setup to center KTP Logo -->
-          <div class="level">
+          <div class="level mb4">
             <div class="mt4 level-item has-text-centered">
               <img src="@/assets/ktp_logo.png" alt="KTP Logo">
             </div>
           </div>
 
-          <!-- uniqname and @umich.edu box -->
-          <div class="field has-addons">
-            <div class="control is-expanded">
-              <input v-model='uniqname' class="input is-primary" type="text" placeholder="Uniqname">
+          <transition name="slide-left" mode="out-in">
+            <div v-if="current_screen == 'landing'" key="landing" class="mt4 pt4">
+              <div class="control">
+                <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+                  Log In
+                </button>
+              </div>
+              <div class="control mt2">
+                <button v-on:click="goToSignup()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+                  Sign up
+                </button>
+              </div>
+              <div class="align-center fira-sans-light-italic mt2">
+                or continue <a class="sky-blue-text fw-lb">  Without an Account</a>
+              </div>
             </div>
-            <div class="control">
-              <button class="button is-static">
-                @umich.edu
-              </button>
-            </div>
-          </div> 
 
-          <!-- Password -->
-          <div class="field">
-            <div class="control">
-              <input v-on:keyup.enter="authenticate()" v-model='password' class="input is-primary" type="password" placeholder="Password">
-            </div>
-          </div> 
-
-          
-          <div class="reflow">
-            <div class='field' v-show="button_index">
-              <div class="field is-grouped">
+            <div v-if="current_screen == 'login'" key="login" >
+              <!-- uniqname and @umich.edu box -->
+              <div class="field has-addons">
                 <div class="control is-expanded">
+                  <div class="fira-sans-light-italic slate">
+                    Uniqname
+                  </div>
+                  <input v-model='uniqname' class="input is-primary" type="text">
+                  <div class="divider slate"></div>
+                </div>
+              </div> 
+
+              <!-- Password -->
+              <div class="field">
+                <div class="control">
+                  <div class="fira-sans-light-italic slate">
+                    Password
+                  </div>
+                  <input v-on:keyup.enter="authenticate()" v-model='password' class="input is-primary" type="password">
+                   <div class="divider slate"></div>
+                </div>
+              </div> 
+              <div class="align-center fira-sans-light-italic pb1">
+                  Forgot Password? <a class="light-green-text fw-lb"> Click here to Reset</a>
+              </div>
+              <div class="control">
+                <button v-on:click="authenticate()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+                  Log In
+                </button>
+              </div>
+              <div class="align-center pb1 fira-sans-light-italic mt1">
+                Don't have an Account? 
+                <a class="sky-blue-text fw-lb" v-on:click='goToSignup()'>Sign Up Here</a>
+              </div>
+            </div>
+
+            <div v-if="current_screen == 'signup'" key="signup">
+              <div class="fs-s2 fira-mono fw-bold pb3 has-text-centered">
+                Sign up
+              </div>
+              <div class='field' >
+                <div class="control is-expanded pb3">
                   <input v-model='payload.firstname' class="input is-primary" type="text" placeholder="First Name">
                 </div>   
       
-                <div class="control is-expanded">
+                <div class="control is-expanded pb3">
                   <input v-model='payload.lastname' class="input is-primary" type="text" placeholder="Last Name">
                 </div> 
+
+                <div class="control is-expanded pb3">
+                    <div class="select is-fullwidth">
+                      <select v-model='payload.standing'>
+                        <option value="">KTP Standing</option>
+                        <option>Rushee</option>
+                        <option>Pledge</option>
+                        <option>Active</option>
+                        <option>Eboard</option>
+                      </select>
+                    </div>        
+                </div>    
+
+                <div class="columns is-centered is-vcentered is-mobile">
+                  <div class="column is-quarter has-text-centered pointer">
+                    <i class="fas fa-arrow-left fa-2x sky-blue-text"></i>
+                  </div>
+                  <div style="font-size: 0.7rem;" class="column is-half has-text-centered">
+                    <div class="columns is-centered is-mobile">
+                      <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
+                      <i class="column fas fa-circle fa-xs light-grey"></i>
+                      <i class="column fas fa-circle fa-xs light-grey"></i>
+                      <i class="column fas fa-circle fa-xs light-grey"></i> 
+                    </div>
+                  </div>
+                  <div class="column has-text-centered pointer">
+                    <i class="fas fa-arrow-right fa-2x sky-blue-text"></i>
+                  </div>
+                </div>
+
+                <div class="align-center pb1 fira-sans-light-italic mt1">
+                Already have an Account? 
+                <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
+                </div>
+
               </div>
-
-              <div class="field is-grouped">
-
-              <div class="control is-expanded">
-                  <div class="select is-fullwidth">
-                    <select v-model='payload.standing'>
-                      <option value="">KTP Standing</option>
-                      <option>Active</option>
-                      <option>Inactive</option>
-                      <option>Pledge</option>
-                      <option>Rushee</option>
-                    </select>
-                  </div>        
-              </div>    
-
-              <div class="control is-expanded">
-                  <div class="select is-fullwidth">
-                    <select v-model='payload.year'>
-                      <option value="">Class Standing</option>
-                      <option>Freshman</option>
-                      <option>Sophomore</option>
-                      <option>Junior</option>
-                      <option>Senior</option>
-                    </select>
-                  </div>        
-              </div>
-
-              <div class="control is-expanded">
-                  <div class="select is-fullwidth">
-                    <select v-model='payload.pledge_class' :disabled='disablePledgeClass'>
-                      <option value="">Pledge Class</option>
-                      <option>Kappa</option>
-                      <option>Lambda</option>
-                      <option>Mu</option>
-                      <option>Nu</option>
-                      <option>Xi</option>
-                      <option>Omicron</option>
-                      <option>Pi</option>
-                    </select>
-                  </div>        
-              </div>
-
             </div>
 
+          </transition>
+
+
+          <div v-if="current_screen == 'other'">
+            <!-- uniqname and @umich.edu box -->
+            <div class="field has-addons">
+              <div class="control is-expanded">
+                <input v-model='uniqname' class="is-primary" type="text" placeholder="Uniqname">
+              </div>
+              <div class="control">
+                <button class="button is-static">
+                  @umich.edu
+                </button>
+              </div>
+            </div> 
+
+            <!-- Password -->
+            <div class="field">
+              <div class="control">
+                <input v-on:keyup.enter="authenticate()" v-model='password' class="input is-primary" type="password" placeholder="Password">
+              </div>
+            </div> 
+
+            <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                      <select v-model='payload.year'>
+                        <option value="">Class Standing</option>
+                        <option>Freshman</option>
+                        <option>Sophomore</option>
+                        <option>Junior</option>
+                        <option>Senior</option>
+                      </select>
+                    </div>        
+                </div>
+
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                      <select v-model='payload.pledge_class' :disabled='disablePledgeClass'>
+                        <option value="">Pledge Class</option>
+                        <option>Kappa</option>
+                        <option>Lambda</option>
+                        <option>Mu</option>
+                        <option>Nu</option>
+                        <option>Xi</option>
+                        <option>Omicron</option>
+                        <option>Pi</option>
+                      </select>
+                    </div>        
+                </div>
+            
+
+
+            <div class="field mt4">
+              <div class="align-center fira-sans fw-sb pb1">
+              Forgot Password? <a class="light-green-text fw-lb"> Click here to Reset</a>
             </div>
-          </div>
-
-
-          <div class="field mt4 mb4">
-            <div class="control">
-              <button v-on:click="authenticate()" class="button is-large is-rounded button-background is-fullwidth">
-                {{button_name[button_index]}}
-              </button>
+              <div class="control">
+                <button v-on:click="authenticate()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold">
+                  {{button_name[button_index]}}
+                </button>
+              </div>
             </div>
-          </div>
-          
-          <a v-on:click='toggleButton()'>{{link_name[button_index]}}</a>
-
+            <div class="align-center pb1 fira-sans fw-sb">
+              Don't have an Account? 
+              <a class="light-green-text fw-lb" v-on:click='toggleButton()'>{{link_name[button_index]}}</a>
+            </div>
+            <div class="align-center fira-sans fw-sb">
+              or continue <a class="sky-blue-text fw-lb">  Without an Account</a>
+            </div>
+        </div>
         </div>
       </div>
     </div>
@@ -108,6 +192,7 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
+
 import router from '@/router.js'
 import * as firebase from 'firebase/app';
 
@@ -117,8 +202,10 @@ export default {
       uniqname: '',
       password: '',
       loggedin: false,
-      button_name: ['Sign in', 'Sign up'],
-      link_name: ["Sign up now!", "Have an account?"],
+      button_name: ['Log in', 'Sign up'],
+      current_screen: 'landing',
+      isSignup1: true,
+      link_name: ["Signup now", "Have an account?"],
       button_index: 0,
       payload: {
         major: "",
@@ -190,6 +277,14 @@ export default {
       this.button_index = 1 - this.button_index;
     },
 
+    goToLogin: function(){
+      this.current_screen = "login";
+    },
+
+    goToSignup: function(){
+      this.current_screen = "signup";
+    },
+
     authenticate: function(){
       if (this.button_index === 0){
         this.login();
@@ -224,5 +319,34 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
   }
+  
+.slide-left-enter-active {
+  transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.slide-left-leave-active {
+  transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.slide-left-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.slide-left-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.slide-right-enter-active {
+  transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.slide-right-leave-active {
+  transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.slide-right-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.slide-right-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
 </style>
 

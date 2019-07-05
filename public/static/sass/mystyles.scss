@@ -9,16 +9,24 @@ $family-sans-serif: "Nunito", sans-serif;
 // ===== COLORS =====
 $sky-blue: #59abe3;
 $light-green: #3db64a;
+$dark-green: #2a7d2c;
 $gunmetal-blue: #52779c;
 $dark-blue:#2c3e50;
 $slate: #5c6b7a;
+$light-grey: #C1C1C1;
 
 // Update Bulma's global Colors
-$primary: $light-green;
+$primary: $slate;
 
 // Setting of colors
+.sky-blue {
+    color: $sky-blue!important;
+}
 .sky-blue-bg {
     background-color: $sky-blue;
+}
+.light-green {
+    color: $light-green
 }
 .light-green-bg {
     background-color: $light-green;
@@ -26,14 +34,100 @@ $primary: $light-green;
 .gunmetal-blue-bg {
     background-color: $gunmetal-blue;
 }
+.dark-blue {
+    color: $dark-blue
+}
 .dark-blue-bg {
     background-color: $dark-blue;
+}
+.slate {
+    color: $slate;
 }
 .slate-bg {
     background-color: $slate;
 }
+.light-grey {
+    color: $light-grey;
+}
 
 // ===== END COLORS =====
+
+// ===== FONTS =====
+.fs-s4 {
+    font-size: 20px!important;
+}
+.fs-s3 {
+    font-size: 24px!important;
+}
+.fs-s2 {
+    font-size: 30px!important;
+}
+.fs-s1 {
+    font-size: 37px!important;
+}
+.fs-h3 {
+    font-size: 50px!important;
+}
+.fs-h2 {
+    font-size: 67px!important;
+}
+.fs-h1 {
+    font-size: 80px!important;
+}
+
+.vertically-center {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.align-center {
+    text-align: center;
+}
+.charterregular {
+    font-family: 'charterregular'; 
+}
+.fira-sans {
+    font-family: 'Fira Sans', sans-serif;
+}
+.fira-sans-light-italic {
+    font-family: 'Fira Sans', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+}
+
+.fira-mono {
+    font-family: 'Fira Mono', monospace;
+}
+.fd-underline {
+    text-decoration: underline;
+}
+
+.fw-lb {
+    font-weight: 600!important;
+}
+
+.fw-sb {
+    font-weight: 525!important;
+}
+
+.fw-light {
+    font-weight: 300!important;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+.fw-eb {
+    font-weight: 800;
+}
+.align-left {
+    text-align: left;
+}
+
+.lh1 {
+    line-height: 1!important;
+}
+
+// ===== END FONTS =====
 
 // ===== SPACING =====
 $size0: 0px;
@@ -185,6 +279,50 @@ $size4: 32px;
   font-size: 62px!important;
   font-weight: 600!important;
 }
+
+.light-green-text {
+    color: $light-green
+}
+.light-green-text:hover {
+    color: $dark-green;
+}
+.sky-blue-text {
+    color: $sky-blue;
+}
+.sky-blue-text:hover {
+    color: $dark-blue;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .middle {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .inner {
+    margin-left: auto;
+    margin-right: auto;
+    /*whatever width you want*/
+  }
+
+  .pointer {
+      cursor: pointer;
+  }
+
+  .divider { 
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+  }
 
 // ===== END CUSTOM CLASSES =====
 

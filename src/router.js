@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import LoginSignup from './views/LoginSignup.vue'
 import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
+import AddEvent from './views/AddEvent.vue'
 
 Vue.use(Router)
 
@@ -26,8 +27,13 @@ export default new Router({
     },
     {
       path: '/KTP/events',
-      name: 'event',
+      name: 'events',
       component: Events
+    },
+    {
+      path: '/KTP/events/add-event',
+      name: 'add-event',
+      component: AddEvent
     },
   ]
 })

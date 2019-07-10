@@ -34,8 +34,9 @@
 
 <script>
 import EventCard from '@/components/EventCard.vue';
-import "firebase/firestore";
+import * as firebase from 'firebase/app';
 import { db, auth } from '@/main.js'
+import { setTimeout } from 'timers';
 
 export default {
   data () {
@@ -58,6 +59,11 @@ export default {
     shuffle: function(){
         this.events.sort(() => Math.random() - 0.5);
     },
+
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
   },
 
   components: {
@@ -65,13 +71,19 @@ export default {
   },
   mounted() {
     // Firebase Events DB Call
-    db.collection("events").get()
-    .then((querySnapshot) => {
+    let myTimestamp = parseInt(new Date().getTime()/1000);
+    let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
+    console.log(myTimestamp)
+    db.collection("events").where('time', '>=', fbtime)
+    .onSnapshot((querySnapshot) => {
+      this.events = []
       querySnapshot.forEach((doc) => {
         this.events.push(doc.data())
+        console.log(doc.data().time)
       })
       if (auth.currentUser){
-        console.log(auth.currentUser)
+        console.log("how many times did we go through this")
+        // console.log(auth.currentUser)
         this.show = true;
       }
     })

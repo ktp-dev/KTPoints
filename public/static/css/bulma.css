@@ -57,9 +57,6 @@
 .align-center {
   text-align: center; }
 
-.charterregular {
-  font-family: 'charterregular'; }
-
 .fira-sans {
   font-family: 'Fira Sans', sans-serif; }
 
@@ -167,6 +164,9 @@
 .ml0 {
   margin-left: 0px !important; }
 
+.mt12 {
+  margin-top: 1px !important; }
+
 .mt1 {
   margin-top: 8px !important; }
 
@@ -261,6 +261,12 @@
   margin-right: auto;
   border-style: inset;
   border-width: 1px; }
+
+.no-border {
+  border-top-width: 0px !important;
+  border-left-width: 0px !important;
+  border-bottom-width: 0px !important;
+  border-right-width: 0px !important; }
 
 /*! bulma.io v0.7.5 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {

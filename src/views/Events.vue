@@ -39,6 +39,7 @@ import { db, auth } from '@/main.js'
 import { setTimeout } from 'timers';
 
 export default {
+  name: 'events',
   data () {
     return {
       events: [
@@ -73,13 +74,12 @@ export default {
     // Firebase Events DB Call
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
-    console.log(myTimestamp)
-    db.collection("events").where('time', '>=', fbtime)
+    let subscriber = db.collection("events").where('time', '>=', fbtime)
     .onSnapshot((querySnapshot) => {
       this.events = []
       querySnapshot.forEach((doc) => {
         this.events.push(doc.data())
-        console.log(doc.data().time)
+        // console.log(doc.data().time)
       })
       if (auth.currentUser){
         console.log("how many times did we go through this")
@@ -87,6 +87,10 @@ export default {
         this.show = true;
       }
     })
+  },
+
+  destroyed() {
+    console.log('we out of there')
   }
 }
 </script>

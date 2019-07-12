@@ -4,8 +4,19 @@ import LoginSignup from './views/LoginSignup.vue'
 import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
 import AddEvent from './views/AddEvent.vue'
+import { auth } from '@/main.js'
 
 Vue.use(Router)
+
+// function guard(to, from, next){
+//   if (auth.currentUser){
+//     next('/landing')
+//     console.log('go to landing')
+//   }
+//   else{
+//     next();
+//   }
+// }
 
 export default new Router({
   mode: 'history',
@@ -13,6 +24,7 @@ export default new Router({
   routes: [
     {
       path: '/',
+      // beforeEnter: guard,
       name: 'home',
       component: LoginSignup
     },

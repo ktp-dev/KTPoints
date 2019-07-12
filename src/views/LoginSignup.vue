@@ -216,11 +216,6 @@ export default {
       }
     },
   },
-  mounted() {
-    // this.$smoothReflow({
-    //   el: '.reflow'
-    // })
-  },
 };
 </script>
 

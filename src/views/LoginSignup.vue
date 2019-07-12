@@ -316,7 +316,6 @@ export default {
       isSignup3: false,
       isSignup4: false,
       link_name: ["Signup now", "Have an account?"],
-      button_index: 0,
       payload: {
         major: "",
         meetings_left: 0,
@@ -368,21 +367,17 @@ export default {
         standing: this.payload.standing,
         uniqname: this.uniqname,
         year: this.payload.year,
-        major: "CS",
+        major: this.payload.major,
         points: 0,
         meetings_left: 0,
       })
       .then(() => {
-          console.log("Document successfully written!");
+          console.log("New user registered!");
           router.push({ name: 'landing', params: { username: this.uniqname } });
       })
       .catch(function(error) {
           console.error("Error writing document: ", error);
       });
-    },
-
-    toggleButton: function(){
-      this.button_index = 1 - this.button_index;
     },
 
     goToLogin: function(){
@@ -420,15 +415,6 @@ export default {
       this.isSignup3 = false;
       this.isSignup4 = true;
     },
-
-    authenticate: function(){
-      if (this.button_index === 0){
-        this.login();
-      }
-      else if (this.button_index === 1){
-        this.signup();
-      }
-    },
   },
   watch: {
     'payload.standing': function(){
@@ -449,7 +435,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   /* Add some padding on this component for mobile */
   #authenticate{
     padding-left: 10px;

@@ -12,16 +12,22 @@
 
           <transition name="slide-left" mode="out-in">
             <div v-if="current_screen == 'landing'" key="landing" class="mt4 pt4">
+
+              <!-- Button for Logging in -->
               <div class="control">
                 <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
                   Log In
                 </button>
               </div>
+
+              <!-- Button for Signing up -->
               <div class="control mt2">
                 <button v-on:click="goToSignup()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
                   Sign up
                 </button>
               </div>
+              
+              <!-- Continue as Guest -->
               <router-link to="/landing">
                 <div class="align-center fira-sans-light-italic mt2">
                   or continue <a class="sky-blue-text fw-lb">  Without an Account</a>
@@ -154,9 +160,20 @@
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
-                      Phone Number (optional)
+                      Pledge Class
                     </div>
-                    <input v-model='payload.number' class="input is-primary" type="tel">
+                    <div class="select is-fullwidth no-border">
+                      <select class="no-border" v-model='payload.pledge_class' :disabled='disablePledgeClass'>
+                        <option value="">Pledge Class</option>
+                        <option>Kappa</option>
+                        <option>Lambda</option>
+                        <option>Mu</option>
+                        <option>Nu</option>
+                        <option>Xi</option>
+                        <option>Omicron</option>
+                        <option>Pi</option>
+                      </select>
+                    </div>  
                     <div class="divider slate"></div>  
                   </div>    
 
@@ -271,82 +288,8 @@
                 </div>
               </div>
             </div>
-
           </transition>
 
-
-        <div v-if="current_screen == 'other'">
-            <!-- uniqname and @umich.edu box -->
-            <div class="field has-addons">
-              <div class="control is-expanded">
-                <input v-model='uniqname' class="is-primary" type="text" placeholder="Uniqname">
-              </div>
-              <div class="control">
-                <button class="button is-static">
-                  @umich.edu
-                </button>
-              </div>
-            </div> 
-
-            <!-- Password -->
-            <div class="field">
-              <div class="control">
-                <input v-on:keyup.enter="authenticate()" v-model='password' class="input is-primary" type="password" placeholder="Password">
-              </div>
-            </div> 
-
-            <div class="control is-expanded">
-              <div class="select is-fullwidth">
-                <select v-model='payload.year'>
-                  <option value="">Class Standing</option>
-                  <option>Freshman</option>
-                  <option>Sophomore</option>
-                  <option>Junior</option>
-                  <option>Senior</option>
-                </select>
-              </div>        
-            </div>
-
-            <div class="control is-expanded">
-              <div class="select is-fullwidth">
-                <select v-model='payload.pledge_class' :disabled='disablePledgeClass'>
-                  <option value="">Pledge Class</option>
-                  <option>Kappa</option>
-                  <option>Lambda</option>
-                  <option>Mu</option>
-                  <option>Nu</option>
-                  <option>Xi</option>
-                  <option>Omicron</option>
-                  <option>Pi</option>
-                </select>
-              </div>        
-            </div>
-
-            <div class="field mt4">
-              <div class="align-center fira-sans fw-sb pb1">
-                Forgot Password? <a class="light-green-text fw-lb"> Click here to Reset</a>
-              </div>
-
-              <div class="control">
-                <button v-on:click="signup()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold">
-                  {{button_name[button_index]}}
-                </button>
-              </div>
-
-            </div>
-
-            <div class="align-center pb1 fira-sans fw-sb">
-              Don't have an Account? 
-              <a class="light-green-text fw-lb" v-on:click='toggleButton()'>{{link_name[button_index]}}</a>
-            </div>
-
-            <router-link to="/landing">
-              <div class="align-center fira-sans fw-sb">
-                or continue <a class="sky-blue-text fw-lb">Without an Account</a>
-              </div>
-            </router-link>
-
-        </div>
 
         </div>
       </div>
@@ -381,9 +324,7 @@ export default {
         lastname: "",
         points: 0,
         standing: '',
-        uniqname: '',
         year: '',
-        number: '',
       },
     disablePledgeClass: false
     }

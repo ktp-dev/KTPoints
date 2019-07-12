@@ -319,9 +319,6 @@
                       </select>
                     </div>        
                 </div>
-            
-
-
             <div class="field mt4">
               <div class="align-center fira-sans fw-sb pb1">
               Forgot Password? <a class="light-green-text fw-lb"> Click here to Reset</a>
@@ -336,9 +333,11 @@
               Don't have an Account? 
               <a class="light-green-text fw-lb" v-on:click='toggleButton()'>{{link_name[button_index]}}</a>
             </div>
-            <div class="align-center fira-sans fw-sb">
-              or continue <a class="sky-blue-text fw-lb">  Without an Account</a>
-            </div>
+            <router-link to="/landing">
+              <div class="align-center fira-sans fw-sb">
+                or continue <a class="sky-blue-text fw-lb">Without an Account</a>
+              </div>
+            </router-link>
         </div>
         </div>
       </div>

@@ -12,7 +12,6 @@
 
           <transition name="slide-left" mode="out-in">
             <div v-if="current_screen == 'landing'" key="landing" class="mt4 pt4">
-
               <!-- Button for Logging in -->
               <div class="control">
                 <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
@@ -75,6 +74,7 @@
               <div v-if="!isSignup4" class="fs-s2 fira-mono fw-bold pb3 has-text-centered">
                 Sign up
               </div>
+              <!-- First Name, Last Name, KTP Standing -->
               <div v-if="isSignup1" key="signup-1">
                 <div class='field' >
                   <div class="control is-expanded pb3">
@@ -131,6 +131,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Major, Year, Pledge Class -->
               <div v-if="isSignup2" key="signup-2">
                 <div class='field' >
                   <div class="control is-expanded pb3">
@@ -200,6 +202,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Uniqname, Password -->
               <div v-if="isSignup3" key="signup-3">
                 <div class='field' >
 
@@ -250,6 +254,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Notice -->
               <div v-if="isSignup4" key="signup-4">
                 <div class='field' >
                   <div class="fs-s2 fira-mono fw-bold pb2 has-text-centered">
@@ -289,8 +295,6 @@
               </div>
             </div>
           </transition>
-
-
         </div>
       </div>
     </div>
@@ -300,7 +304,6 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-
 import router from '@/router.js'
 import * as firebase from 'firebase/app';
 
@@ -427,11 +430,6 @@ export default {
       }
     },
   },
-  mounted() {
-    // this.$smoothReflow({
-    //   el: '.reflow'
-    // })
-  },
 };
 </script>
 
@@ -441,34 +439,34 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
   }
-  
-.slide-left-enter-active {
-  transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.slide-left-leave-active {
-  transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.slide-left-enter {
-  transform: translateX(100%);
-  opacity: 0;
-}
-.slide-left-leave-to {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-.slide-right-enter-active {
-  transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.slide-right-leave-active {
-  transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.slide-right-enter {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-.slide-right-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
-}
+    
+  .slide-left-enter-active {
+    transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .slide-left-leave-active {
+    transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .slide-left-enter {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  .slide-left-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  .slide-right-enter-active {
+    transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .slide-right-leave-active {
+    transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .slide-right-enter {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  .slide-right-leave-to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 </style>
 

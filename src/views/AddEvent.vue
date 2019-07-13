@@ -1,21 +1,47 @@
 <template>
   <div class="section">
     <div class="columns is-centered">
-      <div class="column is-3">
+      <div class="column is-4">
         <div class="card has-text-centered">
-          <header class="card-header title">
+          <header class="card-header title fira-mono">
             <p>Add New Event</p>
           </header>
           <div class="card-content">
             <div class="field">
-              <input v-model="eventName" class="input is-primary" type="text" placeholder="Event">
-              <input v-model="location" class="input is-primary" type="text" placeholder="Location">
-              <input v-model="time" class="input is-primary" type="time">
-              <input v-model="date" class="input is-primary" type="date">
-              <input v-model="points" class="input is-primary" type="number" placeholder="Points">
-              <div class="mt4">
-                <textarea v-model="description" class="textarea is-primary" placeholder="Description"></textarea>
+              <div class="fira-sans-light-italic slate has-text-left">
+                Event
               </div>
+              <input v-model="eventName" class="input is-primary" type="text">
+              <div class="divider slate"></div>
+
+              <div class="mt2 fira-sans-light-italic has-text-left">
+                Location
+              </div>
+              <input v-model="location" class="input is-primary" type="text">
+              <div class="divider slate"></div>
+
+              <div class="mt2 fira-sans-light-italic has-text-left">
+                Time
+              </div>
+              <input v-model="time" class="input is-primary" type="time">
+              <div class="divider slate"></div>
+
+              <div class="mt2 fira-sans-light-italic has-text-left">
+                Date
+              </div>
+              <input v-model="date" class="input is-primary" type="date">
+              <div class="divider slate"></div>
+
+              <div class="mt2 fira-sans-light-italic has-text-left">
+                Points
+              </div>
+              <input v-model="points" class="input is-primary" type="number">
+              <div class="divider slate"></div>
+
+              <div class="mt4 fira-sans-light-italic has-text-left">
+                Description
+              </div>
+              <textarea v-model="description" class="textarea is-primary"></textarea>
             </div>
           </div>
           <footer class="card-footer">

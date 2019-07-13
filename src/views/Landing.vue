@@ -1,6 +1,5 @@
 <template>
-<!-- <div class="container"> -->
-  <div class="hero is-link is-fullheight">
+  <div class="hero is-fullheight">
       <div class="hero-body">
         <div class="container">
           <p class="title">Welcome to KTPoints {{$route.params.username}}</p>
@@ -10,7 +9,6 @@
         </div>
       </div>
   </div>
-<!-- </div> -->
 </template>
 
 <script>

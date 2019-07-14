@@ -1,5 +1,5 @@
 <template>
-    <div v-on:click="toggle()" class="card has-text-centered">
+    <div v-on:click="toggle()" class="card has-text-centered is-rounded">
         <div class="card-content">
             <div class="media">
                 <!-- <div class="media-left">
@@ -45,7 +45,6 @@ export default {
     methods: {
         toggle: function() {
             this.expanded = !this.expanded
-            console.log(this.expanded);
         },
         imgURL: function() {
             
@@ -65,6 +64,7 @@ export default {
     }
 }
 </script>
+
 
 <style lang="scss">
 .card.has-text-centered {

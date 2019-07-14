@@ -1,35 +1,26 @@
 <template>
-    <section id='userDisplay'>
-        <div class="reflow">
-            <template v-if= "searchBool">
-                <div class="field has-addons">
-                    <div class="control is-expanded">
-                        <input v-model='input' class="input is-primary" type="text" placeholder="Member Name">
-                    </div>
-                    <div class="control">
-                        <button v-on:click="toggle()" class="button">
-                            Cancel search
-                        </button>
-                    </div>
+    <section id='directory'>
+        <section id='searchBar'>
+                <transition name="slide-right" mode="out-in">
+                <div class="control has-icons-left has-icons-right">
+                    <input v-model='input' class="input is-primary" type="text" placeholder="Search">
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                    </span>
+                    <span class="icon is-small is-right">
+                    <i class="fas fa-search"></i>
+                    </span>
                 </div>
-            </template>
-            <template v-else>
-                <div class="control">
-                    <button v-on:click="toggle()" class="button is-large is-rounded">
-                        Search
-                    </button>
+                </transition>
+        </section>
+
+        <section id='userDisplay'>
+            <transition-group name='flip-list' class="columns is-centered is-multiline">
+                <div v-for="directoryInfo in searchResults(this.input)" :key="directoryInfo.uniqname" class="column is-3">
+                    <directoryCard :key=0 v-bind='directoryInfo'/>
                 </div>
-            </template>
-        </div>
-
-
-
-        <transition-group name='flip-list' class="columns is-centered is-multiline">
-            <div v-for="directoryInfo in searchResults(this.input)" :key="directoryInfo.uniqname" class="column is-3">
-                <directoryCard :key=0 v-bind='directoryInfo'/>
-            </div>
-        </transition-group>
-
+            </transition-group>
+        </section>
 
     </section>
 </template>
@@ -43,8 +34,12 @@ import {database} from '@/main.js';
 export default {
     data() {
         return {
-            searchBool: true,
+            searchIdx: 0,
             input: '',
+            searchButtons: [
+                'Search',
+                'Cancel Search'
+            ],
             users: 
             [
                 
@@ -53,17 +48,15 @@ export default {
     },
     methods: {
         searchResults: function(input) {
-            //console.log("COMPUTED FUNCTION HERE");
 
             return this.users.filter(function (user) {
-                return input == user.name.substring(0,input.length) || input == user.uniqname.substring(0,input.length)
+                var temp = input.toUpperCase();
+                return temp === user.name.substring(0,input.length).toUpperCase() ||
+                       temp === user.uniqname.substring(0,input.length).toUpperCase();
             })
         },
         toggle: function() {
-            this.searchBool = !this.searchBool;
-            if (!this.searchBool) {
-                this.input = '';
-            }
+            this.searchIdx = (this.searchIdx + 1) % 2;
         }
     },
     components: {
@@ -82,13 +75,19 @@ export default {
 
 
 
+<style scoped>
+  #searchBar {
+      padding-bottom: 10px;
+      padding-left: 40px;
+      padding-right: 40px;
+      padding-top: 20px;
+  }
+  #userDisplay {
+      padding-bottom: 10px;
+      padding-right: 40px; 
+      padding-left: 40px;
+  }
 
-
-
-
-
-
-<style>
   .flip-list-move {
     transition: transform .5s;
   }

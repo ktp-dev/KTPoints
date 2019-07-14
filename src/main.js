@@ -6,6 +6,7 @@ import './registerServiceWorker'
 import * as firebase from 'firebase/app';
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 // import bulma and custom styles
 // This file opens up 
@@ -21,6 +22,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
+
 var firebaseConfig = {
   apiKey: "AIzaSyCc4W4annW8hstY99LCBC1IlEyXETrdapE",
   authDomain: "ktpoints-68071.firebaseapp.com",
@@ -34,3 +36,10 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+const database = firebase.firestore();
+const storage = firebase.storage();
+
+export {
+  database, 
+  storage
+};

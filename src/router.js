@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import LoginSignup from './views/LoginSignup.vue'
 import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
+import Directory from './views/Directory.vue'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/KTP/events',
       name: 'event',
       component: Events
+    },
+    {
+      path: '/KTP/directory',
+      name: 'directory',
+      component: Directory
     },
   ]
 })

@@ -7,6 +7,9 @@
           <router-link to='/KTP/events'>
             <button class='button is-large is-primary'>EVENTS</button>
           </router-link>
+          <router-link to='/KTP/directory'>
+            <button class='button is-large is-primary'>DIRECTORY</button>
+          </router-link>
         </div>
       </div>
   </div>

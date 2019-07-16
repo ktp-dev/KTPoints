@@ -36,7 +36,6 @@
 import EventCard from '@/components/EventCard.vue';
 import * as firebase from 'firebase/app';
 import { db, auth } from '@/main.js'
-import { setTimeout } from 'timers';
 
 export default {
   name: 'events',
@@ -61,10 +60,6 @@ export default {
         this.events.sort(() => Math.random() - 0.5);
     },
 
-    sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
   },
 
   components: {
@@ -74,7 +69,7 @@ export default {
     // Firebase Events DB Call
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
-    let subscriber = db.collection("events").where('time', '>=', fbtime)
+    let subscriber = db.collection("events").where('time', '>=', fbtime).limit(10)
     .onSnapshot((querySnapshot) => {
       this.events = []
       querySnapshot.forEach((doc) => {

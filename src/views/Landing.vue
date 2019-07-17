@@ -32,7 +32,6 @@ export default {
     else{
       this.name = this.$store.state.userData.name
     }
-    // console.log(this.name)
   }
 }
 </script>

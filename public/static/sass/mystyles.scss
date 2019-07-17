@@ -54,25 +54,25 @@ $primary: $slate;
 
 // ===== FONTS =====
 .fs-s4 {
-    font-size: 20px!important;
+    font-size: 1.667em!important;
 }
 .fs-s3 {
-    font-size: 24px!important;
+    font-size: 2em!important;
 }
 .fs-s2 {
-    font-size: 30px!important;
+    font-size: 2.5em!important;
 }
 .fs-s1 {
-    font-size: 37px!important;
+    font-size: 3.083em!important;
 }
 .fs-h3 {
-    font-size: 50px!important;
+    font-size: 4.167em!important;
 }
 .fs-h2 {
-    font-size: 67px!important;
+    font-size: 5.583em!important;
 }
 .fs-h1 {
-    font-size: 80px!important;
+    font-size: 6.667em!important;
 }
 
 .vertically-center {
@@ -129,11 +129,14 @@ $primary: $slate;
 
 // ===== SPACING =====
 $size0: 0px;
-$size1: 8px;
-$size2: 16px;
-$size3: 24px;
-$size4: 32px;
+$size1: 0.667em;
+$size2: 1.333em;
+$size3: 2em;
+$size4: 2.667em;
 
+.p0 {
+    padding: $size0!important;
+}
 .pt0 {
     padding-top: $size0!important;
 }
@@ -147,6 +150,9 @@ $size4: 32px;
     padding-left: $size0!important;
 }
 
+.p1 {
+    padding: $size1!important;
+}
 .pt1 {
     padding-top: $size1!important;
 }
@@ -160,6 +166,9 @@ $size4: 32px;
     padding-left: $size1!important;
 }
 
+.p2 {
+    padding: $size2!important;
+}
 .pt2 {
     padding-top: $size2!important;
 }
@@ -173,6 +182,9 @@ $size4: 32px;
     padding-left: $size2!important;
 }
 
+.p3 {
+    padding: $size3!important;
+}
 .pt3 {
     padding-top: $size3!important;
 }
@@ -186,6 +198,9 @@ $size4: 32px;
     padding-left: $size3!important;
 }
 
+.p4 {
+    padding: $size4!important;
+}
 .pt4 {
     padding-top: $size4!important;
 }
@@ -199,6 +214,9 @@ $size4: 32px;
     padding-left: $size4!important;
 }
 
+.m0 {
+    margin: $size0!important;
+}
 .mt0 {
     margin-top: $size0!important;
 }
@@ -211,8 +229,13 @@ $size4: 32px;
 .ml0 {
     margin-left: $size0!important;
 }
+
 .mt12 {
     margin-top: 1px!important;
+}
+
+.m1 {
+    margin: $size1!important;
 }
 .mt1 {
     margin-top: $size1!important;
@@ -227,6 +250,9 @@ $size4: 32px;
     margin-left: $size1!important;
 }
 
+.m2 {
+    margin: $size2!important;
+}
 .mt2 {
     margin-top: $size2!important;
 }
@@ -240,6 +266,9 @@ $size4: 32px;
     margin-left: $size2!important;
 }
 
+.m3 {
+    margin: $size3!important;
+}
 .mt3 {
     margin-top: $size3!important;
 }
@@ -253,6 +282,9 @@ $size4: 32px;
     margin-left: $size3!important;
 }
 
+.m4 {
+    margin: $size4!important;
+}
 .mt4 {
     margin-top: $size4!important;
 }
@@ -329,6 +361,13 @@ $size4: 32px;
   border-left-width: 0px!important;
   border-bottom-width: 0px!important;
   border-right-width: 0px!important;
+}
+
+.desktop-width {
+    max-width: 960px!important;
+}
+.event-width {
+    max-width: 480px!important;
 }
 // ===== END CUSTOM CLASSES =====
 

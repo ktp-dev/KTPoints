@@ -25,6 +25,11 @@ export default {
   mounted(){
     // Dispatches if there is no userData
     if (this.$store.state.userData === null){
+      /* 
+      // This timeout is here so we wait a little bit
+      // so that the userAuth object is not null but 
+      // I HATE THIS IT'S GARBAGE
+      */ 
       setTimeout(() => {
         this.$store.dispatch("addUserData").then(() => {
           this.name = this.$store.state.userData.name

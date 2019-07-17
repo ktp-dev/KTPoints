@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { auth } from '@/main.js'
+import { auth, db } from '@/main.js'
 import store from '@/store.js'
 
 export default {
@@ -44,7 +44,13 @@ export default {
     auth.onAuthStateChanged(function(user) {
       if (user) {
         // Add user to vuex store
-        store.commit('addUser', user)
+        store.commit('addUserAuth', auth.currentUser)
+        const email = auth.currentUser.email;
+        const username = email.split('@')[0]
+        db.collection('users').doc(username).get().then((doc) => {
+          store.commit('addUserData', doc.data())
+          console.log(doc.data())
+        })
       } 
     })
   }

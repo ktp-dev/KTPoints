@@ -3,9 +3,9 @@
   <div class="hero is-link is-fullheight">
       <div class="hero-body">
         <div class="container">
-          <p class="title">Welcome to KTPoints {{$route.params.username}}</p>
+          <p class="title">Welcome to KTPoints {{$store.state.userData.name}}</p>
           <router-link to='/KTP/events'>
-            <button class='button is-large is-primary'>EVENTS</button>
+            <button class='button is-large'>EVENTS</button>
           </router-link>
         </div>
       </div>

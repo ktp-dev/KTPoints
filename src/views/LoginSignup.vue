@@ -386,7 +386,7 @@ export default {
     },
 
     goToLogin: function(){
-      if (this.$store.state.user !== null){
+      if (this.$store.state.userAuth !== null){
         router.push('/landing');
       }
       this.current_screen = "login";

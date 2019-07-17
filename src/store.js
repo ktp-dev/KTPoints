@@ -9,13 +9,24 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    // Use this auth object to updatePassword, get email, etc
+    userAuth: null,
+
+    // Use this firestore dictionary object to get information about a user e.g. pledgeclass
+    // here is what it looks like
+    // USER OBJECTS:
+    // standing, major, meetings_left, name, pledge_class, points, uniqname, year
+    userData: null,
   },
 
   // Change state by providing state and other parameters
   mutations: {
-    addUser(state, currentUser){
-      state.user = currentUser;
+    addUserAuth(state, currentUserAuth){
+      state.userAuth = currentUserAuth;
+    },
+    
+    addUserData(state, currentUserInfo){
+      state.userData = currentUserInfo;
     }
   },
 

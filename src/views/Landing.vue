@@ -1,11 +1,11 @@
 <template>
 <!-- <div class="container"> -->
-  <div class="hero is-link is-fullheight">
+  <div class="hero is-fullheight">
       <div class="hero-body">
         <div class="container">
           <p class="title">Welcome to KTPoints {{name}}</p>
           <router-link to='/KTP/events'>
-            <button class='button is-large'>EVENTS</button>
+            <button class='button is-large is-link'>EVENTS</button>
           </router-link>
         </div>
       </div>
@@ -23,12 +23,15 @@ export default {
     }
   },
   mounted(){
-    console.log(this.$store.state.userData)
+    // Dispatches if there is no userData
     if (this.$store.state.userData === null){
-      this.$store.dispatch("addUserData").then(() => {
-        this.name = this.$store.state.userData.name
-      })
+      setTimeout(() => {
+        this.$store.dispatch("addUserData").then(() => {
+          this.name = this.$store.state.userData.name
+        })
+      }, 2000);
     }
+    // 
     else{
       this.name = this.$store.state.userData.name
     }

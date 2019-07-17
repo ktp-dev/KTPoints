@@ -18,6 +18,7 @@ export default new Vuex.Store({
     // USER OBJECTS:
     // standing, major, meetings_left, name, pledge_class, points, uniqname, year
     userData: null,
+    number: 5
   },
 
   // Change state by providing state and other parameters
@@ -32,22 +33,21 @@ export default new Vuex.Store({
   },
 
   getters: {
-    
+    uniqname(state){
+      const email = state.userAuth.email;
+      return email.split('@')[0]  
+    }
   },
   
   // Use actions to perform asynchronous calls (not possible in a mutation)
   actions: {
-    addUserData(context) {
-      // console.log(state.number);
-      // const email = this.userAuth.currentUser.email;
-      // const username = email.split('@')[0]
+    addUserData({commit, getters}) {
       return new Promise((resolve) => {
-        db.collection('users').doc('mayakh').get().then((doc, response) => {
-          context.commit('addUserData', doc.data())
-          console.log(doc.data())
+        db.collection('users').doc(getters.uniqname).get().then((doc, response) => {
+          commit('addUserData', doc.data())
           resolve(response);
         })  
       })
-    }
+    },
   }
 })

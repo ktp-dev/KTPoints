@@ -45,13 +45,6 @@ export default {
       if (user) {
         // Add user to vuex store
         store.commit('addUserAuth', auth.currentUser)
-        // store.dispatch('addUserData')
-        // const email = auth.currentUser.email;
-        // const username = email.split('@')[0]
-        // db.collection('users').doc(username).get().then((doc) => {
-        //   store.commit('addUserData', doc.data())
-        //   console.log(doc.data())
-        // })
       } 
     })
   }

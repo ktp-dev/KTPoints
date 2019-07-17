@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { db } from '@/main.js'
 // to get state in a component, import the store
 // put the store into the component
 // call a mutation using store.commit('funcName', param1, param2)
@@ -36,6 +37,17 @@ export default new Vuex.Store({
   
   // Use actions to perform asynchronous calls (not possible in a mutation)
   actions: {
-
+    addUserData(context) {
+      // console.log(state.number);
+      // const email = this.userAuth.currentUser.email;
+      // const username = email.split('@')[0]
+      return new Promise((resolve) => {
+        db.collection('users').doc('mayakh').get().then((doc, response) => {
+          context.commit('addUserData', doc.data())
+          console.log(doc.data())
+          resolve(response);
+        })  
+      })
+    }
   }
 })

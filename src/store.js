@@ -18,7 +18,6 @@ export default new Vuex.Store({
     // USER OBJECTS:
     // standing, major, meetings_left, name, pledge_class, points, uniqname, year
     userData: null,
-    number: 5
   },
 
   // Change state by providing state and other parameters
@@ -29,6 +28,12 @@ export default new Vuex.Store({
     
     addUserData(state, currentUserInfo){
       state.userData = currentUserInfo;
+    },
+
+    addGuestData(state){
+      state.userData = {}
+      state.userData.name = 'Guest';
+      state.userData.standing = 'Guest';
     }
   },
 

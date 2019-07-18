@@ -12,11 +12,8 @@
 </template>
 
 <script>
-import { auth } from '@/main.js'
-import store from '@/store.js'
 
 export default {
-  store,
   data(){
     return{
       transitionName: ''
@@ -40,14 +37,6 @@ export default {
       this.transitionName = toDepth > fromDepth ? 'slide-right' : 'slide-left'
     }
   },
-  created(){
-    auth.onAuthStateChanged(function(user) {
-      if (user) {
-        // Add user to vuex store
-        store.commit('addUserAuth', auth.currentUser)
-      } 
-    })
-  }
 }
 </script>
 

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 export default {
   data(){
     return{
@@ -45,7 +46,7 @@ export default {
       const fromDepth = from.path.split('/').length
       this.transitionName = toDepth > fromDepth ? 'slide-right' : 'slide-left'
     }
-  }
+  },
 }
 </script>
 

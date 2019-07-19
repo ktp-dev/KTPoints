@@ -269,6 +269,18 @@ $size4: 32px;
 // ===== END SPACING =====
 
 // ===== CUSTOM CLASSES =====
+.sky-blue-button {
+    border-color: $sky-blue!important;
+    background-color: white!important;
+    color: $sky-blue!important;
+}
+
+.sky-blue-button:hover {
+    border-color: $sky-blue!important;
+    background-color: $sky-blue!important;
+    color: white!important;
+}
+
 .button-background {
     background-image: linear-gradient(to right, $light-green, $sky-blue);
     color: #ffffff!important;

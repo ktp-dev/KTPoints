@@ -305,9 +305,11 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import router from '@/router.js'
+import store from '@/store.js'
 import * as firebase from 'firebase/app';
 
 export default {
+  store,
   data: function() {
     return {
       uniqname: '',
@@ -384,6 +386,9 @@ export default {
     },
 
     goToLogin: function(){
+      if (this.$store.state.userAuth !== null){
+        router.push('/landing');
+      }
       this.current_screen = "login";
     },
 
@@ -419,6 +424,7 @@ export default {
       this.isSignup4 = true;
     },
   },
+
   watch: {
     'payload.standing': function(){
       if (this.payload.standing == 'Rushee'){
@@ -430,6 +436,7 @@ export default {
       }
     },
   },
+
 };
 </script>
 

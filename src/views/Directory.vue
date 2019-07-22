@@ -57,7 +57,7 @@ export default {
         },
         toggle: function() {
             this.searchIdx = (this.searchIdx + 1) % 2;
-        }
+        },
     },
     components: {
         DirectoryCard
@@ -65,9 +65,20 @@ export default {
     mounted() {
         database.collection("users").onSnapshot((querySnapshot) => {
             this.users = [];
+            this.imgs = [];
+            var i = 0;
+            //var URL =  '';
             querySnapshot.forEach((doc) => {
-                this.users.push(doc.data())
+                this.users.push(doc.data());
+                //var gsURL = 'gs://ktpoints-68071.appspot.com/profile_pictures/' + this.users[i].uniqname + '.jpg';
+                
+
+
+
+                //console.log(URL);
+                i = i + 1;
             })
+            console.log(this.imgs);
         })
     }
 }

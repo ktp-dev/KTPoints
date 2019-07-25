@@ -10,15 +10,17 @@
                 </div>
                 <div class="media-content">
                     <p class="title is-4">{{name}}</p>
-                    <p class="subtitle is-6">{{this.tag}}</p>
+                    <p class="subtitle is-6">{{year}}</p>
+                    <router-link v-bind:to="'/KTP/users/' + uniqname">
+                    <a>{{this.tag}}</a>
+                    </router-link>
                 </div>
             </div>
         </div>
 
         <div class="content">
-            <p> <strong>{{year}}</strong> </p>
+            <p> <strong>{{major}}</strong> </p>
             <div v-if="expanded">
-                <p> <strong>{{major}}</strong> </p>
                 <p> <strong>{{standing}}</strong> </p>
                 <p> <strong>{{pledge_class}}</strong> </p>
             </div>
@@ -34,12 +36,12 @@ import {storage} from '@/main.js'
 export default {
     mixins: [smoothReflow],
     props: ['major','meetings_left','name','pledge_class','points','standing','uniqname','year'],
-    data(){
+    data() {
         return {
             expanded: false,
             tag: '@' + this.uniqname, 
             gsURL: 'gs://ktpoints-68071.appspot.com/profile_pictures/' + this.uniqname + '.jpg',
-            URL: 'a'
+            URL: ''
         }
     },
     computed: {
@@ -55,29 +57,29 @@ export default {
             this.URL = url;
         },
         imgURL: function() {
-                if (this.URL != 'a') {
+                if (this.URL != '') {
                     return this.URL;
                 }
-                var gsURL = 'gs://ktpoints-68071.appspot.com/profile_pictures/';
-                gsURL = gsURL.concat(this.uniqname);
+                var gsURL_anon = 'gs://ktpoints-68071.appspot.com/profile_pictures/';
+                var gsURL = gsURL_anon.concat(this.uniqname);
                 gsURL = gsURL.concat('.jpg');
+                gsURL_anon = gsURL_anon.concat('anon.jpg');
                 var urlRef = storage.refFromURL(gsURL);
 
-
+                
                 urlRef.getDownloadURL().then((url) => {
                     this.URL = url;
-                    return url;
-                }).catch(function(error) {
+                }).catch((error) => {
                     switch (error.code) {
-                        case 'storage/object was not found':
-                            return 'altURL';
-                        case 'storage/unknown':
-                            return 'altURL';
+                        case 'storage/object-not-found':
+                            storage.refFromURL(gsURL_anon).getDownloadURL().then((url) => {
+                                this.URL = url;
+                            })
+                            break;
                     }
                 })
-                console.log(this.URL);
                 return this.URL;
-        }
+        },
     },
     mounted() {
         this.$smoothReflow()
@@ -95,5 +97,4 @@ export default {
     align-items: center;
   }
 }
-
 </style>

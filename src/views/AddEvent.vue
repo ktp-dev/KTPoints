@@ -94,7 +94,8 @@ export default {
         location: this.location,
         points: this.points,
         description: this.description,
-        time: new firebase.firestore.Timestamp(myTimestamp, 0)
+        time: new firebase.firestore.Timestamp(myTimestamp, 0),
+        attendees: []
       })
       .then(() => {
         router.push({ name: 'events'})

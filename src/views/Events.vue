@@ -41,16 +41,7 @@ export default {
   name: 'events',
   data () {
     return {
-      events: [
-        // {
-        //   event: "Ethics Meeting",
-        //   location: 'North Quad 2486',
-        //   time: '8:30 PM',
-        //   date: '2/17/19',
-        //   points: 20,
-        //   description: 'Lorem hipsum flexatarian'
-        // },
-      ],
+      events: [],
       show: false,
     }
   },
@@ -69,16 +60,14 @@ export default {
     // Firebase Events DB Call
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
-    let subscriber = db.collection("events").where('time', '>=', fbtime).limit(10)
-    .onSnapshot((querySnapshot) => {
+    let subscriber = db.collection("events").where('time', '>=', fbtime).limit(10).onSnapshot((querySnapshot) => {
       this.events = []
       querySnapshot.forEach((doc) => {
         this.events.push(doc.data())
-        // console.log(doc.data().time)
+        this.events[this.events.length-1].id = doc.id
+        // console.log(this.events)
       })
       if (auth.currentUser){
-        console.log("how many times did we go through this")
-        // console.log(auth.currentUser)
         this.show = true;
       }
     })

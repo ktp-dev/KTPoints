@@ -4,6 +4,7 @@ import LoginSignup from './views/LoginSignup.vue'
 import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
 import AddEvent from './views/AddEvent.vue'
+import SingleEvent from './views/SingleEvent.vue'
 import store from '@/store.js'
 import { auth } from '@/main.js'
 
@@ -33,6 +34,12 @@ const router = new Router({
       path: '/KTP/events',
       name: 'events',
       component: Events
+    },
+    {
+      path: '/KTP/event/:eventhash',
+      name: 'event',
+      component: SingleEvent,
+      props: true
     },
     {
       path: '/KTP/events/add-event',

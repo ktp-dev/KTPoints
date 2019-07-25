@@ -21,8 +21,9 @@
     <div v-if="expanded">
       <footer class="card-footer">
         <a class="card-footer-item">Add to Cal</a>
-        <a class="card-footer-item">Edit</a>
-        <a class="card-footer-item">Delete</a>
+        <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Edit</a>
+        <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
+        <a v-on:click="goToSingleEvent(event, location, time, points, description, id, attendees)" class="card-footer-item">See Event</a>
       </footer>
     </div>      
 
@@ -32,9 +33,13 @@
 
 <script>
 import smoothReflow from 'vue-smooth-reflow'
+import router from '@/router.js'
+import store from '@/store.js'
+
 export default {
+  store,
   mixins: [smoothReflow],
-  props: ['event', 'location', 'time', 'points', 'description'],
+  props: ['event', 'location', 'time', 'points', 'description', 'id', 'attendees'],
   data(){
     return {
       expanded: false,
@@ -52,6 +57,20 @@ export default {
   methods: {
     toggle: function(){
       this.expanded = !this.expanded;
+    },
+    goToSingleEvent: function(myevent, location, time, points, description, id, attendees){
+      router.push({ name: 'event', 
+      params: 
+        { 
+          event: myevent, 
+          location: location, 
+          time: time, 
+          points: points,
+          description: description,
+          eventhash: id,
+          attendees: attendees
+        }
+      })
     }
   },
   mounted() {

@@ -1,33 +1,32 @@
 <template>
 <!-- <div class="container"> -->
-  <div>
+  <div class="gradient">
   <NavBar />
   <div class="container is-centered desktop-width">
     <div class=" mt4">
-      <div class="light-green-bg m1">
-        <p class="title">Welcome to KTPoints {{$route.params.username}}</p>
-          Tell the new kids some shit about KTP and how absolutely fire we are
+      <div class="m1 landing-card p1">
+        <p class="fw-sb fs-s3 has-text-centered">Welcome</p>
+        <p class="fs-s6">
+          Thank you for your interest in KTP we’re excited to meet you! 
+          If you would like to learn more about the fraternity, please visit: 
+          <a class="fira-sans-light-italic fw-reg .sky-blue-text">kappathetapi.com/</a> <br>
+          Otherwise, explore around and find out more about the brothers and
+          the events we have!
+        </p>
       </div>
-      <div class="sky-blue-bg m1">
-        <p class="title">Announcement {{$route.params.username}}</p>
-          Read this you little shits
+      <div class="m1 landing-card p1">
+        <p class="fw-sb fs-s3 has-text-centered">Announcements</p>
+        <p class="fs-s6">
+          - No current Announcements
+        </p>
       </div>
-      <div class="light-green-bg m1">
+      <div class="m1 landing-card">
         <div class="card">
-          <header class="card-header">
-            <p class="card-header-title">
-              Upcoming Events
-            </p>
-            <a href="#" class="card-header-icon" aria-label="more options">
-              <span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </a>
-          </header>
+          <p class="fw-sb fs-s3 has-text-centered">  Upcoming Events </p>
           <div class="card-content">
             <div class="content">
-                <div class="container is-centered event-width">
-                  <div v-for="eventinfo in events" :key="eventinfo.location" class="is-3">
+                <div class="columns is-centered">
+                  <div v-for="eventinfo in events" :key="eventinfo.location" class="column event-width">
                     <EventCard v-bind='eventinfo'/>
                   </div>
                 </div>
@@ -35,27 +34,49 @@
           </div>
         </div>
       </div>
-      <div class="sky-blue-bg m1">
+      <div class="m1">
         <div class="card">
-          <header class="card-header">
-            <p class="card-header-title">
-              Points and Shit
-            </p>
-            <a href="#" class="card-header-icon" aria-label="more options">
-              <span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </a>
-          </header>
           <div class="card-content">
             <div class="content">
-              Points Earned: 15
-              <br>
-              Meetings Completed: 16
-              <br>
-              <h2 class="has-text-centered"> Most Recently Earned Points </h2>
-                <div class="container is-centered event-width">
-                  <div v-for="eventinfo in events" :key="eventinfo.location" class="is-3">
+              <div class="columns is-centered">
+                <div class="column">
+                  <p class="has-text-centered fs-s3 fw-sb mb0 pb1">Meetings</p>
+                  <div class="level">
+                    <div class="level-item">
+                      <radial-progress-bar :diameter=200
+                              :completed-steps=15
+                              :total-steps=20
+                              startColor="#59abe3"
+                              stop-color="#52779c"
+                              inner-stroke-color="#C1C1C1"
+                      >
+                        <p>Needed: 20</p>
+                        <p>Completed: 15</p>
+                      </radial-progress-bar>
+                    </div>
+                  </div>
+                </div>
+                <div class="column">
+                  <p class="has-text-centered fs-s3 fw-sb mb0 pb1">Points</p>
+                  <div class="level">
+                    <div class="level-item">
+                      <radial-progress-bar :diameter="200"
+                                          :completed-steps="45"
+                                          :total-steps="100"
+                                          startColor="#59abe3"
+                                          stop-color="#52779c"
+                                          inner-stroke-color="#C1C1C1"
+                      >
+                        <p>Needed: 100</p>
+                        <p>Completed: 45</p>
+                      </radial-progress-bar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="has-text-centered"> Recently Attended Events </h2>
+                <div class="columns is-centered">
+                  <div v-for="eventinfo in events" :key="eventinfo.location" class="column event-width">
                     <EventCard v-bind='eventinfo'/>
                   </div>
                 </div>
@@ -70,6 +91,7 @@
 </template>
 
 <script>
+import RadialProgressBar from 'vue-radial-progress'
 import EventCard from '@/components/EventCard.vue';
 import NavBar from '@/components/NavBar.vue'
 import * as firebase from 'firebase/app';
@@ -81,7 +103,6 @@ export default {
   data () {
     return {
       events: [
-
       ],
       show: false,
     }
@@ -93,7 +114,8 @@ export default {
   },
   components: {
     EventCard,
-    NavBar
+    NavBar,
+    RadialProgressBar
   },
   mounted() {
     // Firebase Events DB Call
@@ -103,11 +125,8 @@ export default {
     db.collection("events").where('time', '>=', fbtime).limit(3)
     .onSnapshot((querySnapshot) => {
       this.events = []
-      let numEvents =  0
       querySnapshot.forEach((doc) => {
         this.events.push(doc.data())
-        numEvents += 1
-        if (numEvents == 3) { return; }
         // console.log(doc.data().time)
       })
       if (auth.currentUser){

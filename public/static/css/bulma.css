@@ -29,6 +29,16 @@
 .light-grey {
   color: #C1C1C1; }
 
+body {
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 12px; }
+
+.fs-s6 {
+  font-size: 1.1em !important; }
+
+.fs-s5 {
+  font-size: 1.333em !important; }
+
 .fs-s4 {
   font-size: 1.667em !important; }
 
@@ -77,6 +87,9 @@
 .fw-sb {
   font-weight: 525 !important; }
 
+.fw-reg {
+  font-weight: 400 !important; }
+
 .fw-light {
   font-weight: 300 !important; }
 
@@ -108,64 +121,64 @@
   padding-left: 0px !important; }
 
 .p1 {
-  padding: 0.667em !important; }
+  padding: 8px !important; }
 
 .pt1 {
-  padding-top: 0.667em !important; }
+  padding-top: 8px !important; }
 
 .pb1 {
-  padding-bottom: 0.667em !important; }
+  padding-bottom: 8px !important; }
 
 .pr1 {
-  padding-right: 0.667em !important; }
+  padding-right: 8px !important; }
 
 .pl1 {
-  padding-left: 0.667em !important; }
+  padding-left: 8px !important; }
 
 .p2 {
-  padding: 1.333em !important; }
+  padding: 16px !important; }
 
 .pt2 {
-  padding-top: 1.333em !important; }
+  padding-top: 16px !important; }
 
 .pb2 {
-  padding-bottom: 1.333em !important; }
+  padding-bottom: 16px !important; }
 
 .pr2 {
-  padding-right: 1.333em !important; }
+  padding-right: 16px !important; }
 
 .pl2 {
-  padding-left: 1.333em !important; }
+  padding-left: 16px !important; }
 
 .p3 {
-  padding: 2em !important; }
+  padding: 24px !important; }
 
 .pt3 {
-  padding-top: 2em !important; }
+  padding-top: 24px !important; }
 
 .pb3 {
-  padding-bottom: 2em !important; }
+  padding-bottom: 24px !important; }
 
 .pr3 {
-  padding-right: 2em !important; }
+  padding-right: 24px !important; }
 
 .pl3 {
-  padding-left: 2em !important; }
+  padding-left: 24px !important; }
 
 .p4 {
-  padding: 2.667em !important; }
+  padding: 32px !important; }
 
 .pt4 {
-  padding-top: 2.667em !important; }
+  padding-top: 32px !important; }
 
 .pb4 {
-  padding-bottom: 2.667em !important; }
+  padding-bottom: 32px !important; }
 
 .pr4 {
-  padding-right: 2.667em !important; }
+  padding-right: 32px !important; }
 
 .pl4 {
-  padding-left: 2.667em !important; }
+  padding-left: 32px !important; }
 
 .m0 {
   margin: 0px !important; }
@@ -186,64 +199,64 @@
   margin-top: 1px !important; }
 
 .m1 {
-  margin: 0.667em !important; }
+  margin: 8px !important; }
 
 .mt1 {
-  margin-top: 0.667em !important; }
+  margin-top: 8px !important; }
 
 .mb1 {
-  margin-bottom: 0.667em !important; }
+  margin-bottom: 8px !important; }
 
 .mr1 {
-  margin-right: 0.667em !important; }
+  margin-right: 8px !important; }
 
 .ml1 {
-  margin-left: 0.667em !important; }
+  margin-left: 8px !important; }
 
 .m2 {
-  margin: 1.333em !important; }
+  margin: 16px !important; }
 
 .mt2 {
-  margin-top: 1.333em !important; }
+  margin-top: 16px !important; }
 
 .mb2 {
-  margin-bottom: 1.333em !important; }
+  margin-bottom: 16px !important; }
 
 .mr2 {
-  margin-right: 1.333em !important; }
+  margin-right: 16px !important; }
 
 .ml2 {
-  margin-left: 1.333em !important; }
+  margin-left: 16px !important; }
 
 .m3 {
-  margin: 2em !important; }
+  margin: 24px !important; }
 
 .mt3 {
-  margin-top: 2em !important; }
+  margin-top: 24px !important; }
 
 .mb3 {
-  margin-bottom: 2em !important; }
+  margin-bottom: 24px !important; }
 
 .mr3 {
-  margin-right: 2em !important; }
+  margin-right: 24px !important; }
 
 .ml3 {
-  margin-left: 2em !important; }
+  margin-left: 24px !important; }
 
 .m4 {
-  margin: 2.667em !important; }
+  margin: 32px !important; }
 
 .mt4 {
-  margin-top: 2.667em !important; }
+  margin-top: 32px !important; }
 
 .mb4 {
-  margin-bottom: 2.667em !important; }
+  margin-bottom: 32px !important; }
 
 .mr4 {
-  margin-right: 2.667em !important; }
+  margin-right: 32px !important; }
 
 .ml4 {
-  margin-left: 2.667em !important; }
+  margin-left: 32px !important; }
 
 .button-background {
   background-image: linear-gradient(to right, #3db64a, #59abe3);
@@ -303,6 +316,19 @@
 
 .event-width {
   max-width: 480px !important; }
+
+.landing-grad {
+  background-image: radial-gradient(white 5%, #52779c 30%, #2c3e50 40%); }
+
+.gradient {
+  background-image: radial-gradient(white, #2c3e50); }
+
+.landing-card {
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0px, 3px, "rgba(0, 0, 0, 0.16)";
+  border-width: 2px;
+  border-color: #52779c; }
 
 /*! bulma.io v0.7.5 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
@@ -597,7 +623,7 @@ button,
 input,
 select,
 textarea {
-  font-family: "Nunito", sans-serif; }
+  font-family: "Fira Sans", sans-serif; }
 
 code,
 pre {
@@ -1140,13 +1166,13 @@ a.has-text-danger:hover, a.has-text-danger:focus {
   font-weight: 700 !important; }
 
 .is-family-primary {
-  font-family: "Nunito", sans-serif !important; }
+  font-family: "Fira Sans", sans-serif !important; }
 
 .is-family-secondary {
-  font-family: "Nunito", sans-serif !important; }
+  font-family: "Fira Sans", sans-serif !important; }
 
 .is-family-sans-serif {
-  font-family: "Nunito", sans-serif !important; }
+  font-family: "Fira Sans", sans-serif !important; }
 
 .is-family-monospace {
   font-family: monospace !important; }

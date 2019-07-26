@@ -11,9 +11,14 @@
                 <div class="media-content">
                     <p class="title is-4">{{name}}</p>
                     <p class="subtitle is-6">{{year}}</p>
-                    <router-link v-bind:to="'/KTP/users/' + uniqname">
-                    <a>{{this.tag}}</a>
+
+                    <!--Link to user page, passing all necessary props (including image URL)-->
+                    <router-link :to="{name: 'user', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: imgURL()}}">
+                        <p>{{this.tag}}</p>
                     </router-link>
+                    
+                    
+                    <router-view></router-view>
                 </div>
             </div>
         </div>
@@ -85,6 +90,7 @@ export default {
         this.$smoothReflow()
     }
 }
+
 </script>
 
 
@@ -98,3 +104,8 @@ export default {
   }
 }
 </style>
+
+
+
+
+

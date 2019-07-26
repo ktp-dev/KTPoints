@@ -4,6 +4,7 @@ import LoginSignup from './views/LoginSignup.vue'
 import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
 import Directory from './views/Directory.vue'
+import User from './views/User.vue'
 
 Vue.use(Router)
 
@@ -35,5 +36,11 @@ export default new Router({
       name: 'directory',
       component: Directory
     },
+    {
+      path: '/KTP/users/:uniqname',
+      name: 'user',
+      component: User,
+      props: true
+    }
   ]
 })

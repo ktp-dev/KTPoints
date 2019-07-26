@@ -16,7 +16,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="field is-right">
+                        <div class="field is-pulled-right">
                             <div class="control">
                                 <a v-on:click="toggleSearchOptions()" class="button">
                                 <span class="icon is-small is-right">

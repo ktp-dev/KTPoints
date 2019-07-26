@@ -1,4 +1,5 @@
 <template>
+<transition name="slide-right" mode="out-in">
 <section class="section" id = 'UserInfo'>
     <div class="columns is-centered">
     <div class="column is-two-fifths">
@@ -37,18 +38,23 @@
                 </div>
                 <div class="column">
                 <div class="button is-rounded">
-                    Meet
+                    Email
                 </div>
                 </div>
             </div>
-            <h1>About</h1>
-            Hello this is my about page
+            <h1>About Me</h1>
+            Hello I am in KTP wow! 
+
+            <h1>Career Interests</h1>
+            I have interests, like many in KTP
+
         </div>
     </div>
     </div>
     </div>
     </div>
 </section>
+</transition>
 </template>
 
 

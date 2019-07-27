@@ -2,7 +2,7 @@
 <transition name="slide-right" mode="out-in">
 <section class="section" id = 'UserInfo'>
     <div class="columns is-centered">
-    <div class="column is-two-fifths">
+    <div class="column is-three-fifths">
     <div class="card is-rounded">
         <div class="card-image">
             <figure class="image is-square">
@@ -15,8 +15,8 @@
                 <div class="column">
                     <div class="media-content">
                         <p class="title is-4">{{name}}</p>
-                        <p v-if="isAlum" class="subtitle is-6">{{year}}</p>
-                        <p v-else class="subtitle is-6">Year: {{year}}</p>
+                        <p v-if="isAlum" class="subtitle is-10"><strong>{{year}}</strong></p>
+                        <p v-else class="subtitle is-10"><strong> Year: {{year}} </strong></p>
                     </div>
                 </div>
             </div>
@@ -25,25 +25,28 @@
         <div class="content">
             <div class="columns is-mobile is-centered">
                 <div class="column">
-                    <p><strong>Major: {{major}}</strong></p>
+                    <p class="subtitle is-10"><strong>Major: {{major}}</strong></p>
                 </div>
                 <div class="column">
-                    <p><strong>Pledge Class: {{pledge_class}}</strong></p>
+                    <p class="subtitle is-10"><strong>Pledge Class: {{pledge_class}}</strong></p>
                 </div>
             </div>
-            <div class="columns is-mobile is-centered">
-                <div class="column">
-                <a class="button is-medium is-rounded">
-                    Message
+
+            <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                <a class="button is-large is-rounded is-info">
+                    <span class="icon is-medium">
+                        <i class="fab fa-facebook-messenger"></i>
+                    </span>
                 </a>
-                </div>
-                <div class="column">
-                <li>
-                <a v-bind:href="'mailto:${sol.email}'" class="button is-medium is-rounded">
-                    Email
+                </p>
+                <p class="control">
+                <a v-bind:href="email" class="button is-large is-rounded is-primary">
+                    <span class="icon is-medium">
+                        <i class="fas fa-envelope"></i>
+                    </span>
                 </a>
-                </li>
-                </div>
+                </p>
             </div>
             <h1>About Me</h1>
             Hello I am in KTP wow! 
@@ -72,7 +75,7 @@ export default {
             return false;
         },
         email: function() {
-            return this.uniqname + '@umich.edu'
+            return 'mailto:' + this.uniqname + '@umich.edu'
         }
     }
 }

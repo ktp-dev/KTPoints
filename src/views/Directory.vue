@@ -135,7 +135,6 @@ import {database} from '@/main.js';
 export default {
     data() {
         return {
-            searchIdx: 0,
             input: '',
             activeShow: true,
             alumShow: false, 
@@ -163,9 +162,7 @@ export default {
                 }
             })
         },
-        toggle: function() {
-            this.searchIdx = (this.searchIdx + 1) % 2;
-        },
+        
         toggleActive: function() {
             this.activeShow = !this.activeShow
         },

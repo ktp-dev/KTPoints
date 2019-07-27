@@ -1,5 +1,5 @@
 <template>
-    <div v-on:click="toggle()" class="card has-text-centered is-rounded">
+    <div v-on:click="toggle()" class="card has-text-centered is-rounded fs-s3 pointer">
 
         <div class="card-content">
             <div class="media">

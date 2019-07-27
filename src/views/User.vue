@@ -15,7 +15,8 @@
                 <div class="column">
                     <div class="media-content">
                         <p class="title is-4">{{name}}</p>
-                        <p class="subtitle is-6">Year: {{year}}</p>
+                        <p v-if="isAlum" class="subtitle is-6">{{year}}</p>
+                        <p v-else class="subtitle is-6">Year: {{year}}</p>
                     </div>
                 </div>
             </div>
@@ -32,14 +33,16 @@
             </div>
             <div class="columns is-mobile is-centered">
                 <div class="column">
-                <div class="button is-rounded">
+                <a class="button is-medium is-rounded">
                     Message
-                </div>
+                </a>
                 </div>
                 <div class="column">
-                <div class="button is-rounded">
+                <li>
+                <a v-bind:href="'mailto:${sol.email}'" class="button is-medium is-rounded">
                     Email
-                </div>
+                </a>
+                </li>
                 </div>
             </div>
             <h1>About Me</h1>
@@ -60,7 +63,18 @@
 
 <script>
 export default {
-    props: ['uniqname','major','name','pledge_class','year','imgURL']
+    props: ['uniqname','major','name','pledge_class','year','imgURL'], 
+    computed: {
+        isAlum: function() {
+            if (this.year == 'Alumni') {
+                return true;
+            }
+            return false;
+        },
+        email: function() {
+            return this.uniqname + '@umich.edu'
+        }
+    }
 }
 </script>
 

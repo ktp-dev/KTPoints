@@ -27,14 +27,14 @@
                             <div class="column is-one-third">
                                 <input id="activeSwitch" type="checkbox" name="activeSwitch" 
                                     v-on:click="toggleActive()"
-                                    class="switch" checked="checked" v-model="activeShow">
+                                    class="switch is-rounded" checked="checked" v-model="activeShow">
                                 <label for="activeSwitch">Actives</label>
                             </div>
 
                             <div class="column is-one-third">
                                 <input id="alumSwitch" type="checkbox" name="alumSwitch" 
                                     v-on:click="toggleAlum()"
-                                    class="switch" checked="unchecked" v-model="alumShow">
+                                    class="switch is-rounded" checked="unchecked" v-model="alumShow">
                                 <label for="activeSwitch">Alumni</label>
                             </div>
                                     

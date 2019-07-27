@@ -34,7 +34,7 @@
 
             <div class="field is-grouped is-grouped-centered">
                 <p class="control">
-                <a class="button is-large is-rounded is-info">
+                <a v-bind:href="messengerURL" class="button is-large is-rounded is-info">
                     <span class="icon is-medium">
                         <i class="fab fa-facebook-messenger"></i>
                     </span>
@@ -49,10 +49,10 @@
                 </p>
             </div>
             <h1>About Me</h1>
-            Hello I am in KTP wow! 
+            Hello, I am in KTP - wow! 
 
             <h1>Career Interests</h1>
-            I have interests, like many in KTP
+            I have interests, like many people in KTP
 
         </div>
     </div>
@@ -76,6 +76,9 @@ export default {
         },
         email: function() {
             return 'mailto:' + this.uniqname + '@umich.edu'
+        },
+        messengerURL: function() {
+            return 'https://www.messenger.com/'
         }
     }
 }

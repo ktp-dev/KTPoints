@@ -72,10 +72,6 @@ export default {
       }
     })
   },
-
-  destroyed() {
-    console.log('we out of there')
-  }
 }
 </script>
 

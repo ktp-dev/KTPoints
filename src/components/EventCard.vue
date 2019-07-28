@@ -1,13 +1,13 @@
 <template>
   <div class="card has-text-centered">
-    <header v-on:click="toggle()" class="card-header title">
+    <header v-on:click="toggle()" class="card-header title fira-mono">
       <p>{{event}}</p>
       <div v-bind:class="{'expanded': expanded}" class="icon subtitle is-medium">
         <i class="fas fa-angle-down"></i> 
       </div>
     </header>
 
-    <div v-on:click="toggle()" class="card-content">
+    <div v-on:click="toggle()" class="card-content fira-sans-light-italic">
       <p> <strong>{{location}}</strong>  </p>
       <p> <strong>{{datetime}}</strong> </p>
       <p> <strong>{{points}} Points</strong> </p>
@@ -23,7 +23,7 @@
         <a class="card-footer-item">Add to Cal</a>
         <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Edit</a>
         <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
-        <a v-on:click="goToSingleEvent(event, location, time, points, description, id, attendees)" class="card-footer-item">See Event</a>
+        <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees)" class="card-footer-item">See Event</a>
       </footer>
     </div>      
 

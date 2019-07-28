@@ -20,7 +20,7 @@
 
     <div v-if="expanded">
       <footer class="card-footer">
-        <a class="card-footer-item">Add to Cal</a>
+        <a class="card-footer-item" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
         <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Edit</a>
         <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
         <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees)" class="card-footer-item">See Event</a>
@@ -57,6 +57,24 @@ export default {
   methods: {
     toggle: function(){
       this.expanded = !this.expanded;
+    },
+    addToCalendar: function(){
+      let baseurl = 'https://www.google.com/calendar/event?action=TEMPLATE';
+      let title = '&text=' + this.event;
+      let description = '&details=' + this.description;
+      let location = '&location=' + this.location;
+      
+      console.log(this.time)
+      let date = new Date(0); 
+      date.setUTCSeconds(this.time.seconds);
+      let momentTimeBegin = moment(date).add('-7', 'hours').format('YYYYMMDD[T]HHmmss[Z]')
+      let momentTimeEnd = moment(date).add('-6', 'hours').format('YYYYMMDD[T]HHmmss[Z]')
+      let dates = '&dates=' + momentTimeBegin + '/' + momentTimeEnd;
+      let gcalURL = baseurl + title + description + location + dates;
+
+      let encodedURL = encodeURI(gcalURL)
+      console.log(encodedURL)
+      window.open(encodedURL, '_blank')
     },
     goToSingleEvent: function(myevent, location, time, points, description, id, attendees){
       router.push({ name: 'event', 

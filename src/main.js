@@ -30,7 +30,7 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const auth = firebase.auth();
-const db_updater = firebase.firestore;
+const fbOperation = firebase.firestore;
 
 new Vue({
   router,
@@ -41,5 +41,5 @@ new Vue({
 export {
   db,
   auth,
-  db_updater
+  fbOperation
 };

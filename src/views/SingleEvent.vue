@@ -29,8 +29,7 @@
 
 <script>
 import store from '@/store.js'
-// import * as firebase from 'firebase/app';
-import {db, db_updater} from '@/main.js'
+import {db, fbOperation} from '@/main.js'
 
 export default {
   store,
@@ -54,7 +53,7 @@ export default {
     checkInToEvent: function(){
       if (this.ATTENDING){
         db.collection('events').doc(this.eventhash).update({
-          attendees: db_updater.FieldValue.arrayRemove(this.uniqname)
+          attendees: fbOperation.FieldValue.arrayRemove(this.uniqname)
         }).then(() => {
           this.payload.attendees.splice(this.payload.attendees.indexOf(this.uniqname), 1)
           this.ATTENDING = !this.ATTENDING
@@ -64,7 +63,7 @@ export default {
       }
       else {
         db.collection('events').doc(this.eventhash).update({
-          attendees: db_updater.FieldValue.arrayUnion(this.uniqname)
+          attendees: fbOperation.FieldValue.arrayUnion(this.uniqname)
         }).then(() => {
           this.ATTENDING = !this.ATTENDING
           this.payload.attendees.push(this.uniqname)

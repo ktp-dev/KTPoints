@@ -1,5 +1,5 @@
 <template>
-    <div v-on:click="toggle()" class="card has-text-centered is-rounded fs-s3 pointer">
+    <div v-on:click="toggle()" class="card has-text-centered">
 
         <div class="card-content">
             <div class="media">
@@ -10,14 +10,12 @@
                 </div>
                 <div class="media-content">
                     <p class="title is-4">{{name}}</p>
-
-
                     <p class="subtitle is-6">{{year}}</p>
                 </div>
             </div>
         </div>
 
-        <div class="content">
+        <div class="content fs-s5">
             <p> <strong>{{major}}</strong> </p>
             <div v-if="expanded">
                 <p> <strong>{{standing}}</strong> </p>
@@ -25,7 +23,7 @@
             </div>
         </div>
 
-        <footer v-if="expanded" class="card-footer">
+        <footer v-if="expanded" class="card-footer fs-s4">
             <!--Link to user page, passing all necessary props (including image URL)-->
             <router-link v-bind:to="{name: 'user', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: imgURL()}}">
                 <a class='card-footer-item is-centered'>View Profile</a>

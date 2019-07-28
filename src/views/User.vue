@@ -14,9 +14,9 @@
             <div class="columns is-mobile is-centered">
                 <div class="column">
                     <div class="media-content">
-                        <p class="title is-4">{{name}}</p>
-                        <p v-if="isAlum" class="subtitle is-10"><strong>{{year}}</strong></p>
-                        <p v-else class="subtitle is-10"><strong> Year: {{year}} </strong></p>
+                        <p class="title fs-s3">{{name}}</p>
+                        <p v-if="isAlum" class="subtitle fs-s4"><strong>{{year}}</strong></p>
+                        <p v-else class="subtitle fs-s4"><strong> Year: {{year}} </strong></p>
                     </div>
                 </div>
             </div>
@@ -25,10 +25,10 @@
         <div class="content">
             <div class="columns is-mobile is-centered">
                 <div class="column">
-                    <p class="subtitle is-10"><strong>Major: {{major}}</strong></p>
+                    <p class="fs-s4"><strong>Major: {{major}}</strong></p>
                 </div>
                 <div class="column">
-                    <p class="subtitle is-10"><strong>Pledge Class: {{pledge_class}}</strong></p>
+                    <p class="fs-s4"><strong>Pledge Class: {{pledge_class}}</strong></p>
                 </div>
             </div>
 
@@ -48,10 +48,10 @@
                 </a>
                 </p>
             </div>
-            <h1>About Me</h1>
+            <h1 class="fs-s2">About Me</h1>
             Hello, I am in KTP - wow! 
 
-            <h1>Career Interests</h1>
+            <h1 class="fs-s2">Career Interests</h1>
             I have interests, like many people in KTP
 
         </div>

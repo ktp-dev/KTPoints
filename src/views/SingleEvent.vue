@@ -7,13 +7,13 @@
           <p>{{event}}</p>
         </header>
         <div class="card-content title is-4 fira-sans-light-italic">
-          <p>{{location}}</p>
-          <p>{{time}}</p>
-          <p>{{points}} points</p>
-          <p>{{description}}</p>
+          <p>{{payload.location}}</p>
+          <p>{{payload.time}}</p>
+          <p>{{payload.points}} points</p>
+          <p>{{payload.description}}</p>
           <div class="divider slate"></div>
           <p class='mt4 has-text-left'>Attendees</p>
-          <p v-for="(attendee, index) in attendees" :key="index" class='has-text-left'>
+          <p v-for="(attendee, index) in payload.attendees" :key="index" class='has-text-left'>
             {{attendee}}
           </p>
         </div>
@@ -40,7 +40,14 @@ export default {
       uniqname: this.$store.state.userData.uniqname,
       ATTENDING: false,
       checkInStatus: "Check in to event",
-      data: null,
+      payload: {
+        event: this.event,
+        location: this.location,
+        points: this.points,
+        description: this.description,
+        attendees: this.attendees,
+        time: this.time,
+      },
     }
   },
   methods: {
@@ -49,7 +56,7 @@ export default {
         db.collection('events').doc(this.eventhash).update({
           attendees: db_updater.FieldValue.arrayRemove(this.uniqname)
         }).then(() => {
-          this.attendees.splice(this.attendees.indexOf(this.uniqname), 1)
+          this.payload.attendees.splice(this.payload.attendees.indexOf(this.uniqname), 1)
           this.ATTENDING = !this.ATTENDING
           this.checkInStatus = 'Check in to event';
         })
@@ -60,37 +67,33 @@ export default {
           attendees: db_updater.FieldValue.arrayUnion(this.uniqname)
         }).then(() => {
           this.ATTENDING = !this.ATTENDING
-          this.attendees.push(this.uniqname)
-          this.attendees.sort()
+          this.payload.attendees.push(this.uniqname)
+          this.payload.attendees.sort()
           this.checkInStatus = 'Check out of event';
         });
       }
     }
   },
+  
   mounted(){
-    if(this.attendees === undefined){
-      console.log('undefined')
+    if(this.event === undefined){
       // 'event', 'location', 'time', 'points', 'description', 'attendees'
       // make firebase call and set the above information using the eventhash
       db.collection('events').doc(this.eventhash).get().then((doc)=>{
-        this.data = doc.data();
+        this.payload = doc.data();
+        let utcSeconds = this.payload.time.seconds;
+        let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
+        date.setUTCSeconds(utcSeconds);
+        this.payload.time = moment(date).format('MMMM Do YYYY, h:mm:ss a')
       })
       .then(() => {
-        this.event = this.data.event;
-        this.location = this.data.location;
-        this.points = this.data.points;
-        this.description = this.data.description;
-        this.attendees = this.data.attendees;
-        this.time = this.data.time;
-      })
-      .then(() => {
-        if (this.attendees.includes(this.uniqname)){
+        if (this.payload.attendees.includes(this.uniqname)){
           this.ATTENDING = true;
           this.checkInStatus = 'Check out of event';
         }
       })
     }
-    else if (this.attendees.includes(this.uniqname)){
+    else if (this.payload.attendees.includes(this.uniqname)){
       this.ATTENDING = true;
       this.checkInStatus = 'Check out of event';
     }

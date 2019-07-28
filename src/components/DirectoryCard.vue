@@ -18,10 +18,6 @@
                     <router-link v-bind:to="{name: 'user', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: imgURL()}}">
                         <p>{{this.tag}}</p>
                     </router-link>
-
-                    
-                    
-                    <router-view></router-view>
                 </div>
             </div>
         </div>

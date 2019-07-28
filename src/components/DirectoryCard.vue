@@ -13,11 +13,6 @@
 
 
                     <p class="subtitle is-6">{{year}}</p>
-
-                    <!--Link to user page, passing all necessary props (including image URL)-->
-                    <router-link v-bind:to="{name: 'user', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: imgURL()}}">
-                        <p>{{this.tag}}</p>
-                    </router-link>
                 </div>
             </div>
         </div>
@@ -29,6 +24,13 @@
                 <p> <strong>{{pledge_class}}</strong> </p>
             </div>
         </div>
+
+        <footer v-if="expanded" class="card-footer">
+            <!--Link to user page, passing all necessary props (including image URL)-->
+            <router-link v-bind:to="{name: 'user', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: imgURL()}}">
+                <a class='card-footer-item is-centered'>View Profile</a>
+            </router-link>
+        </footer>
     </div>
 </template>
 

@@ -63,12 +63,12 @@ export default {
       let title = '&text=' + this.event;
       let description = '&details=' + this.description;
       let location = '&location=' + this.location;
-      
+
       console.log(this.time)
       let date = new Date(0); 
       date.setUTCSeconds(this.time.seconds);
-      let momentTimeBegin = moment(date).add('-7', 'hours').format('YYYYMMDD[T]HHmmss[Z]')
-      let momentTimeEnd = moment(date).add('-6', 'hours').format('YYYYMMDD[T]HHmmss[Z]')
+      let momentTimeBegin = moment(date).format('YYYYMMDD[T]HHmmss')
+      let momentTimeEnd = moment(date).add('1', 'hours').format('YYYYMMDD[T]HHmmss')
       let dates = '&dates=' + momentTimeBegin + '/' + momentTimeEnd;
       let gcalURL = baseurl + title + description + location + dates;
 

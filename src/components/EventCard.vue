@@ -64,7 +64,7 @@ export default {
       let description = '&details=' + this.description;
       let location = '&location=' + this.location;
 
-      console.log(this.time)
+      // console.log(this.time)
       let date = new Date(0); 
       date.setUTCSeconds(this.time.seconds);
       let momentTimeBegin = moment(date).format('YYYYMMDD[T]HHmmss')
@@ -73,7 +73,7 @@ export default {
       let gcalURL = baseurl + title + description + location + dates;
 
       let encodedURL = encodeURI(gcalURL)
-      console.log(encodedURL)
+      // console.log(encodedURL)
       window.open(encodedURL, '_blank')
     },
     goToSingleEvent: function(myevent, location, time, points, description, id, attendees){

@@ -1,4 +1,6 @@
 <template>
+  <div>
+  <NavBar />
   <div class="section">
     <transition-group name='flip-list' class="columns is-centered is-multiline">
       <div v-for="eventinfo in events" :key="eventinfo.location" class="column is-3">
@@ -14,6 +16,7 @@
         <button v-on:click="shuffle" class='button is-large'>Shuffle</button>
       </div>
     </transition>
+  </div>
   </div>
 </template>
 
@@ -36,6 +39,7 @@
 import EventCard from '@/components/EventCard.vue';
 import * as firebase from 'firebase/app';
 import { db, auth } from '@/main.js'
+import NavBar from '../components/NavBar'
 
 export default {
   name: 'events',
@@ -54,7 +58,8 @@ export default {
   },
 
   components: {
-    EventCard
+    EventCard,
+    NavBar
   },
   mounted() {
     // Firebase Events DB Call

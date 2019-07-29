@@ -44,7 +44,7 @@ const router = new Router({
     },
     {
       path: '/KTP/users/:uniqname',
-      name: 'user',
+      name: 'user1',
       component: User,
       props: true
     },
@@ -65,6 +65,7 @@ const router = new Router({
 // This runs before we enter every route
 // Calling next() allows us to enter the route
 // to, from: these can be used if you want to do something special for a specific URL
+// fix user  call it something else
 router.beforeEach((to, from, next) => {
   // If the object is null, try to add it
   if (store.state.userAuth === null){

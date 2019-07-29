@@ -25,7 +25,7 @@
 
         <footer v-if="expanded" class="card-footer fs-s4">
             <!--Link to user page, passing all necessary props (including image URL)-->
-            <router-link v-bind:to="{name: 'user', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: imgURL()}}">
+            <router-link v-bind:to="{name: 'user1', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: imgURL()}}">
                 <a class='card-footer-item is-centered'>View Profile</a>
             </router-link>
         </footer>

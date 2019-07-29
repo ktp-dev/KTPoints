@@ -27,9 +27,9 @@
           </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item">
+            <router-link to='/KTP/directory' class="navbar-item">
               Directory
-            </a>
+            </router-link>
             <a class="navbar-item">
               Leaderboard
             </a>

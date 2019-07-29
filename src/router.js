@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import LoginSignup from './views/LoginSignup.vue'
 import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
+import Directory from './views/Directory.vue'
+import User from './views/User.vue'
 import AddEvent from './views/AddEvent.vue'
 import SingleEvent from './views/SingleEvent.vue'
 import store from '@/store.js'
@@ -36,6 +38,17 @@ const router = new Router({
       component: Events
     },
     {
+      path: '/KTP/directory',
+      name: 'directory',
+      component: Directory
+    },
+    {
+      path: '/KTP/users/:uniqname',
+      name: 'user1',
+      component: User,
+      props: true
+    },
+    {
       path: '/KTP/event/:eventhash',
       name: 'event',
       component: SingleEvent,
@@ -52,6 +65,7 @@ const router = new Router({
 // This runs before we enter every route
 // Calling next() allows us to enter the route
 // to, from: these can be used if you want to do something special for a specific URL
+// fix user  call it something else
 router.beforeEach((to, from, next) => {
   // If the object is null, try to add it
   if (store.state.userAuth === null){

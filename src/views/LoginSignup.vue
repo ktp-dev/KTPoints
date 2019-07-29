@@ -15,13 +15,13 @@
               <!-- Button for Logging in -->
               <div class="control">
                 <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
-                  Login
+                  Log In
                 </button>
               </div>
 
               <!-- Button for Signing up -->
               <div class="control mt2">
-                <button v-on:click="goToSignup()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+                <button v-on:click="goToSignup()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
                   Sign up
                 </button>
               </div>
@@ -57,7 +57,7 @@
                 </div>
               </div> 
               <div class="control">
-                <button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+                <button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
                   Log In
                 </button>
               </div>

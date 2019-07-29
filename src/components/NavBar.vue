@@ -49,12 +49,17 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <div class="buttons">
+          <div v-if="this.$store.state.userData.standing == rushee"  class="buttons">
             <a class="button is-primary">
               <strong>Sign up</strong>
             </a>
             <a class="button is-light">
               Log in
+            </a>
+          </div>
+          <div v-if="this.$store.state.userData.standing != rushee"  class="buttons">
+            <a class="button is-primary">
+              <strong>{{this.$store.state.userData.name}}</strong>
             </a>
           </div>
         </div>
@@ -65,7 +70,11 @@
 
 
 <script>
+import store from '@/store.js'
 
+export default {
+  store,
+}
 </script>
 
 <style lang="scss">

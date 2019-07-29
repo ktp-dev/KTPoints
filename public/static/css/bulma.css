@@ -258,6 +258,16 @@ body {
 .ml4 {
   margin-left: 32px !important; }
 
+.sky-blue-button {
+  border-color: #59abe3 !important;
+  background-color: white !important;
+  color: #59abe3 !important; }
+
+.sky-blue-button:hover {
+  border-color: #59abe3 !important;
+  background-color: #59abe3 !important;
+  color: white !important; }
+
 .button-background {
   background-image: linear-gradient(to right, #3db64a, #59abe3);
   color: #ffffff !important; }

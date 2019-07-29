@@ -14,7 +14,7 @@
             <div v-if="current_screen == 'landing'" key="landing" class="mt4 pt4">
               <!-- Button for Logging in -->
               <div class="control">
-                <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
+                <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
                   Log In
                 </button>
               </div>
@@ -28,7 +28,7 @@
               
               <!-- Continue as Guest -->
               <router-link to="/landing">
-                <div class="align-center fira-sans-light-italic mt2">
+                <div class="align-center fira-sans-light-italic mt2 dark-blue">
                   or continue <a class="sky-blue-text fw-lb">  Without an Account</a>
                 </div>
               </router-link>
@@ -56,17 +56,17 @@
                    <div class="divider slate"></div>
                 </div>
               </div> 
-              <div class="align-center fira-sans-light-italic pb1">
-                  Forgot Password? <a class="light-green-text fw-lb"> Click here to Reset</a>
-              </div>
               <div class="control">
                 <button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
                   Log In
                 </button>
               </div>
-              <div class="align-center pb1 fira-sans-light-italic mt1">
+              <div class="align-center fira-sans-light-italic mt3">
                 Don't have an Account? 
                 <a class="sky-blue-text fw-lb" v-on:click='goToSignup()'>Sign Up Here</a>
+              </div>
+              <div class="align-center fira-sans-light-italic mt2">
+                  Forgot Password? <a class="light-green-text fw-lb"> Click here to Reset</a>
               </div>
             </div>
 
@@ -270,11 +270,6 @@
                     explore immediately, although you don't have access to <br>
                     full functionality of the app.
                   </div>
-                  <div class="control has-text-centered pb3">
-                    <button v-on:click="signup()" class="button is-medium is-rounded button-background fs-s2 fira-mono fw-bold pointer">
-                      Sign up
-                    </button>
-                  </div>
                   <div class="columns is-centered is-vcentered is-mobile pb4">
                     <div v-on:click='goToSignup3()' class="column is-quarter has-text-centered pointer">
                       <i class="fas fa-arrow-left fa-2x sky-blue-text"></i>
@@ -288,6 +283,11 @@
                       </div>
                     </div>
                     <div class="column has-text-centered pointer fira-sans sky-blue-text fw-lb fs-s4" >
+                      <div class="control has-text-centered">
+                        <button v-on:click="signup()" class="button is-small is-rounded fs-s4 fira-sans-light-italic fw-lb sky-blue-button pointer">
+                          Sign up
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -305,9 +305,11 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import router from '@/router.js'
+import store from '@/store.js'
 import * as firebase from 'firebase/app';
 
 export default {
+  store,
   data: function() {
     return {
       uniqname: '',
@@ -384,6 +386,9 @@ export default {
     },
 
     goToLogin: function(){
+      if (this.$store.state.userAuth !== null){
+        router.push('/landing');
+      }
       this.current_screen = "login";
     },
 
@@ -419,6 +424,7 @@ export default {
       this.isSignup4 = true;
     },
   },
+
   watch: {
     'payload.standing': function(){
       if (this.payload.standing == 'Rushee'){
@@ -430,6 +436,7 @@ export default {
       }
     },
   },
+
 };
 </script>
 

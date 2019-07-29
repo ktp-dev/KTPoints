@@ -1,10 +1,10 @@
 <template>
 <!-- <div class="container"> -->
-  <div class="gradient">
+  <div class="gradient pb4">
   <NavBar />
   <div class="container is-centered desktop-width">
-    <div class=" mt4">
-      <div class="m1 landing-card p1">
+    <div class="mt4">
+      <div v-if="this.$store.state.userData.standing == rushee" class="m1 landing-card p1">
         <p class="fw-sb fs-s3 has-text-centered">Welcome</p>
         <p class="fs-s6">
           Thank you for your interest in KTP we’re excited to meet you! 
@@ -21,7 +21,6 @@
         </p>
       </div>
       <div class="m1 landing-card">
-        <div class="card">
           <p class="fw-sb fs-s3 has-text-centered">  Upcoming Events </p>
           <div class="card-content">
             <div class="content">
@@ -32,10 +31,9 @@
                 </div>
             </div>
           </div>
-        </div>
       </div>
-      <div class="m1">
-        <div class="card">
+      <div v-if="this.$store.state.userData.standing != rushee" class="m1">
+        <div class="landing-card">
           <div class="card-content">
             <div class="content">
               <div class="columns is-centered">
@@ -91,6 +89,7 @@
 </template>
 
 <script>
+import store from '@/store.js'
 import RadialProgressBar from 'vue-radial-progress'
 import EventCard from '@/components/EventCard.vue';
 import NavBar from '@/components/NavBar.vue'
@@ -99,6 +98,7 @@ import { db, auth } from '@/main.js';
 import { setTimeout } from 'timers';
 
 export default {
+  store,
   name: 'events',
   data () {
     return {
@@ -131,6 +131,7 @@ export default {
       })
       if (auth.currentUser){
         console.log("how many times did we go through this")
+        console.log(store.state.userData)
         // console.log(auth.currentUser)
         this.show = true;
       }

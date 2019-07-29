@@ -128,9 +128,7 @@
 
 <script>
 import DirectoryCard from '@/components/DirectoryCard.vue';
-//import * as firebase from 'firebase/app';
-import {database} from '@/main.js';
-//import { userInfo } from 'os';
+import {db} from '@/main.js';
 
 export default {
     data() {
@@ -182,7 +180,8 @@ export default {
         DirectoryCard
     },
     mounted() {
-        database.collection("users").onSnapshot((querySnapshot) => {
+        console.log('hello world')
+        db.collection("users").onSnapshot((querySnapshot) => {
             this.users = [];
             querySnapshot.forEach((doc) => {
                 this.users.push(doc.data());

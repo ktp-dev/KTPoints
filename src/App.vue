@@ -6,12 +6,15 @@
     </div>
     <!-- <transition name='slide-fade' mode="out-in"> -->
     <transition :name="transitionName" mode="out-in">
-      <router-view/>
+      <keep-alive include="events">
+        <router-view/>
+      </keep-alive>
     </transition>
   </div>
 </template>
 
 <script>
+
 export default {
   data(){
     return{
@@ -21,11 +24,19 @@ export default {
   watch: {
     '$route' (to, from) {
       // if we're moving to or from landing, do a slide-up/down transition
-      if (from.fullPath == '/'){
+      if (from.fullPath === '/'){
         this.transitionName = 'slide-down'
         return;
       }
-      else if (to.fullPath == '/'){
+      else if (to.fullPath === '/'){
+        this.transitionName = 'slide-up'
+        return;
+      }
+      if (from.fullPath === '/KTP/events/add-event'){
+        this.transitionName = 'slide-down'
+        return;
+      }
+      else if (to.fullPath === '/KTP/events/add-event'){
         this.transitionName = 'slide-up'
         return;
       }
@@ -35,17 +46,17 @@ export default {
       const fromDepth = from.path.split('/').length
       this.transitionName = toDepth > fromDepth ? 'slide-right' : 'slide-left'
     }
-  }
+  },
 }
 </script>
 
 <style>
 /*  Handles route transitioning */
 .slide-down-enter-active {
-  transition: all .8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 .slide-down-leave-active {
-  transition: all .8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 .slide-down-enter {
   /* transform: translateY(-100%); */
@@ -57,10 +68,10 @@ export default {
 }
 
 .slide-up-enter-active {
-  transition: all .8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 .slide-up-leave-active {
-  transition: all .8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 .slide-up-enter {
   /* transform: translateY(-100%); */
@@ -72,10 +83,10 @@ export default {
 }
 
 .slide-left-enter-active {
-  transition: all .8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 .slide-left-leave-active {
-  transition: all .8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 .slide-left-enter {
   transform: translateX(100%);
@@ -87,10 +98,11 @@ export default {
 }
 
 .slide-right-enter-active {
-  transition: all .8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  /* transition: all .5s cubic-bezier(0.165, 0.84, 0.44, 1); */
+  transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 .slide-right-leave-active {
-  transition: all .8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 .slide-right-enter {
   transform: translateX(-100%);

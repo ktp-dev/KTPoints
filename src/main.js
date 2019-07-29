@@ -16,13 +16,6 @@ import './../public/static/css/style.css';
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
-
-
 var firebaseConfig = {
   apiKey: "AIzaSyCc4W4annW8hstY99LCBC1IlEyXETrdapE",
   authDomain: "ktpoints-68071.firebaseapp.com",
@@ -36,10 +29,20 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const database = firebase.firestore();
+const db = firebase.firestore();
+const auth = firebase.auth();
 const storage = firebase.storage();
+const fbOperation = firebase.firestore;
+
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
 
 export {
-  database, 
+  db,
+  auth,
+  fbOperation,
   storage
 };

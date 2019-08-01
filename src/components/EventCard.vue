@@ -21,8 +21,7 @@
     <div v-if="expanded">
       <footer class="card-footer">
         <a class="card-footer-item" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
-        <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Edit</a>
-        <a v-on:click="deleteEvent(id)" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
+        <a v-on:click="deleteEvent(id)" v-bind:class="{'delete-color': DELETE_STATUS}" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
         <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees)" class="card-footer-item">See Event</a>
       </footer>
     </div>      
@@ -44,6 +43,7 @@ export default {
   data(){
     return {
       expanded: false,
+      DELETE_STATUS: false,
     }
   },
   computed: {
@@ -59,6 +59,7 @@ export default {
     toggle: function(){
       this.expanded = !this.expanded;
     },
+
     addToCalendar: function(){
       let baseurl = 'https://www.google.com/calendar/event?action=TEMPLATE';
       let title = '&text=' + this.event;
@@ -77,6 +78,7 @@ export default {
       // console.log(encodedURL)
       window.open(encodedURL, '_blank')
     },
+
     goToSingleEvent: function(myevent, location, time, points, description, id, attendees){
       router.push({ name: 'event', 
       params: 
@@ -91,7 +93,12 @@ export default {
         }
       })
     },
+
     deleteEvent: function(id){
+      if (this.DELETE_STATUS === false){
+        this.DELETE_STATUS = true;
+        return;
+      }
       db.collection("events").doc(id).delete()
       .then(function() {
         console.log("Document successfully deleted!");
@@ -124,6 +131,10 @@ div .fa-angle-down {
 
 div.expanded .fa-angle-down {
     transform: rotate(180deg);
+}
+
+.delete-color {
+  color: red;
 }
 
 </style>

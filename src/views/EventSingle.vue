@@ -3,10 +3,45 @@
   <div class="columns is-centered">
     <div class="column is-6">
       <div class="card has-text-centered">
-        <header class="card-header title fira-mono">
-          <p>{{event}}</p>
+
+
+        <header v-if="!EDITING" class="card-header title fira-mono">
+          <p>{{payload.event}}</p>
         </header>
-        <div class="card-content title is-4 fira-sans-light-italic">
+
+        <div v-if="EDITING" class="card-content title is-4 fira-sans-light-italic">
+          <div class="slate has-text-left mr2">
+            <p>Title</p>
+          </div>
+          <input class='input is-primary' v-model="payload.event" :placeholder='payload.event'>
+          <div class="divider slate"></div>
+
+          <div class="mt2 slate has-text-left">
+            <p>Location</p>
+          </div>
+          <input class='input is-primary' v-model="payload.location" :placeholder='payload.location'>
+          <div class="divider slate"></div>
+          
+          <div class="mt2 slate has-text-left">
+            <p>Time</p>
+          </div>
+          <input class='input is-primary' v-model="payload.time" :placeholder='payload.time'>
+          <div class="divider slate"></div>
+
+          <div class="mt2 slate has-text-left">
+            <p>Points</p>
+          </div>          
+          <input class='input is-primary' v-model="payload.points" :placeholder='payload.points'>
+          <div class="divider slate"></div>
+
+          <div class="mt2 slate has-text-left">
+            <p>Description</p>
+          </div>          
+          <input class='input is-primary' v-model="payload.description" :placeholder='payload.description'>
+          <div class="divider slate"></div>
+        </div>
+
+        <div v-else class="card-content title is-4 fira-sans-light-italic">
           <p>{{payload.location}}</p>
           <p>{{payload.time}}</p>
           <p>{{payload.points}} points</p>
@@ -19,6 +54,7 @@
         </div>
         <footer v-if="this.$store.state.userData.standing !== 'Guest'" class="card-footer">
           <a class='card-footer-item'>Add to Calendar</a>
+          <a v-on:click="triggerEditView()" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">{{EDIT_STATUS[EDITING]}}</a>
           <a class='card-footer-item' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
         </footer>
       </div>
@@ -36,8 +72,10 @@ export default {
   props: ['event', 'location', 'time', 'points', 'description', 'eventhash', 'attendees'],
   data() {
     return {
-      uniqname: this.$store.state.userData.uniqname,
       ATTENDING: false,
+      EDITING: 0,
+      EDIT_STATUS: ['Edit', 'Confirm'],
+      uniqname: this.$store.state.userData.uniqname,
       checkInStatus: "Check in to event",
       payload: {
         event: this.event,
@@ -71,7 +109,13 @@ export default {
           this.checkInStatus = 'Check out of event';
         });
       }
-    }
+    },
+    triggerEditView: function(){
+      if (this.EDITING === 1){
+        
+      }
+      this.EDITING = 1 - this.EDITING;
+    },
   },
   
   mounted(){

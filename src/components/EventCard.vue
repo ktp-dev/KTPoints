@@ -22,7 +22,7 @@
       <footer class="card-footer">
         <a class="card-footer-item" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
         <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Edit</a>
-        <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
+        <a v-on:click="deleteEvent(id)" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
         <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees)" class="card-footer-item">See Event</a>
       </footer>
     </div>      
@@ -35,6 +35,7 @@
 import smoothReflow from 'vue-smooth-reflow'
 import router from '@/router.js'
 import store from '@/store.js'
+import { db } from '@/main.js'
 
 export default {
   store,
@@ -89,6 +90,15 @@ export default {
           attendees: attendees
         }
       })
+    },
+    deleteEvent: function(id){
+      db.collection("events").doc(id).delete()
+      .then(function() {
+        console.log("Document successfully deleted!");
+      })
+      .catch(function(error) {
+          console.error("Error removing document: ", error);
+      });
     }
   },
   mounted() {

@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   .flip-list-move {
     transition: transform .5s;
   }
@@ -29,9 +29,19 @@
     transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
   }
 
+  .flip-list-leave-active {
+    transition: all .5s cubic-bezier(0.42,0,0.58,1);
+    position: absolute;
+  }
+
   .flip-list-enter, .flip-list-leave-to{
     opacity: 0;
     transform: translateY(-30px);
+  }
+
+  .flip-list-item {
+    transition: all .5s cubic-bezier(0.42,0,0.58,1);
+    display: inline-block;
   }
 </style>
 

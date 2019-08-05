@@ -1,5 +1,184 @@
+<!--<template>
+    <section id='userDisplay'>
+            <transition-group name='flip-list' class="columns is-centered is-multiline">
+                    <div v-for="directoryInfo in displayedUsers" :key="directoryInfo.uniqname" class="column is-3">
+                        <directoryCard :key=0 v-bind='directoryInfo'/>
+                    </div>
+            </transition-group>
+            <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    </section>
+</template> -->
+
 <template>
-    <section id='directory'>
+    <section id='userDisplay'>
+        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+            <transition-group name='flip-list' class="columns is-centered is-multiline">
+            <div v-for="directoryInfo in userInfo" :key="directoryInfo.uniqname" class="column is-3">
+                <directoryCard :key=0 v-bind='directoryInfo'/>
+            </div>
+            </transition-group>
+        </div>
+    </section>
+</template>
+
+
+
+<script>
+import DirectoryCard from '@/components/DirectoryCard.vue';
+//import InfiniteLoading from 'vue-infinite-loading';
+import infiniteScroll from 'vue-infinite-scroll'
+import {db, storage} from '@/main.js';
+
+var count = 0;
+export default {
+    name: 'directory',
+    directives: {infiniteScroll},
+    data() {
+        return {
+            input: '',
+            activeShow: true,
+            alumShow: false, 
+            searchOptions: false,
+            busy: false, 
+            userInfo: 
+            [
+                
+            ],
+            displayedUsers: 
+            [
+
+            ],
+            users:
+            [
+
+            ],
+            images:
+            [
+
+            ]
+        }
+    },
+    methods: {
+        loadMore: function() {
+            this.busy = true;
+
+            setTimeout(() => {
+                for (var i = 0, j = 10; i < j; i++) {
+                    const obj = this.users[count];
+                    //console.log(this.users[count].uniqname)
+
+                    var url = this.getImageURL(this.users[count].uniqname)
+                    console.log(url);
+                    this.userInfo.push({
+                        'major': this.users[count].major,
+                        'meetings_left': this.users[count].meetings_left,
+                        'name': this.users[count].name, 
+                        'pledge_class': this.users[count].pledge_class, 
+                        'points': this.users[count].points, 
+                        'standing': this.users[count].standing, 
+                        'uniqname': this.users[count].uniqname,
+                        'year': this.users[count].year, 
+                    })
+                    count++;
+                }
+                this.busy = false;
+            }, 1000);
+        },
+        getImageURL: function(uniqname) {
+            console.log(uniqname);
+            var gsURL_anon = 'gs://ktpoints-68071.appspot.com/profile_pictures/';
+            var gsURL = gsURL_anon.concat(uniqname);
+            gsURL = gsURL.concat('.jpg');
+            //console.log(gsURL)
+            gsURL_anon = gsURL_anon.concat('anon.jpg');
+            var urlRef = storage.refFromURL(gsURL);
+            
+            urlRef.getDownloadURL().then((url) => {
+                this.images.push(url);
+            }).catch((error) => {
+                return 'anon_url'
+            })
+
+            var URL = this.images[this.images.length - 1]
+            console.log(URL)
+        },
+        infiniteHandler($state) {
+            setTimeout(() => {
+            const temp = []
+            db.collection("users")
+            var end = this.displayedUsers.length + 5;
+            if (end >= this.users.length) {
+                end = this.users.length;
+            }
+
+            for (let i = this.displayedUsers.length; i <= end; i++) {
+                temp.push(this.users[i]);
+            }
+        
+            this.displayedUsers = this.displayedUsers.concat(temp);
+            console.log(this.displayedUsers);
+            $state.loaded();
+            }, 1000);
+        },
+        searchResults: function(input) {
+
+            return this.users.filter((user) => {
+                if (!this.alumShow && user.year == 'Alumni') {
+                    return false;
+                }
+                else if (!this.activeShow && user.year != 'Alumni') {
+                    return false;
+                }
+                else {
+                    var temp = input.toUpperCase();
+                    return temp === user.name.substring(0,input.length).toUpperCase() ||
+                       temp === user.uniqname.substring(0,input.length).toUpperCase();
+                }
+            })            
+        },
+        toggleActive: function() {
+            this.activeShow = !this.activeShow
+        },
+        toggleAlum: function() {
+            this.alumShow = !this.alumShow
+        },
+        toggleSearchOptions: function() {
+            this.searchOptions = !this.searchOptions;
+        },
+    },
+    computed: {
+        notSearchOptions: function() {
+            return !this.searchOptions;
+        }
+    },
+    components: {
+        DirectoryCard, 
+    },
+    mounted() {
+        db.collection("users").onSnapshot((querySnapshot) => {
+            this.users = [];
+            querySnapshot.forEach((doc) => {
+                this.users.push(doc.data());
+            })
+        })
+    }, 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+<section id='directory'>
         <section id='searchBar'>
             <!-- For searching with extra options -->
             <transition name="slide-right" mode="in-out">
@@ -98,97 +277,15 @@
         
         <!-- Flip List User display -->
         <section id='userDisplay'>
-            <div>
-                <transition-group name='flip-list' class="columns is-centered is-multiline">
-                <div v-for="directoryInfo in searchResults(this.input)" :key="directoryInfo.uniqname" class="column is-3">
-                    <directoryCard :key=0 v-bind='directoryInfo'/>
-                </div>
-                </transition-group>
-            </div>
+            <!--<transition-group name='flip-list' class="columns is-centered is-multiline">-->
+                    <div v-for="directoryInfo in displayedUsers" :key="directoryInfo.uniqname" class="column is-3">
+                        <directoryCard :key=0 v-bind='directoryInfo'/>
+                    </div>
+            <!--</transition-group>-->
         </section>
 
     </section>
-</template>
-
-
-
-<!--
-<div class="column is-one-fifth">
-                    <transition name="slide-left" mode="out-in">
-                        <aside class="menu is-pulled-right">
-                            <p class="menu-label">
-                                Search Options
-                            </p>
-                        </aside>
-                    </transition>
-                </div>
-
-
--->
-
-<script>
-import DirectoryCard from '@/components/DirectoryCard.vue';
-import {db} from '@/main.js';
-
-export default {
-    data() {
-        return {
-            input: '',
-            activeShow: true,
-            alumShow: false, 
-            searchOptions: false,
-            users: 
-            [
-                
-            ],
-        }
-    },
-    methods: {
-        searchResults: function(input) {
-
-            return this.users.filter((user) => {
-                if (!this.alumShow && user.year == 'Alumni') {
-                    return false;
-                }
-                else if (!this.activeShow && user.year != 'Alumni') {
-                    return false;
-                }
-                else {
-                    var temp = input.toUpperCase();
-                    return temp === user.name.substring(0,input.length).toUpperCase() ||
-                       temp === user.uniqname.substring(0,input.length).toUpperCase();
-                }
-            })
-        },
-        
-        toggleActive: function() {
-            this.activeShow = !this.activeShow
-        },
-        toggleAlum: function() {
-            this.alumShow = !this.alumShow
-        },
-        toggleSearchOptions: function() {
-            this.searchOptions = !this.searchOptions;
-        }
-    },
-    computed: {
-        notSearchOptions: function() {
-            return !this.searchOptions;
-        }
-    },
-    components: {
-        DirectoryCard
-    },
-    mounted() {
-        console.log('hello world')
-        db.collection("users").onSnapshot((querySnapshot) => {
-            this.users = [];
-            querySnapshot.forEach((doc) => {
-                this.users.push(doc.data());
-            })
-        })
-    }
-}
+*/
 </script>
 
 
@@ -246,3 +343,6 @@ export default {
   }
 
 </style>
+
+
+

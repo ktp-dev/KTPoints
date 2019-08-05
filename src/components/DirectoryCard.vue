@@ -5,7 +5,7 @@
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
-                        <img v-bind:src="imgURL()"/>
+                        <!--<img v-bind:src="imgURL()"/>-->
                     </figure>
                 </div>
                 <div class="media-content">
@@ -25,7 +25,7 @@
 
         <footer v-if="expanded" class="card-footer fs-s4">
             <!--Link to user page, passing all necessary props (including image URL)-->
-            <router-link v-bind:to="{name: 'user1', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: imgURL()}}">
+            <router-link v-bind:to="{name: 'user1', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: ''}}">
                 <a class='card-footer-item is-centered'>View Profile</a>
             </router-link>
         </footer>
@@ -61,27 +61,17 @@ export default {
             this.URL = url;
         },
         imgURL: function() {
-                if (this.URL != '') {
-                    return this.URL;
-                }
                 var gsURL_anon = 'gs://ktpoints-68071.appspot.com/profile_pictures/';
                 var gsURL = gsURL_anon.concat(this.uniqname);
                 gsURL = gsURL.concat('.jpg');
                 gsURL_anon = gsURL_anon.concat('anon.jpg');
                 var urlRef = storage.refFromURL(gsURL);
-
+                //var Url = '';
                 
                 urlRef.getDownloadURL().then((url) => {
                     this.URL = url;
-                }).catch((error) => {
-                    switch (error.code) {
-                        case 'storage/object-not-found':
-                            storage.refFromURL(gsURL_anon).getDownloadURL().then((url) => {
-                                this.URL = url;
-                            })
-                            break;
-                    }
                 })
+
                 return this.URL;
         },
     },

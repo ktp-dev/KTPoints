@@ -6,7 +6,7 @@
     </div>
     <!-- <transition name='slide-fade' mode="out-in"> -->
     <transition :name="transitionName" mode="out-in">
-      <keep-alive include="events">
+      <keep-alive include="events, directory">
         <router-view/>
       </keep-alive>
     </transition>

@@ -33,7 +33,7 @@
             <a class="navbar-item">
               Leaderboard
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="#">
               Profile
             </a>
             <a class="navbar-item">

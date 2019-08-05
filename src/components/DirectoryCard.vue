@@ -5,7 +5,7 @@
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
-                        <!--<img v-bind:src="imgURL()"/>-->
+                        <img v-bind:src="imageURL"/>
                     </figure>
                 </div>
                 <div class="media-content">
@@ -25,7 +25,7 @@
 
         <footer v-if="expanded" class="card-footer fs-s4">
             <!--Link to user page, passing all necessary props (including image URL)-->
-            <router-link v-bind:to="{name: 'user1', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: ''}}">
+            <router-link v-bind:to="{name: 'user1', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: this.imageURL}}">
                 <a class='card-footer-item is-centered'>View Profile</a>
             </router-link>
         </footer>
@@ -39,13 +39,11 @@ import {storage} from '@/main.js'
 
 export default {
     mixins: [smoothReflow],
-    props: ['major','meetings_left','name','pledge_class','points','standing','uniqname','year'],
+    props: ['major','meetings_left','name','pledge_class','points','standing','uniqname','year', 'imageURL'],
     data() {
         return {
             expanded: false,
             tag: '@' + this.uniqname, 
-            gsURL: 'gs://ktpoints-68071.appspot.com/profile_pictures/' + this.uniqname + '.jpg',
-            URL: ''
         }
     },
     computed: {
@@ -56,23 +54,6 @@ export default {
     methods: {
         toggle: function() {
             this.expanded = !this.expanded
-        },
-        copyURL: function(url) {
-            this.URL = url;
-        },
-        imgURL: function() {
-                var gsURL_anon = 'gs://ktpoints-68071.appspot.com/profile_pictures/';
-                var gsURL = gsURL_anon.concat(this.uniqname);
-                gsURL = gsURL.concat('.jpg');
-                gsURL_anon = gsURL_anon.concat('anon.jpg');
-                var urlRef = storage.refFromURL(gsURL);
-                //var Url = '';
-                
-                urlRef.getDownloadURL().then((url) => {
-                    this.URL = url;
-                })
-
-                return this.URL;
         },
     },
     mounted() {

@@ -1,14 +1,3 @@
-<!--<template>
-    <section id='userDisplay'>
-            <transition-group name='flip-list' class="columns is-centered is-multiline">
-                    <div v-for="directoryInfo in displayedUsers" :key="directoryInfo.uniqname" class="column is-3">
-                        <directoryCard :key=0 v-bind='directoryInfo'/>
-                    </div>
-            </transition-group>
-            <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-    </section>
-</template> -->
-
 <template>
     <section id='userDisplay'>
         <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
@@ -52,23 +41,17 @@ export default {
             [
 
             ],
-            images:
-            [
-
-            ]
+            imageUrl: 'asdf'
         }
     },
     methods: {
         loadMore: function() {
             this.busy = true;
-
             setTimeout(() => {
                 for (var i = 0, j = 10; i < j; i++) {
                     const obj = this.users[count];
                     //console.log(this.users[count].uniqname)
-
-                    var url = this.getImageURL(this.users[count].uniqname)
-                    console.log(url);
+                    this.getImageURL(this.users[count].uniqname)
                     this.userInfo.push({
                         'major': this.users[count].major,
                         'meetings_left': this.users[count].meetings_left,
@@ -78,14 +61,16 @@ export default {
                         'standing': this.users[count].standing, 
                         'uniqname': this.users[count].uniqname,
                         'year': this.users[count].year, 
+                        'imageURL': this.users[count].imageURL
                     })
                     count++;
+                    //console.log(count)
                 }
                 this.busy = false;
             }, 1000);
         },
         getImageURL: function(uniqname) {
-            console.log(uniqname);
+            //console.log(uniqname);
             var gsURL_anon = 'gs://ktpoints-68071.appspot.com/profile_pictures/';
             var gsURL = gsURL_anon.concat(uniqname);
             gsURL = gsURL.concat('.jpg');
@@ -94,13 +79,10 @@ export default {
             var urlRef = storage.refFromURL(gsURL);
             
             urlRef.getDownloadURL().then((url) => {
-                this.images.push(url);
+                console.log(url)
             }).catch((error) => {
-                return 'anon_url'
+                console.log("error")
             })
-
-            var URL = this.images[this.images.length - 1]
-            console.log(URL)
         },
         infiniteHandler($state) {
             setTimeout(() => {

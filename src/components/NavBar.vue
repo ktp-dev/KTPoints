@@ -33,9 +33,9 @@
             <a class="navbar-item">
               Leaderboard
             </a>
-            <a class="navbar-item" href="#">
-              Profile
-            </a>
+            <router-link class="navbar-item" v-bind:to="{name: 'user1', params: { uniqname: getUniqname(), major: getMajor(), name: getName(), pledge_class: getPledgeClass(), year: getYear(), imgURL: getImgURL()}}">
+                Profile
+            </router-link>
             <a class="navbar-item">
               Contact
             </a>
@@ -74,6 +74,32 @@ import store from '@/store.js'
 
 export default {
   store,
+  data(){
+      return {
+          gsURL: 'gs://ktpoints-68071.appspot.com/profile_pictures/' + this.uniqname + '.jpg',
+          URL: ''
+      }
+  },
+  methods: {
+      getImgURL: function(){
+          return this.$store.state.userData.imageURL;
+      },
+      getUniqname: function(){
+          return this.$store.state.userData.uniqname;
+      },
+      getMajor: function(){
+          return this.$store.state.userData.major;
+      },
+      getName: function(){
+          return this.$store.state.userData.name;
+      },
+      getPledgeClass: function(){
+          return this.$store.state.userData.pledge_class;
+      },
+      getYear: function(){
+          return this.$store.state.userData.year;
+      }
+  }
 }
 </script>
 

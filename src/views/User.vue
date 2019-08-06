@@ -16,13 +16,13 @@
                     <div class="media-content">
                         <p class="title fs-s3">{{name}}</p>
                         <div v-if="this.editing">
-                            <p class="subtitle fs-s4">
-                                 <strong><span v-if="!isAlum">Year: </span>{{year}}</strong>
+                            <p class="subtitle fs-s4 has-text-weight-bold">
+                                 <span v-if="!isAlum">Year: </span>{{year}}
                             </p>
                         </div>
                         <div v-else class="control columns">
-                            <p class="subtitle fs-s4 column">
-                                 <strong><span v-if="!isAlum">Year: </span></strong>
+                            <p class="subtitle fs-s4 column has-text-weight-bold">
+                                 <span v-if="!isAlum">Year: </span>
                             </p>
                             <div class="select column">
                                 <select v-model="year">
@@ -42,10 +42,16 @@
         <div class="content">
             <div class="columns is-mobile is-centered">
                 <div class="column">
-                    <p class="fs-s4"><strong>Major: {{major}}</strong></p>
+                    <div class="fs-s4 has-text-weight-bold">
+                        <div v-if="this.editing">Major: {{major}}</div>
+                        <div v-else>Major: <input v-model="major"></div>
+                    </div>
                 </div>
                 <div class="column">
-                    <p class="fs-s4"><strong>Pledge Class: {{pledge_class}}</strong></p>
+                    <div class="fs-s4 has-text-weight-bold">
+                        <div v-if="this.editing">Pledge Class: {{pledge_class}}</div>
+                        <div v-else>Pledge Class: <input v-model="pledge_class"></div>
+                    </div>
                 </div>
             </div>
 
@@ -80,7 +86,6 @@
             </div>
             <div v-else v-on:click="toggleEditing(); updateFirebase()" class="level-item has-text-centered">
                 <a class="button is-danger is-rounded">Save</a>
-
             </div>
 
         </div>

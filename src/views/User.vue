@@ -25,8 +25,15 @@
                 <div v-if="this.editing" v-on:click="toggleEditing()" class=" has-text-centered">
                     <a class="button is-success is-rounded">Edit</a>
                 </div>
-                <div v-else v-on:click="toggleEditing(); updateFirebase()" class=" has-text-centered ">
-                    <a class="button is-danger is-rounded">Save</a>
+                <div v-else v-on:click="toggleEditing()" class=" level has-text-centered ">
+                    <div class="level-item margin-fix">
+                        <a class="button is-light is-rounded">Upload a file</a>
+                    </div>
+                    <div v-on:click="updateFirebase()" class="level-item">
+                        <a class="button is-danger is-rounded">Save</a>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -139,8 +146,6 @@ export default {
         },
         updateFirebase: function(){
             let dbFirestone = firebase.firestore();
-            console.log("imgURL:", this.payload.imageURL);
-
 
             dbFirestone.collection("users").doc(this.uniqname).update({
                 imageURL: this.payload.imageURL,
@@ -196,6 +201,9 @@ export default {
   }
   input {
       margin-left: 10px;
+  }
+  .margin-fix{
+      margin-right: 0.5rem;
   }
 
 

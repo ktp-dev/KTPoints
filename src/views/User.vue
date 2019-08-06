@@ -6,7 +6,7 @@
     <div class="card is-rounded">
         <div class="card-image">
             <figure class="image is-square">
-                <img :src="imgURL">
+                <img :src= "payload.imageURL">
             </figure>
         </div>
     <div class="card-content is-small">
@@ -14,10 +14,10 @@
             <div class="columns is-mobile is-centered">
                 <div class="column">
                     <div class="media-content">
-                        <p class="title fs-s3">{{name}}</p>
+                        <p class="title fs-s3">{{ payload.name }}</p>
                         <div v-if="this.editing">
                             <p class="subtitle fs-s4 has-text-weight-bold">
-                                 <span v-if="!isAlum">Year: </span>{{year}}
+                                 <span v-if="!isAlum">Year: </span>{{ payload.year }}
                             </p>
                         </div>
                         <div v-else class="control columns">
@@ -25,7 +25,7 @@
                                  <span v-if="!isAlum">Year: </span>
                             </p>
                             <div class="select column">
-                                <select v-model="year">
+                                <select v-model="payload.year">
                                     <option>Freshmen</option>
                                     <option>Sophmore</option>
                                     <option>Junior</option>
@@ -43,14 +43,14 @@
             <div class="columns is-mobile is-centered">
                 <div class="column">
                     <div class="fs-s4 has-text-weight-bold">
-                        <div v-if="this.editing">Major: {{major}}</div>
-                        <div v-else>Major: <input v-model="major"></div>
+                        <div v-if="this.editing">Major: {{ payload.major }}</div>
+                        <div v-else>Major: <input v-model="payload.major"></div>
                     </div>
                 </div>
                 <div class="column">
                     <div class="fs-s4 has-text-weight-bold">
-                        <div v-if="this.editing">Pledge Class: {{pledge_class}}</div>
-                        <div v-else>Pledge Class: <input v-model="pledge_class"></div>
+                        <div v-if="this.editing">Pledge Class: {{ payload.pledge_class }}</div>
+                        <div v-else>Pledge Class: <input v-model="payload.pledge_class"></div>
                     </div>
                 </div>
             </div>
@@ -101,14 +101,23 @@
 
 <script>
 
+import store from '@/store.js'
 import * as firebase from 'firebase/app';
+import {db} from '@/main.js'
 
 export default {
-    props: ['uniqname','major','name','pledge_class','year','imgURL'],
+    store,
+    props: ['uniqname','major','name','pledge_class','year','imageURL'],
     data(){
         return {
             editing: true,
-
+            payload: {
+                name: this.name,
+                major: this.major,
+                pledge_class: this.pledge_class,
+                year: this.year,
+                imageURL: this.imageURL,
+            },
         }
     },
     methods: {
@@ -116,12 +125,15 @@ export default {
             this.editing = !this.editing;
         },
         updateFirebase: function(){
-            let db = firebase.firestore();
-            db.collection("users").doc(this.uniqname).update({
-              name: this.name,
-              pledge_class: this.pledge_class,
-              year: this.year,
-              major: this.major,
+            let dbFirestone = firebase.firestore();
+            console.log("imgURL:", this.payload.imageURL);
+
+
+            dbFirestone.collection("users").doc(this.uniqname).update({
+                imageURL: this.payload.imageURL,
+                pledge_class: this.payload.pledge_class,
+                year: this.payload.year,
+                major: this.payload.major,
             })
             .then(() => {
                 console.log("User updated!");
@@ -146,6 +158,16 @@ export default {
         },
         messengerURL: function() {
             return 'https://www.messenger.com/'
+        }
+    },
+
+    mounted(){
+        // If the page is refreshed/redirected to, the values are gathered here
+        if(this.name === undefined){
+          // Make firebase call and set the above information using the uniqname
+          db.collection('users').doc(this.uniqname).get().then((doc)=>{
+            this.payload = doc.data();
+          })
         }
     }
 }

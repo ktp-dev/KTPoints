@@ -33,7 +33,7 @@
             <a class="navbar-item">
               Leaderboard
             </a>
-            <router-link class="navbar-item" v-bind:to="{name: 'user1', params: { uniqname: getUniqname(), major: getMajor(), name: getName(), pledge_class: getPledgeClass(), year: getYear(), imgURL: getImgURL()}}">
+            <router-link class="navbar-item" v-bind:to="{name: 'user1', params: { uniqname: getUniqname(), major: getMajor(), name: getName(), pledge_class: getPledgeClass(), year: getYear(), imageURL: getImgURL()}}">
                 Profile
             </router-link>
             <a class="navbar-item">

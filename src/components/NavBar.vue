@@ -74,12 +74,6 @@ import store from '@/store.js'
 
 export default {
   store,
-  data(){
-      return {
-          gsURL: 'gs://ktpoints-68071.appspot.com/profile_pictures/' + this.uniqname + '.jpg',
-          URL: ''
-      }
-  },
   methods: {
       getImgURL: function(){
           return this.$store.state.userData.imageURL;

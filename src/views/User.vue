@@ -15,8 +15,25 @@
                 <div class="column">
                     <div class="media-content">
                         <p class="title fs-s3">{{name}}</p>
-                        <p v-if="isAlum" class="subtitle fs-s4"><strong>{{year}}</strong></p>
-                        <p v-else class="subtitle fs-s4"><strong> Year: {{year}} </strong></p>
+                        <div v-if="this.editing">
+                            <p class="subtitle fs-s4">
+                                 <strong><span v-if="!isAlum">Year: </span>{{year}}</strong>
+                            </p>
+                        </div>
+                        <div v-else class="control columns">
+                            <p class="subtitle fs-s4 column">
+                                 <strong><span v-if="!isAlum">Year: </span></strong>
+                            </p>
+                            <div class="select column">
+                                <select v-model="year">
+                                    <option>Freshmen</option>
+                                    <option>Sophmore</option>
+                                    <option>Junior</option>
+                                    <option>Senior</option>
+                                    <option>Alumni</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,12 +66,25 @@
                 </p>
             </div>
             <h1 class="fs-s2">About Me</h1>
-            Hello, I am in KTP - wow! 
+            <p>Hello, I am in KTP - wow!</p>
 
             <h1 class="fs-s2">Career Interests</h1>
-            I have interests, like many people in KTP
+            <p>I have interests, like many people in KTP</p>
+
 
         </div>
+
+        <div v-if="isUser" class="level buttons are-large">
+            <div v-if="this.editing" v-on:click="toggleEditing()" class="level-item has-text-centered">
+                <a class="button is-success is-rounded">Edit</a>
+            </div>
+            <div v-else v-on:click="toggleEditing(); updateFirebase()" class="level-item has-text-centered">
+                <a class="button is-danger is-rounded">Save</a>
+
+            </div>
+
+        </div>
+
     </div>
     </div>
     </div>
@@ -65,14 +95,46 @@
 
 
 <script>
+
+import * as firebase from 'firebase/app';
+
 export default {
-    props: ['uniqname','major','name','pledge_class','year','imgURL'], 
+    props: ['uniqname','major','name','pledge_class','year','imgURL'],
+    data(){
+        return {
+            editing: true,
+
+        }
+    },
+    methods: {
+        toggleEditing: function(){
+            this.editing = !this.editing;
+        },
+        updateFirebase: function(){
+            let db = firebase.firestore();
+            db.collection("users").doc(this.uniqname).update({
+              name: this.name,
+              pledge_class: this.pledge_class,
+              year: this.year,
+              major: this.major,
+            })
+            .then(() => {
+                console.log("User updated!");
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+        }
+    },
     computed: {
         isAlum: function() {
             if (this.year == 'Alumni') {
                 return true;
             }
             return false;
+        },
+        isUser: function(){
+            return (this.$store.state.userData.uniqname === this.uniqname ? true : false);
         },
         email: function() {
             return 'mailto:' + this.uniqname + '@umich.edu'

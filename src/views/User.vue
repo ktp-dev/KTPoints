@@ -14,7 +14,7 @@
             <div class="columns is-mobile is-centered">
                 <div class="column">
                     <div class="media-content">
-                        <p class="title fs-s3">{{ payload.name }}</p>
+                        <p class="title fs-s3 is-capitalized">{{ payload.name }}</p>
                         <div v-if="this.editing">
                             <p class="subtitle fs-s4 has-text-weight-bold">
                                  <span v-if="!isAlum">Year: </span>{{ payload.year }}

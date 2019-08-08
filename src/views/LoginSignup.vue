@@ -1,5 +1,36 @@
 <template>
   <section id='authenticate' class="outer">
+    <div class="modal" v-bind:class="{ 'is-active': signup_error }">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Oops!</p>
+        </header>
+        <section class="modal-card-body">
+          <p>It appears we recieved the error <span class="has-text-danger">"{{this.error_message}}"</span> while trying to sign you up, please try again!</p>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" v-on:click="disable_error()">Close</button>
+        </footer>
+      </div>
+      <button class="modal-close is-large" v-on:click="disable_error()" aria-label="close"></button>
+    </div>
+    <div class="modal" v-bind:class="{ 'is-active': sent_email_verification }">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Email Sent!</p>
+        </header>
+        <section class="modal-card-body">
+          <p>A verification email was sent to <span class="light-green">"{{this.email}}"</span> please check your email
+          and follow the instructions to continue. <br><br> Not recieving the email? Click <span class="has-text-link">here</span> to resend</p>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" v-on:click="disable_error()">Close</button>
+        </footer>
+      </div>
+      <button class="modal-close is-large" v-on:click="disable_error()" aria-label="close"></button>
+    </div>
     <div class="container middle">
       <div class="columns is-centered inner">
         <div class="column is-narrow ">
@@ -320,7 +351,10 @@ export default {
       isSignup2: false,
       isSignup3: false,
       isSignup4: false,
+      error_message: '',
+      sent_email_verification: false,
       link_name: ["Signup now", "Have an account?"],
+      signup_error: false,
       payload: {
         major: "",
         meetings_left: 0,
@@ -353,14 +387,51 @@ export default {
     },
 
     signup: function(){
+
+      var user = firebase.auth().currentUser;
+      console.log(user)
+      console.log('now making account')
+
+      //Setting for passing state through an email
+      var actionCodeSettings = {
+      // URL you want to redirect back to. The domain (www.example.com) for this
+      // URL must be whitelisted in the Firebase Console.
+      url: 'https://www.ktpoints.netlify.com/',
+      // This must be true.
+      handleCodeInApp: false,
+      };
+      user.sendEmailVerification().then(function() {
+        // Email sent.
+        window.localStorage.setItem('emailForSignIn', email);
+        this.sent_email_verification = true
+        }).catch(function(error) {
+          // An error happened.
+          console.log(error)
+        });
+    
+
+
+      //Need to refactor so that all verification stuff happens and then user is created
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       .then(() => {
-        console.log("new user " + this.email + " signed up")
-        this.addInfo();
+        var user = firebase.auth().currentUser;
+        user.sendEmailVerification().then(() => {
+          console.log('in verification')
+          this.sent_email_verification = true
+          // Email sent.
+        }).then(() => {
+          console.log("new user " + this.email + " signed up")
+          console.log(firebase.auth().currentUser)
+          // this.addInfo();
+        })
+        .catch((error) => {
+          this.display_error(error.code, error.message)
+          console.log('bad signup');
+        });
       })
-      .catch(function(error) {
+      .catch((error) => {
+        this.display_error(error.code, error.message)
         console.log('bad signup');
-        console.log(error);
       });      
     },
 
@@ -383,6 +454,18 @@ export default {
       .catch(function(error) {
           console.error("Error writing document: ", error);
       });
+    },
+
+    display_error: function(code, message){
+      console.log(code)
+      console.log(message)
+      this.error_message = message
+      this.signup_error = true;
+      //probably should try to actually display some type of info about error at some point
+    },
+
+    disable_error: function(){
+      this.signup_error = false;
     },
 
     goToLogin: function(){

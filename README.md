@@ -1,6 +1,6 @@
 # KTPoints
 
-Currently, our site is deployed through Netlify and lives at https://ktpoints.netlify.com/
+Currently, our site is deployed through Netlify and lives at https://ktp.life
 
 ## Project setup
 ```

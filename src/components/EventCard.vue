@@ -115,26 +115,25 @@ export default {
 </script>
 
 <style lang="scss">
-.card.has-text-centered {
-  .card-header,
-  .card-content,
-  .card-footer {
-    justify-content: center;
-    align-items: center;
+  .card.has-text-centered {
+    .card-header,
+    .card-content,
+    .card-footer {
+      justify-content: center;
+      align-items: center;
+    }
   }
-}
 
-div .fa-angle-down {
-    transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-    transform: none;
-}
+  div .fa-angle-down {
+      transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+      transform: none;
+  }
 
-div.expanded .fa-angle-down {
-    transform: rotate(180deg);
-}
+  div.expanded .fa-angle-down {
+      transform: rotate(180deg);
+  }
 
-.delete-color {
-  color: red;
-}
-
+  .delete-color {
+    color: red;
+  }
 </style>

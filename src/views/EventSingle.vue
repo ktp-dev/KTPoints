@@ -4,11 +4,12 @@
     <div class="column is-6">
       <div class="card has-text-centered">
 
-
+        <!-- Not Editing View -->
         <header v-if="!EDITING" class="card-header title fira-mono">
           <p>{{payload.event}}</p>
         </header>
 
+        <!-- Editing View -->
         <div v-if="EDITING" class="card-content title is-4 fira-sans-light-italic">
           <div class="slate has-text-left mr2">
             <p>Title</p>
@@ -23,15 +24,21 @@
           <div class="divider slate"></div>
           
           <div class="mt2 slate has-text-left">
-            <p>Time</p>
+            Time
           </div>
-          <input class='input is-primary' v-model="payload.time" :placeholder='payload.time'>
+          <input v-model="new_time" class="input is-primary" type="time" placeholder="time">
+          <div class="divider slate"></div>
+
+          <div class="mt2 slate has-text-left">
+            Date
+          </div>
+          <input v-model="date" class="input is-primary" type="date">
           <div class="divider slate"></div>
 
           <div class="mt2 slate has-text-left">
             <p>Points</p>
           </div>          
-          <input class='input is-primary' v-model="payload.points" :placeholder='payload.points'>
+          <input class='input is-primary' v-model="payload.points" :placeholder='payload.points' type="number">
           <div class="divider slate"></div>
 
           <div class="mt2 slate has-text-left">
@@ -41,6 +48,7 @@
           <div class="divider slate"></div>
         </div>
 
+        <!-- Not Editing View -->
         <div v-else class="card-content title is-4 fira-sans-light-italic">
           <p>{{payload.location}}</p>
           <p>{{payload.time}}</p>
@@ -52,6 +60,8 @@
             {{attendee}}
           </p>
         </div>
+
+        <!-- show footer if not guest -->
         <footer v-if="this.$store.state.userData.standing !== 'Guest'" class="card-footer">
           <a class='card-footer-item'>Add to Calendar</a>
           <a v-on:click="triggerEditView()" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">{{EDIT_STATUS[EDITING]}}</a>
@@ -77,10 +87,12 @@ export default {
       EDIT_STATUS: ['Edit', 'Confirm'],
       uniqname: this.$store.state.userData.uniqname,
       checkInStatus: "Check in to event",
+      new_time: "",
+      date: "",
       payload: {
         event: this.event,
         location: this.location,
-        points: this.points,
+        points: parseInt(this.points),
         description: this.description,
         attendees: this.attendees,
         time: this.time,
@@ -112,7 +124,13 @@ export default {
     },
     triggerEditView: function(){
       if (this.EDITING === 1){
-        
+
+        db.collection('events').doc(this.eventhash).update({
+          description: this.payload.description,
+          event: this.payload.event,
+          location: this.payload.location,
+          points: this.payload.points,
+        })
       }
       this.EDITING = 1 - this.EDITING;
     },

@@ -77,7 +77,7 @@ export default {
       router.push({ name: 'events'})
     },
     validate: function(){
-      if (this.eventName != "" && this.location != "" && this.date != "" && this.time != "" && this.points != ""){
+      if (this.eventName !== "" && this.location !== "" && this.date !== "" && this.time !== "" && this.points !== ""){
         return true;
       } 
       else {

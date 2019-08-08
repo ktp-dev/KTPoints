@@ -13,7 +13,7 @@
             </figure>
         </div>
         <div class="button-links field is-grouped is-grouped-centered buttons are-large">
-            <a v-bind:href="messengerURL" class=" button is-rounded is-info"target="_blank">
+            <a v-bind:href="messengerURL" class=" button is-rounded is-info" target="_blank">
                 <span class="icon is-medium">
                     <i class="fab fa-facebook-messenger"></i>
                 </span>
@@ -152,7 +152,6 @@
 <script>
 
 import store from '@/store.js';
-import * as firebase from 'firebase/app';
 import {db, storage} from '@/main.js';
 import NavBar from '@/components/NavBar.vue';
 
@@ -200,21 +199,22 @@ export default {
         onFilePicked(event){
             this.allChangesSaved = false;
             const fileIMG = event.target.files[0];
-            const fileName = event.target.files[0].name;
-            // const extension = fileName.slice(fileName.lastIndexOf('.'));
+
+            const reader = new FileReader();
+            reader.readAsDataURL(fileIMG)
 
             // Use file reader so that the image can be previewed
-            const reader = new FileReader();
-
-            reader.readAsDataURL(fileIMG)
             this.payload.image = fileIMG;
 
-            reader.addEventListener('load', (e) => {
+            reader.addEventListener('load', () => {
                 this.payload.imageURL = reader.result;
+                // Store the image in the storage section of Firebase
                 storage.ref('profile_pictures/' + this.uniqname + '.jpg').put(this.payload.image)
                 .then((fileData) => {
+                    // Get the URL generated from uploading the image
                     fileData.ref.getDownloadURL()
                     .then((url) => {
+                        // Setting the imageURL appropriately
                         this.payload.imageURL = url;
                         console.log("Image fully uploaded");
                         this.allChangesSaved = true;

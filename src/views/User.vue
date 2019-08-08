@@ -64,7 +64,7 @@
                                         </p>
                                     </div>
                                     <div v-else class="control ">
-                                        <div class="select is-focused">
+                                        <div class="select is-focused is-rounded margin-left-fix">
                                             <select v-model="payload.year">
                                                 <option>Freshmen</option>
                                                 <option>Sophmore</option>
@@ -88,7 +88,7 @@
                         <div v-else class="level">
                             <div class="level-left">Major: </div>
                             <div class="level-item">
-                                <input class="input is-focused is-small" type="text" v-model="payload.major">
+                                <input class="input is-focused is-small is-rounded" type="text" v-model="payload.major">
                             </div>
                         </div>
                     </div>
@@ -99,8 +99,27 @@
                         <div v-if="this.editing">Pledge Class: {{ payload.pledge_class }}</div>
                         <div v-else class="level">
                             <div class="level-left">Pledge Class:</div>
-                            <div class="level-item">
-                                <input class="input is-focused is-small" type="text" v-model="payload.pledge_class">
+                            <div class="level-item pledge-class-select">
+                                <div class="select is-focused is-rounded is-small pledge-class-select">
+                                    <select v-model="payload.pledge_class">
+                                        <option>Alpha</option>
+                                        <option>Beta</option>
+                                        <option>Gamma</option>
+                                        <option>Delta</option>
+                                        <option>Epsilon</option>
+                                        <option>Zeta</option>
+                                        <option>Eta</option>
+                                        <option>Theta</option>
+                                        <option>Iota</option>
+                                        <option>Kappa</option>
+                                        <option>Lambda</option>
+                                        <option>Mu</option>
+                                        <option>Nu</option>
+                                        <option>Xi</option>
+                                        <option>Omnicron</option>
+                                    </select>
+                                </div>
+                                <!-- <input class="input is-focused is-small" type="text" v-model="payload.pledge_class"> -->
                             </div>
                         </div>
                     </div>
@@ -247,6 +266,13 @@ export default {
   }
   input {
       margin-left: 10px;
+  }
+  .pledge-class-select{
+      justify-content: left;
+      margin-left: 0.25rem;
+  }
+  .margin-left-fix {
+      margin-left: 0.5rem;
   }
   .margin-fix{
       margin-right: 0.5rem;

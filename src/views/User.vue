@@ -25,12 +25,18 @@
                 <div v-if="this.editing" v-on:click="toggleEditing()" class=" has-text-centered">
                     <a class="button is-success is-rounded">Edit</a>
                 </div>
-                <div v-else v-on:click="toggleEditing()" class=" level has-text-centered ">
+                <div v-else  class=" level has-text-centered ">
                     <div class="level-item margin-fix">
-                        <a class="button is-light is-rounded">Upload a file</a>
+                        <a class="button is-light is-rounded" @click="onPickFile">Upload a file</a>
+                        <input type="file"
+                            style="display: none;"
+                            ref="fileInput"
+                            accept="image/*"
+                            @change="onFilePicked"
+                            >
                     </div>
-                    <div v-on:click="updateFirebase()" class="level-item">
-                        <a class="button is-danger is-rounded">Save</a>
+                    <div v-on:click="updateFirebase(); toggleEditing()" class="level-item">
+                        <a class="button is-danger is-rounded" v-bind:class="{'is-loading':!this.allChangesSaved}">Save</a>
                     </div>
 
 
@@ -123,7 +129,7 @@
 
 import store from '@/store.js'
 import * as firebase from 'firebase/app';
-import {db} from '@/main.js'
+import {db, storage} from '@/main.js'
 
 export default {
     store,
@@ -131,12 +137,14 @@ export default {
     data(){
         return {
             editing: true,
+            allChangesSaved: true,
             payload: {
                 name: this.name,
                 major: this.major,
                 pledge_class: this.pledge_class,
                 year: this.year,
                 imageURL: this.imageURL,
+                image: null,
             },
         }
     },
@@ -145,20 +153,49 @@ export default {
             this.editing = !this.editing;
         },
         updateFirebase: function(){
-            let dbFirestone = firebase.firestore();
-
-            dbFirestone.collection("users").doc(this.uniqname).update({
+            this.allChangesSaved = false;
+            db.collection("users").doc(this.uniqname).update({
                 imageURL: this.payload.imageURL,
                 pledge_class: this.payload.pledge_class,
                 year: this.payload.year,
                 major: this.payload.major,
             })
             .then(() => {
+                this.allChangesSaved = true;
                 console.log("User updated!");
             })
             .catch(function(error) {
                 console.error("Error writing document: ", error);
             });
+        },
+        onPickFile(){
+            this.$refs.fileInput.click();
+        },
+        onFilePicked(event){
+            this.allChangesSaved = false;
+            const fileIMG = event.target.files[0];
+            const fileName = event.target.files[0].name;
+            // const extension = fileName.slice(fileName.lastIndexOf('.'));
+
+            // Use file reader so that the image can be previewed
+            const reader = new FileReader();
+
+            reader.readAsDataURL(fileIMG)
+            this.payload.image = fileIMG;
+
+            reader.addEventListener('load', (e) => {
+                this.payload.imageURL = reader.result;
+                storage.ref('profile_pictures/' + this.uniqname + '.jpg').put(this.payload.image)
+                .then((fileData) => {
+                    fileData.ref.getDownloadURL()
+                    .then((url) => {
+                        this.payload.imageURL = url;
+                        console.log("Image fully uploaded");
+                        this.allChangesSaved = true;
+                    })
+                    // gsImageURL = fileData.metadata.downloadURLs[0];
+                })
+            })
         }
     },
     computed: {
@@ -170,7 +207,7 @@ export default {
         },
         messengerURL: function() {
             return 'https://www.messenger.com/'
-        }
+        },
     },
 
     mounted(){

@@ -1,6 +1,9 @@
 <template>
+<div>
+<NavBar />
 <transition name="slide-right" mode="out-in">
 <section class="section" id = 'UserInfo'>
+
     <div class="card" id="user-container">
     <div class="columns is-centered is-vcentered">
     <div class="column is-two-fifths">
@@ -122,14 +125,18 @@
     </div>
 </section>
 </transition>
+</div>
+
 </template>
 
 
 <script>
 
-import store from '@/store.js'
+import store from '@/store.js';
 import * as firebase from 'firebase/app';
-import {db, storage} from '@/main.js'
+import {db, storage} from '@/main.js';
+import NavBar from '@/components/NavBar.vue';
+
 
 export default {
     store,
@@ -208,6 +215,8 @@ export default {
         messengerURL: function() {
             return 'https://www.messenger.com/'
         },
+    },components: {
+      NavBar,
     },
 
     mounted(){

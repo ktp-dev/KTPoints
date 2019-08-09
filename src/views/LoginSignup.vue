@@ -24,6 +24,7 @@
         <section class="modal-card-body">
           <p>A verification email was sent to <span class="light-green">"{{this.email}}"</span> please check your email
           and follow the instructions to continue. <br><br> Not recieving the email? Click <span class="has-text-link">here</span> to resend</p>
+          
         </section>
         <footer class="modal-card-foot">
           <button class="button" v-on:click="disable_error()">Close</button>
@@ -381,6 +382,7 @@ export default {
         router.push({ name: 'landing', params: { username: this.uniqname } })
       })
       .catch(function(error) {
+        this.display_error(error.code, error.message)
         console.log('BAD');
         console.log(error);
       });      
@@ -388,30 +390,36 @@ export default {
 
     signup: function(){
 
-      var user = firebase.auth().currentUser;
-      console.log(user)
-      console.log('now making account')
+      // var user = firebase.auth().currentUser;
+      // console.log(user)
+      // console.log('now making account')
 
-      //Setting for passing state through an email
-      var actionCodeSettings = {
-      // URL you want to redirect back to. The domain (www.example.com) for this
-      // URL must be whitelisted in the Firebase Console.
-      url: 'https://www.ktpoints.netlify.com/',
-      // This must be true.
-      handleCodeInApp: false,
-      };
-      user.sendEmailVerification().then(function() {
-        // Email sent.
-        window.localStorage.setItem('emailForSignIn', email);
-        this.sent_email_verification = true
-        }).catch(function(error) {
-          // An error happened.
-          console.log(error)
-        });
+      // //Setting for passing state through an email
+      // var actionCodeSettings = {
+      // // URL you want to redirect back to. The domain (www.example.com) for this
+      // // URL must be whitelisted in the Firebase Console.
+      // url: 'https://www.ktpoints.netlify.com/',
+      // // This must be true.
+      // handleCodeInApp: false,
+      // };
+
+
+      //send email with code
+      //
+
+      // user.sendEmailVerification().then(function() {
+      //   // Email sent.
+      //   window.localStorage.setItem('emailForSignIn', email);
+      //   this.sent_email_verification = true
+      //   }).catch(function(error) {
+      //     // An error happened.
+      //     console.log(error)
+      //   });
     
 
 
       //Need to refactor so that all verification stuff happens and then user is created
+      //Creating an Account, Good to go
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       .then(() => {
         var user = firebase.auth().currentUser;
@@ -428,11 +436,7 @@ export default {
           this.display_error(error.code, error.message)
           console.log('bad signup');
         });
-      })
-      .catch((error) => {
-        this.display_error(error.code, error.message)
-        console.log('bad signup');
-      });      
+      })      
     },
 
     addInfo: function(){

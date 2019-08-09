@@ -125,13 +125,16 @@
               <!-- First Name, Last Name, KTP Standing -->
               <div v-if="isSignup1" key="signup-1">
                 <div class='field' >
-                  <div class="control is-expanded pb3">
+
+
+                  <InputString label="First Name" :dataLabel="payload.firstname" @newLabel="payload.firstname = $event"/>
+                  <!-- <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
                       First Name
                     </div>
                     <input v-model='payload.firstname' class="input is-primary" type="text">
                     <div class="divider slate"></div>
-                  </div>
+                  </div> -->
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
@@ -158,25 +161,15 @@
                   </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
-                    <div class="column is-quarter">
-                    </div>
-                    <div style="font-size: 0.7rem;" class="column is-half has-text-centered">
-                      <div class="columns is-centered is-mobile">
-                        <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i class="column fas fa-circle fa-xs light-grey"></i>
-                        <i class="column fas fa-circle fa-xs light-grey"></i>
-                        <i class="column fas fa-circle fa-xs light-grey"></i>
-                      </div>
-                    </div>
-                    <div class="column has-text-centered pointer" v-on:click='goToSignup2()'>
-                      <i class="fas fa-arrow-right fa-2x sky-blue-text"></i>
-                    </div>
+                    <div class="column is-quarter"></div>
+
+                    <Dots :S1="isSignup1" :S2="isSignup2" :S3="isSignup3" :S4="isSignup4" />
+                    <RightArrow nextSignup="S2" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
+
                   </div>
 
-                  <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account?
-                  <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
-                  </div>
+                  <AlreadyHaveAccount :chooseScreen="current_screen" @screenChanged="current_screen = $event"/>
+
                 </div>
               </div>
 
@@ -228,26 +221,16 @@
                   </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
-                    <div v-on:click="goToSignup1()" class="column is-quarter has-text-centered pointer">
-                      <i class="fas fa-arrow-left fa-2x sky-blue-text"></i>
-                    </div>
-                    <div style="font-size: 0.7rem;" class="column is-half has-text-centered">
-                      <div class="columns is-centered is-mobile">
-                        <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
-                      </div>
-                    </div>
-                    <div class="column has-text-centered pointer" v-on:click='goToSignup3()'>
-                      <i class="fas fa-arrow-right fa-2x sky-blue-text"></i>
-                    </div>
+                    <LeftArrow nextSignup="S1" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
+
+                    <Dots :S1="isSignup1" :S2="isSignup2" :S3="isSignup3" :S4="isSignup4" />
+
+                    <RightArrow nextSignup="S3" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
+
                   </div>
 
-                  <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account?
-                  <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
-                  </div>
+                  <AlreadyHaveAccount :chooseScreen="current_screen" @screenChanged="current_screen = $event"/>
+
                 </div>
               </div>
 
@@ -280,26 +263,15 @@
                   </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
-                    <div v-on:click='goToSignup2()' class="column is-quarter has-text-centered pointer">
-                      <i class="fas fa-arrow-left fa-2x sky-blue-text"></i>
-                    </div>
-                    <div style="font-size: 0.7rem;" class="column is-half has-text-centered">
-                      <div class="columns is-centered is-mobile">
-                        <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
-                      </div>
-                    </div>
-                    <div class="column has-text-centered pointer" v-on:click='goToSignup4()'>
-                      <i class="fas fa-arrow-right fa-2x sky-blue-text"></i>
-                    </div>
+                    <LeftArrow nextSignup="S2" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
+
+                    <Dots :S1="isSignup1" :S2="isSignup2" :S3="isSignup3" :S4="isSignup4" />
+
+                    <RightArrow nextSignup="S4" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
                   </div>
 
-                  <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account?
-                  <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
-                  </div>
+                  <AlreadyHaveAccount :chooseScreen="current_screen" @screenChanged="current_screen = $event"/>
+
                 </div>
               </div>
 
@@ -319,17 +291,10 @@
                     full functionality of the app.
                   </div>
                   <div class="columns is-centered is-vcentered is-mobile pb4">
-                    <div v-on:click='goToSignup3()' class="column is-quarter has-text-centered pointer">
-                      <i class="fas fa-arrow-left fa-2x sky-blue-text"></i>
-                    </div>
-                    <div style="font-size: 0.7rem;" class="column is-half has-text-centered">
-                      <div class="columns is-centered is-mobile">
-                        <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
-                      </div>
-                    </div>
+                    <LeftArrow nextSignup="S3" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
+
+                    <Dots :S1="isSignup1" :S2="isSignup2" :S3="isSignup3" :S4="isSignup4" />
+
                     <div class="column has-text-centered pointer fira-sans sky-blue-text fw-lb fs-s4" >
                       <div class="control has-text-centered">
                         <button v-on:click="signup()" class="button is-small is-rounded fs-s4 fira-sans-light-italic fw-lb sky-blue-button pointer">
@@ -356,11 +321,17 @@
 import router from '@/router.js'
 import store from '@/store.js'
 import * as firebase from 'firebase/app';
+import Dots from '@/components/login/dots.vue';
+import AlreadyHaveAccount from '@/components/login/alreadyHaveAccount.vue';
+import RightArrow from '@/components/login/rightArrow.vue';
+import LeftArrow from '@/components/login/leftArrow.vue';
+import InputString from '@/components/login/inputString.vue';
 
 export default {
   store,
   data: function() {
     return {
+        fname: '',
       uniqname: '',
       password: '',
       confirmPassword: '',
@@ -370,7 +341,7 @@ export default {
       isSignup2: false,
       isSignup3: false,
       isSignup4: false,
-      passwordsMatch: false,
+      passwordsMatch: true,
       error_message: '',
       sent_email_verification: false,
       link_name: ["Signup now", "Have an account?"],
@@ -386,6 +357,13 @@ export default {
       },
     disablePledgeClass: false
     }
+  },
+  components: {
+      Dots,
+      AlreadyHaveAccount,
+      RightArrow,
+      LeftArrow,
+      InputString,
   },
   computed: {
     email: function(){
@@ -487,11 +465,7 @@ export default {
     },
 
     checkPasswords: function(){
-        console.log(this.password);
-        console.log(this.confirmPassword);
-
-        this.passwordsMatch = this.password === this.confirmPassword ? true : false;
-        return this.passwordsMatch;
+        return this.passwordsMatch = (this.password === this.confirmPassword ? true : false);
     },
 
     display_error: function(code, message){
@@ -504,7 +478,7 @@ export default {
 
     disable_error: function(){
       this.signup_error = false;
-      this.passwordsMatch = true;
+      this.passwordsMatch = !this.passwordsMatch;
     },
 
     goToLogin: function(){
@@ -516,34 +490,6 @@ export default {
 
     goToSignup: function(){
       this.current_screen = "signup";
-    },
-
-    goToSignup1: function(){
-      this.isSignup1 = true;
-      this.isSignup2 = false;
-      this.isSignup3 = false;
-      this.isSignup4 = false;
-    },
-
-    goToSignup2: function(){
-      this.isSignup1 = false;
-      this.isSignup2 = true;
-      this.isSignup3 = false;
-      this.isSignup4 = false;
-    },
-
-    goToSignup3: function(){
-      this.isSignup1 = false;
-      this.isSignup2 = false;
-      this.isSignup3 = true;
-      this.isSignup4 = false;
-    },
-
-    goToSignup4: function(){
-      this.isSignup1 = false;
-      this.isSignup2 = false;
-      this.isSignup3 = false;
-      this.isSignup4 = true;
     },
   },
 

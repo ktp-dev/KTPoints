@@ -1,4 +1,4 @@
-# KTPoints
+# ktp.life
 
 Currently, our site is deployed through Netlify and lives at https://ktp.life
 
@@ -22,17 +22,29 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Branching workflow
+
+#### checkout
+```
+git checkout develop
+git pull
+git checkout -b feature/my-feature-name
+```
+
+Make your code changes, commit and push them, then open a pull request into develop for review
+
 
 ### Bulma Custom Styles
 Edit file in public/static/sass/mystyles
 
-To build:
+To build css:
 
 ```
 npm run css-build
 ```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Rules
 

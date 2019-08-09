@@ -127,14 +127,14 @@
                 <div class='field' >
 
 
-                  <InputString label="First Name" :dataLabel="payload.firstname" @newLabel="payload.firstname = $event"/>
-                  <!-- <div class="control is-expanded pb3">
+                  <!-- <InputString label="First Name" :dataLabel="payload.firstname" @newLabel="payload.firstname = $event"/> -->
+                  <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
                       First Name
                     </div>
                     <input v-model='payload.firstname' class="input is-primary" type="text">
                     <div class="divider slate"></div>
-                  </div> -->
+                  </div>
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
@@ -168,7 +168,7 @@
 
                   </div>
 
-                  <AlreadyHaveAccount :chooseScreen="current_screen" @screenChanged="current_screen = $event"/>
+                  <AlreadyHaveAccount @screenChanged="current_screen = $event"/>
 
                 </div>
               </div>
@@ -229,7 +229,7 @@
 
                   </div>
 
-                  <AlreadyHaveAccount :chooseScreen="current_screen" @screenChanged="current_screen = $event"/>
+                  <AlreadyHaveAccount @screenChanged="current_screen = $event"/>
 
                 </div>
               </div>
@@ -270,7 +270,7 @@
                     <RightArrow nextSignup="S4" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
                   </div>
 
-                  <AlreadyHaveAccount :chooseScreen="current_screen" @screenChanged="current_screen = $event"/>
+                  <AlreadyHaveAccount @screenChanged="current_screen = $event"/>
 
                 </div>
               </div>
@@ -371,6 +371,10 @@ export default {
     }
   },
   methods: {
+      check(){
+          console.log(this.payload.firstname);
+          console.log("hello");
+      },
     login: function(){
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
       .then(() => {
@@ -419,15 +423,18 @@ export default {
       //Creating an Account, Good to go
 
       console.log("Signup Clicked");
-      if (this.checkPasswords()) {
+      // if (this.checkPasswords()) {
+          // console.log(" Passwords matched. We gucci! ");
+          console.log(this.email, this.password);
           firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-          .then(() => {
-            var user = firebase.auth().currentUser;
-            user.sendEmailVerification().then(() => {
-              console.log('in verification')
-              this.sent_email_verification = true
-              // Email sent.
-            }).then(() => {
+          // .then(() => {
+          //   var user = firebase.auth().currentUser;
+          //   user.sendEmailVerification().then(() => {
+          //     console.log('in verification')
+          //     this.sent_email_verification = true
+          //     // Email sent.
+          //   })
+            .then(() => {
               console.log("new user " + this.email + " signed up")
               console.log(firebase.auth().currentUser)
               // this.addInfo();
@@ -436,11 +443,11 @@ export default {
               this.display_error(error.code, error.message)
               console.log('bad signup');
             });
-          })
-      } else {
-          console.log("Passwords did not match");
-          this.passwordsMatch = false;
-      }
+          // })
+      // } else {
+      //     console.log("Passwords did not match");
+      //     this.passwordsMatch = false;
+      // }
     },
 
     addInfo: function(){

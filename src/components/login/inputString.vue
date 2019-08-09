@@ -3,7 +3,7 @@
         <div class="fira-sans-light-italic slate">
             {{ label }}
         </div>
-        <input @input="changeInput" class="input is-primary" type="text">
+        <input @input="changeInput" :value="dataLabel" class="input is-primary" v-bind:type="this.t">
         <div class="divider slate"></div>
     </div>
 </template>
@@ -13,7 +13,7 @@
 import router from '@/router.js'
 
 export default {
-    props: ['label', 'dataLabel'],
+    props: ['label', 't', 'dataLabel'],
     data() {
         return {
             newDataLabel: '',
@@ -23,6 +23,7 @@ export default {
         changeInput(event){
             this.newDataLabel = event.target.value;
             this.$emit('newLabel', this.newDataLabel );
+            console.log(this.t);
         },
     },
 };

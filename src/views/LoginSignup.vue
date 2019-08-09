@@ -15,6 +15,21 @@
       </div>
       <button class="modal-close is-large" v-on:click="disable_error()" aria-label="close"></button>
     </div>
+    <div class="modal" v-bind:class="{ 'is-active': !passwordsMatch }">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Oops!</p>
+        </header>
+        <section class="modal-card-body">
+          <p>It appears we recieved the error <span class="has-text-danger">Your passwords did not match! Please try again!</span> while trying to sign you up, please try again!</p>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" v-on:click="disable_error()">Close</button>
+        </footer>
+      </div>
+      <button class="modal-close is-large" v-on:click="disable_error()" aria-label="close"></button>
+    </div>
     <div class="modal" v-bind:class="{ 'is-active': sent_email_verification }">
       <div class="modal-background"></div>
       <div class="modal-card">
@@ -24,7 +39,7 @@
         <section class="modal-card-body">
           <p>A verification email was sent to <span class="light-green">"{{this.email}}"</span> please check your email
           and follow the instructions to continue. <br><br> Not recieving the email? Click <span class="has-text-link">here</span> to resend</p>
-          
+
         </section>
         <footer class="modal-card-foot">
           <button class="button" v-on:click="disable_error()">Close</button>
@@ -32,6 +47,7 @@
       </div>
       <button class="modal-close is-large" v-on:click="disable_error()" aria-label="close"></button>
     </div>
+
     <div class="container middle">
       <div class="columns is-centered inner">
         <div class="column is-narrow ">
@@ -57,7 +73,7 @@
                   Sign up
                 </button>
               </div>
-              
+
               <!-- Continue as Guest -->
               <router-link to="/landing">
                 <div class="align-center fira-sans-light-italic mt2 dark-blue">
@@ -76,7 +92,7 @@
                   <input v-model='uniqname' class="input is-primary" type="text">
                   <div class="divider slate"></div>
                 </div>
-              </div> 
+              </div>
 
               <!-- Password -->
               <div class="field">
@@ -87,14 +103,14 @@
                   <input v-on:keyup.enter="login()" v-model='password' class="input is-primary" type="password">
                    <div class="divider slate"></div>
                 </div>
-              </div> 
+              </div>
               <div class="control">
                 <button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
                   Log In
                 </button>
               </div>
               <div class="align-center fira-sans-light-italic mt3">
-                Don't have an Account? 
+                Don't have an Account?
                 <a class="sky-blue-text fw-lb" v-on:click='goToSignup()'>Sign Up Here</a>
               </div>
               <div class="align-center fira-sans-light-italic mt2">
@@ -115,15 +131,15 @@
                     </div>
                     <input v-model='payload.firstname' class="input is-primary" type="text">
                     <div class="divider slate"></div>
-                  </div>   
-        
+                  </div>
+
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
                       Last Name
                     </div>
                     <input v-model='payload.lastname' class="input is-primary" type="text">
                     <div class="divider slate"></div>
-                  </div> 
+                  </div>
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
@@ -137,9 +153,9 @@
                           <option>Active</option>
                           <option>Eboard</option>
                         </select>
-                      </div>  
-                      <div class="divider slate"></div>      
-                  </div>    
+                      </div>
+                      <div class="divider slate"></div>
+                  </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
                     <div class="column is-quarter">
@@ -149,7 +165,7 @@
                         <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i class="column fas fa-circle fa-xs light-grey"></i>
                         <i class="column fas fa-circle fa-xs light-grey"></i>
-                        <i class="column fas fa-circle fa-xs light-grey"></i> 
+                        <i class="column fas fa-circle fa-xs light-grey"></i>
                       </div>
                     </div>
                     <div class="column has-text-centered pointer" v-on:click='goToSignup2()'>
@@ -158,7 +174,7 @@
                   </div>
 
                   <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account? 
+                  Already have an Account?
                   <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
                   </div>
                 </div>
@@ -173,8 +189,8 @@
                     </div>
                     <input v-model='payload.major' class="input is-primary" type="text">
                     <div class="divider slate"></div>
-                  </div>   
-        
+                  </div>
+
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
                       Year
@@ -188,9 +204,9 @@
                           <option>Senior</option>
                           <option>Alumni</option>
                         </select>
-                      </div>  
+                      </div>
                     <div class="divider slate"></div>
-                  </div> 
+                  </div>
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
@@ -207,9 +223,9 @@
                         <option>Omicron</option>
                         <option>Pi</option>
                       </select>
-                    </div>  
-                    <div class="divider slate"></div>  
-                  </div>    
+                    </div>
+                    <div class="divider slate"></div>
+                  </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
                     <div v-on:click="goToSignup1()" class="column is-quarter has-text-centered pointer">
@@ -220,7 +236,7 @@
                         <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i> 
+                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
                       </div>
                     </div>
                     <div class="column has-text-centered pointer" v-on:click='goToSignup3()'>
@@ -229,13 +245,13 @@
                   </div>
 
                   <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account? 
+                  Already have an Account?
                   <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
                   </div>
                 </div>
               </div>
 
-              <!-- Uniqname, Password -->
+              <!-- Uniqname, Password, Confirm Password -->
               <div v-if="isSignup3" key="signup-3">
                 <div class='field' >
 
@@ -244,8 +260,8 @@
                       Uniqname
                     </div>
                     <input v-model='uniqname'  class="input is-primary" type="text">
-                    <div class="divider slate"></div>  
-                  </div> 
+                    <div class="divider slate"></div>
+                  </div>
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
@@ -253,15 +269,15 @@
                     </div>
                     <input v-model='password'  class="input is-primary" type="password">
                     <div class="divider slate"></div>
-                  </div>   
-        
+                  </div>
+
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
-                      Confirm  Password
+                      Confirm Password
                     </div>
-                    <input  class="input is-primary" type="password">
+                    <input v-model='confirmPassword' class="input is-primary" type="password">
                     <div class="divider slate"></div>
-                  </div>    
+                  </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
                     <div v-on:click='goToSignup2()' class="column is-quarter has-text-centered pointer">
@@ -272,7 +288,7 @@
                         <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i> 
+                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
                       </div>
                     </div>
                     <div class="column has-text-centered pointer" v-on:click='goToSignup4()'>
@@ -281,7 +297,7 @@
                   </div>
 
                   <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account? 
+                  Already have an Account?
                   <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
                   </div>
                 </div>
@@ -292,7 +308,7 @@
                 <div class='field' >
                   <div class="fs-s2 fira-mono fw-bold pb2 has-text-centered">
                     One Last Thing
-                  </div>  
+                  </div>
                   <div class="control fira-sans fs-s4 is-expanded pb2 has-text-centered">
                     If you are an Active or an Alumni, there will be a pending <br>
                     process while we approve your identity.
@@ -311,7 +327,7 @@
                         <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i> 
+                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
                       </div>
                     </div>
                     <div class="column has-text-centered pointer fira-sans sky-blue-text fw-lb fs-s4" >
@@ -326,6 +342,7 @@
                 </div>
               </div>
             </div>
+
           </transition>
         </div>
       </div>
@@ -346,12 +363,14 @@ export default {
     return {
       uniqname: '',
       password: '',
+      confirmPassword: '',
       loggedin: false,
       current_screen: 'landing',
       isSignup1: true,
       isSignup2: false,
       isSignup3: false,
       isSignup4: false,
+      passwordsMatch: false,
       error_message: '',
       sent_email_verification: false,
       link_name: ["Signup now", "Have an account?"],
@@ -385,7 +404,7 @@ export default {
         this.display_error(error.code, error.message)
         console.log('BAD');
         console.log(error);
-      });      
+      });
     },
 
     signup: function(){
@@ -415,28 +434,35 @@ export default {
       //     // An error happened.
       //     console.log(error)
       //   });
-    
+
 
 
       //Need to refactor so that all verification stuff happens and then user is created
       //Creating an Account, Good to go
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-      .then(() => {
-        var user = firebase.auth().currentUser;
-        user.sendEmailVerification().then(() => {
-          console.log('in verification')
-          this.sent_email_verification = true
-          // Email sent.
-        }).then(() => {
-          console.log("new user " + this.email + " signed up")
-          console.log(firebase.auth().currentUser)
-          // this.addInfo();
-        })
-        .catch((error) => {
-          this.display_error(error.code, error.message)
-          console.log('bad signup');
-        });
-      })      
+
+      console.log("Signup Clicked");
+      if (this.checkPasswords()) {
+          firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+          .then(() => {
+            var user = firebase.auth().currentUser;
+            user.sendEmailVerification().then(() => {
+              console.log('in verification')
+              this.sent_email_verification = true
+              // Email sent.
+            }).then(() => {
+              console.log("new user " + this.email + " signed up")
+              console.log(firebase.auth().currentUser)
+              // this.addInfo();
+            })
+            .catch((error) => {
+              this.display_error(error.code, error.message)
+              console.log('bad signup');
+            });
+          })
+      } else {
+          console.log("Passwords did not match");
+          this.passwordsMatch = false;
+      }
     },
 
     addInfo: function(){
@@ -460,6 +486,14 @@ export default {
       });
     },
 
+    checkPasswords: function(){
+        console.log(this.password);
+        console.log(this.confirmPassword);
+
+        this.passwordsMatch = this.password === this.confirmPassword ? true : false;
+        return this.passwordsMatch;
+    },
+
     display_error: function(code, message){
       console.log(code)
       console.log(message)
@@ -470,6 +504,7 @@ export default {
 
     disable_error: function(){
       this.signup_error = false;
+      this.passwordsMatch = true;
     },
 
     goToLogin: function(){
@@ -533,7 +568,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
   }
-    
+
   .slide-left-enter-active {
     transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
@@ -563,4 +598,3 @@ export default {
     opacity: 0;
   }
 </style>
-

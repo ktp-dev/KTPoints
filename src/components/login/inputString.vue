@@ -20,10 +20,9 @@ export default {
         }
     },
     methods: {
-        changeInput(event){
+        changeInput: function(event){
             this.newDataLabel = event.target.value;
             this.$emit('newLabel', this.newDataLabel );
-            console.log(this.t);
         },
     },
 };

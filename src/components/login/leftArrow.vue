@@ -17,7 +17,7 @@ export default {
         }
     },
     methods: {
-        signUp(){
+        signUp: function(){
             if (this.nextSignup === "S1") {
                 this.goToSignup1();
             } else if (this.nextSignup === "S2") {

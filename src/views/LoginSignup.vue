@@ -1,5 +1,5 @@
 <template>
-  <section id='authenticate' class="outer">
+	<section id='authenticate' class="outer">
 	<div class="modal" v-bind:class="{ 'is-active': signup_error }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
@@ -10,10 +10,10 @@
 		  <p>It appears we recieved the error <span class="has-text-danger">"{{this.error_message}}"</span> while trying to sign you up, please try again!</p>
 		</section>
 		<footer class="modal-card-foot">
-		  <button class="button" v-on:click="disable_error()">Close</button>
+		  <button class="button" v-on:click="disableGeneralError()">Close</button>
 		</footer>
 	  </div>
-	  <button class="modal-close is-large" v-on:click="disable_error()" aria-label="close"></button>
+	  <button class="modal-close is-large" v-on:click="disableGeneralError()" aria-label="close"></button>
 	</div>
 	<div class="modal" v-bind:class="{ 'is-active': !passwordsMatch }">
 	  <div class="modal-background"></div>
@@ -25,11 +25,12 @@
 		  <p>It appears we recieved the error <span class="has-text-danger">Your passwords did not match! Please try again!</span> while trying to sign you up, please try again!</p>
 		</section>
 		<footer class="modal-card-foot">
-		  <button class="button" v-on:click="disable_error()">Close</button>
+		  <button class="button" v-on:click="displayPasswordError()">Close</button>
 		</footer>
 	  </div>
-	  <button class="modal-close is-large" v-on:click="disable_error()" aria-label="close"></button>
+	  <button class="modal-close is-large" v-on:click="displayPasswordError()" aria-label="close"></button>
 	</div>
+
 	<div class="modal" v-bind:class="{ 'is-active': sent_email_verification }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
@@ -42,10 +43,10 @@
 
 		</section>
 		<footer class="modal-card-foot">
-		  <button class="button" v-on:click="disable_error()">Close</button>
+		  <button class="button" v-on:click="disableGeneralError()">Close</button>
 		</footer>
 	  </div>
-	  <button class="modal-close is-large" v-on:click="disable_error()" aria-label="close"></button>
+	  <button class="modal-close is-large" v-on:click="disableGeneralError()" aria-label="close"></button>
 	</div>
 
 	<div class="container middle">
@@ -220,36 +221,32 @@
 
 			  <!-- Notice -->
 			  <div v-if="isSignup4" key="signup-4">
-				<div class='field' >
-				  <div class="fs-s2 fira-mono fw-bold pb2 has-text-centered">
-					One Last Thing
-				  </div>
-				  <div class="control fira-sans fs-s4 is-expanded pb2 has-text-centered">
-					If you are an Active or an Alumni, there will be a pending <br>
-					process while we approve your identity.
-					  <br>
-					  <br>
-					If you are a Pledge or Rushee, welcome! You are able to <br>
-					explore immediately, although you don't have access to <br>
-					full functionality of the app.
-				  </div>
-				  <div class="columns is-centered is-vcentered is-mobile pb4">
-					<LeftArrow nextSignup="S3" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
-
-					<Dots :S1="isSignup1" :S2="isSignup2" :S3="isSignup3" :S4="isSignup4" />
-
-					<div class="column has-text-centered pointer fira-sans sky-blue-text fw-lb fs-s4" >
-					  <div class="control has-text-centered">
-						<button v-on:click="signup()" class="button is-small is-rounded fs-s4 fira-sans-light-italic fw-lb sky-blue-button pointer">
-						  Sign up
-						</button>
+				  <div class='field' >
+					  <div class="fs-s2 fira-mono fw-bold pb2 has-text-centered">
+						  One Last Thing
 					  </div>
-					</div>
+					  <div class="control fira-sans fs-s4 is-expanded pb2 has-text-centered">
+						  If you are an Active or an Alumni, there will be a pending <br>
+						  process while we approve your identity.
+						  <br><br>
+						  If you are a Pledge or Rushee, welcome! You are able to <br>
+						  explore immediately, although you don't have access to <br>
+						  full functionality of the app.
+					  </div>
+					  <div class="columns is-centered is-vcentered is-mobile pb4">
+						  <LeftArrow nextSignup="S3" @S1="isSignup1 = $event" @S2="isSignup2 = $event" @S3="isSignup3 = $event" @S4="isSignup4 = $event"/>
+						  <Dots :S1="isSignup1" :S2="isSignup2" :S3="isSignup3" :S4="isSignup4" />
+						  <div class="column has-text-centered pointer fira-sans sky-blue-text fw-lb fs-s4" >
+							  <div class="control has-text-centered">
+								  <button v-on:click="signup()" class="button is-small is-rounded fs-s4 fira-sans-light-italic fw-lb sky-blue-button pointer">
+									  Sign up
+								  </button>
+							  </div>
+						  </div>
+					  </div>
 				  </div>
-
-				</div>
 			  </div>
-			</div>
+		  </div>
 
 		  </transition>
 		</div>
@@ -274,7 +271,6 @@ export default {
   store,
   data: function() {
 	return {
-		fname: '',
 	  uniqname: '',
 	  password: '',
 	  confirmPassword: '',
@@ -321,23 +317,33 @@ export default {
 		this.loggedin = true;
 		router.push({ name: 'landing', params: { username: this.uniqname } })
 	  })
-	  .catch(function(error) {
-		console.log('BAD');
-		console.log(error);
+	  .catch((error) => {
+		  console.log("Username or password incorrect");
+		  this.displayGeneralError(error.code, error.message)
+		  console.log(error);
 	  });
 	},
 
 	signup: function(){
+
 		console.log("Signup Initiated");
-		firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-		.then(() => {
-			console.log("New user: " + this.email + " created")
-			this.addInfo();
-		})
-		.catch(function(error) {
-			console.log('Bad signup');
-			console.log(error);
-	  	});
+		if (this.checkPasswords()) {
+			console.log("Passwords Match");
+			firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+			.then(() => {
+				console.log("New user: " + this.email + " created")
+				this.addInfo();
+			})
+			.catch((error) => {
+				console.log('Bad signup');
+				console.log(this.signup_error);
+				this.displayGeneralError(error.code, error.message, this.signup_error);
+		  	});
+		} else {
+			console.log("Passwords do not match");
+		}
+
+
 	},
 
 	addInfo: function(){
@@ -365,19 +371,19 @@ export default {
 		return this.passwordsMatch = (this.password === this.confirmPassword ? true : false);
 	},
 
-	display_error: function(code, message){
-	  console.log(code)
-	  console.log(message)
-	  this.error_message = message
+	displayGeneralError: function(code, message, error){
+	  this.error_message = message;
 	  this.signup_error = true;
-	  //probably should try to actually display some type of info about error at some point
 	},
 
-	disable_error: function(){
-	  this.signup_error = false;
-	  this.passwordsMatch = !this.passwordsMatch;
+	displayPasswordError: function(){
+		this.passwordsMatch = !this.passwordsMatch;
 	},
 
+	disableGeneralError: function(){
+	  this.signup_error = !this.signup_error;
+	  // this.passwordsMatch = !this.passwordsMatch;
+	},
 	goToLogin: function(){
 	  if (this.$store.state.userAuth !== null){
 		router.push('/landing');

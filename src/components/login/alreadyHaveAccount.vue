@@ -17,7 +17,7 @@ export default {
         }
     },
     methods: {
-        goToLogin(){
+        goToLogin: function(){
             if (this.$store.state.userAuth !== null){
                 router.push('/landing');
             }

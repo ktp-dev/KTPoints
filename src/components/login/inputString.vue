@@ -3,7 +3,7 @@
         <div class="fira-sans-light-italic slate">
             {{ label }}
         </div>
-        <input @input="changeInput" :value="dataLabel" class="input is-primary" type="text">
+        <input @input="changeInput" class="input is-primary" type="text">
         <div class="divider slate"></div>
     </div>
 </template>
@@ -16,7 +16,7 @@ export default {
     props: ['label', 'dataLabel'],
     data() {
         return {
-            newDataLabel: ''
+            newDataLabel: '',
         }
     },
     methods: {

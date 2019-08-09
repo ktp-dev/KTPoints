@@ -10,7 +10,7 @@
 import router from '@/router.js'
 
 export default {
-    props: [],
+    props: ['chooseScreen'],
     data() {
         return {
             newScreen: '',

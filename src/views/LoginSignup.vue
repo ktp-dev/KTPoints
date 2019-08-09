@@ -383,7 +383,6 @@ export default {
         router.push({ name: 'landing', params: { username: this.uniqname } })
       })
       .catch(function(error) {
-        this.display_error(error.code, error.message)
         console.log('BAD');
         console.log(error);
       });
@@ -391,63 +390,51 @@ export default {
 
     signup: function(){
 
-      // var user = firebase.auth().currentUser;
-      // console.log(user)
-      // console.log('now making account')
+      var user = firebase.auth().currentUser;
+      console.log(user)
+      console.log('now making account')
 
-      // //Setting for passing state through an email
-      // var actionCodeSettings = {
-      // // URL you want to redirect back to. The domain (www.example.com) for this
-      // // URL must be whitelisted in the Firebase Console.
-      // url: 'https://www.ktpoints.netlify.com/',
-      // // This must be true.
-      // handleCodeInApp: false,
-      // };
-
-
-      //send email with code
-      //
-
-      // user.sendEmailVerification().then(function() {
-      //   // Email sent.
-      //   window.localStorage.setItem('emailForSignIn', email);
-      //   this.sent_email_verification = true
-      //   }).catch(function(error) {
-      //     // An error happened.
-      //     console.log(error)
-      //   });
+      //Setting for passing state through an email
+      var actionCodeSettings = {
+      // URL you want to redirect back to. The domain (www.example.com) for this
+      // URL must be whitelisted in the Firebase Console.
+      url: 'https://www.ktpoints.netlify.com/',
+      // This must be true.
+      handleCodeInApp: false,
+      };
+      user.sendEmailVerification().then(function() {
+        // Email sent.
+        window.localStorage.setItem('emailForSignIn', email);
+        this.sent_email_verification = true
+        }).catch(function(error) {
+          // An error happened.
+          console.log(error)
+        });
 
 
 
       //Need to refactor so that all verification stuff happens and then user is created
-      //Creating an Account, Good to go
-
-      console.log("Signup Clicked");
-      // if (this.checkPasswords()) {
-          // console.log(" Passwords matched. We gucci! ");
-          console.log(this.email, this.password);
-          firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-          // .then(() => {
-          //   var user = firebase.auth().currentUser;
-          //   user.sendEmailVerification().then(() => {
-          //     console.log('in verification')
-          //     this.sent_email_verification = true
-          //     // Email sent.
-          //   })
-            .then(() => {
-              console.log("new user " + this.email + " signed up")
-              console.log(firebase.auth().currentUser)
-              // this.addInfo();
-            })
-            .catch((error) => {
-              this.display_error(error.code, error.message)
-              console.log('bad signup');
-            });
-          // })
-      // } else {
-      //     console.log("Passwords did not match");
-      //     this.passwordsMatch = false;
-      // }
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      .then(() => {
+        var user = firebase.auth().currentUser;
+        user.sendEmailVerification().then(() => {
+          console.log('in verification')
+          this.sent_email_verification = true
+          // Email sent.
+        }).then(() => {
+          console.log("new user " + this.email + " signed up")
+          console.log(firebase.auth().currentUser)
+          // this.addInfo();
+        })
+        .catch((error) => {
+          this.display_error(error.code, error.message)
+          console.log('bad signup');
+        });
+      })
+      .catch((error) => {
+        this.display_error(error.code, error.message)
+        console.log('bad signup');
+      });
     },
 
     addInfo: function(){

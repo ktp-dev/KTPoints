@@ -116,7 +116,7 @@
                                         <option>Mu</option>
                                         <option>Nu</option>
                                         <option>Xi</option>
-                                        <option>Omnicron</option>
+                                        <option>Omicron</option>
                                     </select>
                                 </div>
                                 <!-- <input class="input is-focused is-small" type="text" v-model="payload.pledge_class"> -->

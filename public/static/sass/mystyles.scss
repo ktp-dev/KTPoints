@@ -13,6 +13,7 @@ $gunmetal-blue: #52779c;
 $dark-blue:#2c3e50;
 $slate: #5c6b7a;
 $light-grey: #C1C1C1;
+$v-light-grey: #f4f4f4;
 
 // Update Bulma's global Colors
 $primary: $slate;
@@ -48,6 +49,9 @@ $primary: $slate;
 .light-grey {
     color: $light-grey;
 }
+.v-light-grey {
+    color: $v-light-grey
+}
 
 // ===== END COLORS =====
 
@@ -56,7 +60,9 @@ body{
     font-family: 'Fira Sans', sans-serif;
     font-size: 12px;
 }
-
+.fs-s7 {
+    font-size: 0.9em!important;
+}
 .fs-s6 {
     font-size: 1.1em!important;
 }
@@ -321,7 +327,6 @@ $size4: 32px;
 }
 
 .sky-blue-button:hover {
-    border-color: $sky-blue!important;
     background-color: $sky-blue!important;
     color: white!important;
 }
@@ -381,6 +386,13 @@ $size4: 32px;
     border-width: 1px;
   }
 
+.background-hover-grey {
+    background-color: white;
+}
+.background-hover-grey:hover {
+    background-color: $light-grey;
+}
+
 .no-border {
   border-top-width: 0px!important;
   border-left-width: 0px!important;
@@ -414,6 +426,15 @@ $size4: 32px;
     border-width: 2px;
     border-color: $gunmetal-blue;
   }
+
+.event-card-border {
+    border-radius: 22px;
+    box-shadow: 0 3px 6px 0 #3c0c0c;
+    border: solid 1px $dark-blue;
+    background-color: white;
+}
+
+
 // ===== END CUSTOM CLASSES =====
 
 

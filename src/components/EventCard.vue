@@ -1,29 +1,28 @@
 <template>
-  <div class="card has-text-centered">
-    <header v-on:click="toggle()" class="card-header title fira-mono">
-      <p>{{event}}</p>
-      <div v-bind:class="{'expanded': expanded}" class="icon subtitle is-medium">
-        <i class="fas fa-angle-down"></i> 
-      </div>
-    </header>
-
-    <div v-on:click="toggle()" class="card-content fira-sans-light-italic">
-      <p> <strong>{{location}}</strong>  </p>
-      <p> <strong>{{datetime}}</strong> </p>
-      <p> <strong>{{points}} Points</strong> </p>
+  <div class="event-card-border card has-text-centered">
+    <div v-on:click="toggle()" class="card-content p1 ">
+      <p class="fs-s4 fw-bold mb1">{{event}}</p>
+      <p class="mb1"> {{datetime}}</p>
+      <p class="fira-sans-light-italic mb0"> {{points}} Points</p>
       <div v-if="expanded">
         <br>
-        <p class='title'>About</p>
-        <p> {{description}} </p>
+        <p class='fs-s5 fw-sb mb1'>About</p>
+        <p class="pb1"> {{description}} </p>
       </div>      
     </div>
 
     <div v-if="expanded">
-      <footer class="card-footer">
-        <a class="card-footer-item" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
-        <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Edit</a>
-        <a v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
-        <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees)" class="card-footer-item">See Event</a>
+      <footer class="fs-s7">
+        <div class="divider v-light-grey"></div>
+        <div class="columns m1">
+          <a class="sky-blue-text column p0 border-right" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
+          <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees)" class="p0 sky-blue-text column">Event page</a>
+        </div>
+        <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
+        <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
+          <a  class="column light-green-text p0">Edit</a>
+          <a  class="column light-green-text p0">Delete</a>
+        </div>
       </footer>
     </div>      
 
@@ -50,7 +49,7 @@ export default {
       let utcSeconds = this.time.seconds;
       let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
       date.setUTCSeconds(utcSeconds);
-      let momentTime = moment(date).format('MMMM Do YYYY, h:mm:ss a')
+      let momentTime = moment(date).format('h:mm a -- M/D/YY')
       return momentTime;
     }
   },

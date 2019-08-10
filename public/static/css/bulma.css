@@ -29,9 +29,15 @@
 .light-grey {
   color: #C1C1C1; }
 
+.v-light-grey {
+  color: #f4f4f4; }
+
 body {
   font-family: 'Fira Sans', sans-serif;
   font-size: 12px; }
+
+.fs-s7 {
+  font-size: 0.9em !important; }
 
 .fs-s6 {
   font-size: 1.1em !important; }
@@ -264,7 +270,6 @@ body {
   color: #59abe3 !important; }
 
 .sky-blue-button:hover {
-  border-color: #59abe3 !important;
   background-color: #59abe3 !important;
   color: white !important; }
 
@@ -315,6 +320,12 @@ body {
   border-style: inset;
   border-width: 1px; }
 
+.background-hover-grey {
+  background-color: white; }
+
+.background-hover-grey:hover {
+  background-color: #C1C1C1; }
+
 .no-border {
   border-top-width: 0px !important;
   border-left-width: 0px !important;
@@ -339,6 +350,12 @@ body {
   box-shadow: 0px, 3px, "rgba(0, 0, 0, 0.16)";
   border-width: 2px;
   border-color: #52779c; }
+
+.event-card-border {
+  border-radius: 22px;
+  box-shadow: 0 3px 6px 0 #3c0c0c;
+  border: solid 1px #2c3e50;
+  background-color: white; }
 
 /*! bulma.io v0.7.5 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {

@@ -29,6 +29,9 @@
 .light-grey {
   color: #C1C1C1; }
 
+.light-grey-bg {
+  background-color: #C1C1C1; }
+
 body {
   font-family: 'Fira Sans', sans-serif;
   font-size: 12px; }
@@ -272,6 +275,11 @@ body {
   background-image: linear-gradient(to right, #3db64a, #59abe3);
   color: #ffffff !important; }
 
+.grey-border {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #C1C1C1 !important; }
+
 .button-text {
   font-family: "AvenirNext";
   font-size: 62px !important;
@@ -339,6 +347,9 @@ body {
   box-shadow: 0px, 3px, "rgba(0, 0, 0, 0.16)";
   border-width: 2px;
   border-color: #52779c; }
+
+.hide {
+  display: none !important; }
 
 /*! bulma.io v0.7.5 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {

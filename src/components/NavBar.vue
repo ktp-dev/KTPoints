@@ -1,11 +1,11 @@
 <template>
   <nav class="navbar white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
+      <a class="navbar-item" href="https://kappathetapi.com/" target="_blank">
         <img src="@/assets/ktp_logo.png" width="112" height="28">
       </a>
 
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <a role="button" v-on:click="toggleBurger()" v-bind:class="{ 'is-active': this.showBurger }"  class="navbar-burger burger" aria-label="menu" aria-expanded="true" data-target="navbarBasicExample">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -14,9 +14,9 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item">
+        <router-link to='/landing' class="navbar-item">
           Home
-        </a>
+        </router-link>
         <router-link to='/KTP/Events' class="navbar-item">
           Events
         </router-link>
@@ -33,14 +33,14 @@
             <a class="navbar-item">
               Leaderboard
             </a>
-            <a class="navbar-item">
+            <router-link :to="this.profileLink" class="navbar-item">
               Profile
-            </a>
-            <a class="navbar-item">
+            </router-link>
+            <a href="https://kappathetapi.com/contact-us" target="_blank" class="navbar-item">
               Contact
             </a>
             <hr class="navbar-divider">
-            <a class="navbar-item">
+            <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="navbar-item">
               Report an issue
             </a>
           </div>
@@ -49,23 +49,44 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <div v-if="this.$store.state.userData.standing == rushee"  class="buttons">
-            <a class="button is-primary">
+          <div v-if="this.$store.state.userData.standing === 'rushee' || this.$store.state.userData.standing === 'Guest'"  class="buttons">
+            <router-link to="/" class="button is-primary">
               <strong>Sign up</strong>
-            </a>
-            <a class="button is-light">
-              Log in
-            </a>
+            </router-link>
           </div>
-          <div v-if="this.$store.state.userData.standing != rushee"  class="buttons">
-            <a class="button is-primary">
+          <div v-if="this.$store.state.userData.standing !== 'rushee' && this.$store.state.userData.standing !== 'Guest'"  class="buttons">
+            <router-link :to="this.profileLink" class="button is-primary">
               <strong>{{this.$store.state.userData.name}}</strong>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
     </div>
+    <div class="pt2 columns has-text-centered is-desktop" v-bind:class="{ 'hide': !this.showBurger }" >
+        <router-link to='/landing' class="light-green-text fw-sb column grey-border">
+          Home
+        </router-link>
+        <router-link to='/KTP/Events' class="sky-blue-text fw-sb column grey-border">
+          Events
+        </router-link>
+        <router-link to='/KTP/directory' class="light-green-text fw-sb column grey-border">
+              Directory
+        </router-link>
+        <a class="sky-blue-text fw-sb column grey-border">
+          Leaderboard
+        </a>
+        <router-link  :to="this.profileLink" class="light-green-text fw-sb column grey-border">
+          Profile
+        </router-link>
+        <a href="https://kappathetapi.com/contact-us" target="_blank" class="sky-blue-text fw-sb column grey-border">
+          Contact
+        </a>
+        <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="light-green-text fw-sb column grey-border">
+          Report an issue
+        </a>
+      </div>
   </nav>
+  
 </template>
 
 
@@ -74,7 +95,24 @@ import store from '@/store.js'
 
 export default {
   store,
-}
+  data: function() {
+    return {
+      showBurger: false,
+    }
+  },
+  computed: {
+    profileLink: function(){
+      return "/KTP/users/" + this.$store.state.userData.uniqname
+    }
+  },
+  methods: {
+    toggleBurger: function(){
+      console.log('getting here')
+      this.showBurger = !this.showBurger
+      console.log(this.showBurger)
+    },
+  }
+};
 </script>
 
 <style lang="scss">

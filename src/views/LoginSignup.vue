@@ -336,7 +336,7 @@ export default {
 					.then(() => {
 						this.displayVerficationEmail();
 						console.log(this.sent_email_verification);
-						
+
 						console.log("Email verification Sent");
 					})
 					.catch((error) => {
@@ -372,7 +372,8 @@ export default {
 	  })
 	  .then(() => {
 		  console.log("New user registered!");
-		  router.push({ name: 'landing', params: { username: this.uniqname } });
+		  router.push('/')
+		  // router.push({ name: 'landing', params: { username: this.uniqname } });
 	  })
 	  .catch(function(error) {
 		  console.error("Error writing document: ", error);

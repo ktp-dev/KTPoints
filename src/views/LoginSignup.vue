@@ -25,12 +25,11 @@
 		  <p>It appears we recieved the error <span class="has-text-danger">Your passwords did not match! Please try again!</span> while trying to sign you up, please try again!</p>
 		</section>
 		<footer class="modal-card-foot">
-		  <button class="button" v-on:click="displayPasswordError()">Close</button>
+		  <button class="button" v-on:click="togglePasswordError()">Close</button>
 		</footer>
 	  </div>
-	  <button class="modal-close is-large" v-on:click="displayPasswordError()" aria-label="close"></button>
+	  <button class="modal-close is-large" v-on:click="togglePasswordError()" aria-label="close"></button>
 	</div>
-
 	<div class="modal" v-bind:class="{ 'is-active': sent_email_verification }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
@@ -39,14 +38,9 @@
 		</header>
 		<section class="modal-card-body">
 		  <p>A verification email was sent to <span class="light-green">"{{this.email}}"</span> please check your email
-		  and follow the instructions to continue. <br><br> Not recieving the email? Click <span class="has-text-link">here</span> to resend</p>
-
+		  and verify your email. Afterwards, please reload the page and login! <br><br> Not recieving the email? Click <span class="has-text-link">here</span> to resend</p>
 		</section>
-		<footer class="modal-card-foot">
-		  <button class="button" v-on:click="disableGeneralError()">Close</button>
-		</footer>
 	  </div>
-	  <button class="modal-close is-large" v-on:click="disableGeneralError()" aria-label="close"></button>
 	</div>
 
 	<div class="container middle">
@@ -260,6 +254,8 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 import router from '@/router.js'
 import store from '@/store.js'
+import { auth, db } from '@/main.js'
+
 import * as firebase from 'firebase/app';
 import Dots from '@/components/login/dots.vue';
 import AlreadyHaveAccount from '@/components/login/alreadyHaveAccount.vue';
@@ -307,29 +303,48 @@ export default {
   computed: {
 	email: function(){
 	  return this.uniqname + "@umich.edu"
-	}
+  	}
   },
   methods: {
 	login: function(){
-	  firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-	  .then(() => {
-		console.log('we made it');
-		this.loggedin = true;
-		router.push({ name: 'landing', params: { username: this.uniqname } })
-	  })
-	  .catch((error) => {
-		  console.log("Username or password incorrect");
-		  this.displayGeneralError(error.code, error.message)
-		  console.log(error);
-	  });
+		firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+		.then((credential) => {
+			if (credential.user.emailVerified) {
+				console.log("You're Verified!");
+				console.log('Logged in');
+	  			this.loggedin = true;
+	  			router.push({ name: 'landing', params: { username: this.uniqname } })
+			} else {
+				console.log("You're not verified");
+			}
+		})
+		.catch((error) => {
+			console.log("Username or password incorrect");
+			this.displayGeneralError(error.code, error.message)
+		 });
 	},
 
 	signup: function(){
-
 		console.log("Signup Initiated");
 		if (this.checkPasswords()) {
 			console.log("Passwords Match");
-			firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+			auth.createUserWithEmailAndPassword(this.email, this.password)
+			.then((credential) => {
+				let user = credential.user;
+				if (!user.emailVerified && user) {
+					user.sendEmailVerification()
+					.then(() => {
+						this.displayVerficationEmail();
+						console.log(this.sent_email_verification);
+						
+						console.log("Email verification Sent");
+					})
+					.catch((error) => {
+						console.log("Email verification could not be sent");
+						console.log(error);
+					})
+				}
+			})
 			.then(() => {
 				console.log("New user: " + this.email + " created")
 				this.addInfo();
@@ -342,12 +357,9 @@ export default {
 		} else {
 			console.log("Passwords do not match");
 		}
-
-
 	},
 
 	addInfo: function(){
-	  let db = firebase.firestore();
 	  db.collection("users").doc(this.uniqname).set({
 		name: this.payload.firstname + " " + this.payload.lastname,
 		pledge_class: this.payload.pledge_class,
@@ -376,7 +388,11 @@ export default {
 	  this.signup_error = true;
 	},
 
-	displayPasswordError: function(){
+	displayVerficationEmail: function(){
+		this.sent_email_verification = true;
+	},
+
+	togglePasswordError: function(){
 		this.passwordsMatch = !this.passwordsMatch;
 	},
 

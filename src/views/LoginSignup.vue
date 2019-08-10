@@ -30,6 +30,22 @@
 	  </div>
 	  <button class="modal-close is-large" v-on:click="togglePasswordError()" aria-label="close"></button>
 	</div>
+	<div class="modal" v-bind:class="{ 'is-active': !userVerifiedError }">
+	  <div class="modal-background"></div>
+	  <div class="modal-card">
+		<header class="modal-card-head">
+		  <p class="modal-card-title">Oops!</p>
+		</header>
+		<section class="modal-card-body">
+		  <p>Your email is not verified. Contact an adminstrator to make sure your email is correct.
+		   <br><br> Not recieving the email? Click <span class="has-text-link">here</span> to resend </p>
+		</section>
+		<footer class="modal-card-foot">
+		  <button class="button" v-on:click="toggleLackingVerification()">Close</button>
+		</footer>
+	  </div>
+	  <button class="modal-close is-large" v-on:click="toggleLackingVerification()" aria-label="close"></button>
+	</div>
 	<div class="modal" v-bind:class="{ 'is-active': sent_email_verification }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
@@ -38,7 +54,8 @@
 		</header>
 		<section class="modal-card-body">
 		  <p>A verification email was sent to <span class="light-green">"{{this.email}}"</span> please check your email
-		  and verify your email. Afterwards, please reload the page and login! <br><br> Not recieving the email? Click <span class="has-text-link">here</span> to resend</p>
+		  and verify your email. Afterwards, please reload the page and login! <br><br>
+		  Not recieving the email? Click <span class="has-text-link">here</span> to resend</p>
 		</section>
 	  </div>
 	</div>
@@ -277,6 +294,7 @@ export default {
 	  isSignup3: false,
 	  isSignup4: false,
 	  passwordsMatch: true,
+	  userVerifiedError: true,
 	  error_message: '',
 	  sent_email_verification: false,
 	  link_name: ["Signup now", "Have an account?"],
@@ -316,6 +334,7 @@ export default {
 	  			router.push({ name: 'landing', params: { username: this.uniqname } })
 			} else {
 				console.log("You're not verified");
+				this.toggleLackingVerification();
 			}
 		})
 		.catch((error) => {
@@ -352,7 +371,7 @@ export default {
 			.catch((error) => {
 				console.log('Bad signup');
 				console.log(this.signup_error);
-				this.displayGeneralError(error.code, error.message, this.signup_error);
+				this.displayGeneralError(error.code, error.message);
 		  	});
 		} else {
 			console.log("Passwords do not match");
@@ -384,19 +403,20 @@ export default {
 		return this.passwordsMatch = (this.password === this.confirmPassword ? true : false);
 	},
 
-	displayGeneralError: function(code, message, error){
+	displayGeneralError: function(code, message){
+		console.log(code);
 	  this.error_message = message;
 	  this.signup_error = true;
 	},
-
 	displayVerficationEmail: function(){
 		this.sent_email_verification = true;
 	},
-
 	togglePasswordError: function(){
 		this.passwordsMatch = !this.passwordsMatch;
 	},
-
+	toggleLackingVerification: function(){
+		this.userVerifiedError = !this.userVerifiedError;
+	},
 	disableGeneralError: function(){
 	  this.signup_error = !this.signup_error;
 	  // this.passwordsMatch = !this.passwordsMatch;

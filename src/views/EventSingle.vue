@@ -26,7 +26,7 @@
           <div class="mt2 slate has-text-left">
             Time
           </div>
-          <input v-model="new_time" class="input is-primary" type="time" placeholder="time">
+          <input v-model="newTime" class="input is-primary" type="time" placeholder="time">
           <div class="divider slate"></div>
 
           <div class="mt2 slate has-text-left">
@@ -87,7 +87,7 @@ export default {
       EDIT_STATUS: ['Edit', 'Confirm'],
       uniqname: this.$store.state.userData.uniqname,
       checkInStatus: "Check in to event",
-      new_time: "",
+      newTime: "",
       date: "",
       payload: {
         event: this.event,
@@ -124,13 +124,32 @@ export default {
     },
     triggerEditView: function(){
       if (this.EDITING === 1){
+        if (this.date !== "" && this.newTime !== ""){
 
-        db.collection('events').doc(this.eventhash).update({
-          description: this.payload.description,
-          event: this.payload.event,
-          location: this.payload.location,
-          points: this.payload.points,
-        })
+          let myTimestamp = new Date(this.date + ' ' + this.newTime);
+          myTimestamp = myTimestamp.getTime() / 1000;
+
+          db.collection('events').doc(this.eventhash).update({
+            description: this.payload.description,
+            event: this.payload.event,
+            location: this.payload.location,
+            points: this.payload.points,
+            time: new fbOperation.Timestamp(myTimestamp, 0),
+          })
+
+          let date = new Date(0); 
+          date.setUTCSeconds(myTimestamp);
+          this.payload.time = moment(date).format('MMMM Do YYYY, h:mm:ss a');
+
+        }
+        else {
+          db.collection('events').doc(this.eventhash).update({
+            description: this.payload.description,
+            event: this.payload.event,
+            location: this.payload.location,
+            points: this.payload.points,
+          })
+        }     
       }
       this.EDITING = 1 - this.EDITING;
     },

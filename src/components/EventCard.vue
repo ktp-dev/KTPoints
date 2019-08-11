@@ -66,7 +66,6 @@ export default {
       let description = '&details=' + this.description;
       let location = '&location=' + this.location;
 
-      // console.log(this.time)
       let date = new Date(0); 
       date.setUTCSeconds(this.time.seconds);
       let momentTimeBegin = moment(date).format('YYYYMMDD[T]HHmmss')

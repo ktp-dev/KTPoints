@@ -1,5 +1,6 @@
 <template>
 <div class="section">
+  <NavBar />
   <div class="columns is-centered">
     <div class="column is-6">
       <div class="card has-text-centered">
@@ -75,6 +76,7 @@
 
 <script>
 import store from '@/store.js'
+import NavBar from '@/components/NavBar'
 import {db, fbOperation} from '@/main.js'
 
 export default {

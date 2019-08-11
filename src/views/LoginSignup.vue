@@ -329,6 +329,7 @@ export default {
         points: 0,
         standing: '',
         year: '',
+        imageURL: ''
       },
     disablePledgeClass: false
     }
@@ -375,6 +376,7 @@ export default {
         major: this.payload.major,
         points: 0,
         meetings_left: 0,
+        imageURL: 'https://firebasestorage.googleapis.com/v0/b/ktpoints-68071.appspot.com/o/profile_pictures%2Fanon.jpg?alt=media&token=d247e41a-a235-4750-9e08-b78348e54e90'
       })
       .then(() => {
           console.log("New user registered!");

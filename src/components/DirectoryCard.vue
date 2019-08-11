@@ -35,7 +35,6 @@
 
 <script>
 import smoothReflow from 'vue-smooth-reflow'
-import {storage} from '@/main.js'
 
 export default {
     mixins: [smoothReflow],

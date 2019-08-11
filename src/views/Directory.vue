@@ -219,10 +219,6 @@ export default {
     },
     created() {
         this.users = [];
-        const ref = db.collection('users');
-        ref.onSnapshot((querySnapshot) => {
-            this.num_entries = querySnapshot.docs.length;
-        })
     }
 }
 

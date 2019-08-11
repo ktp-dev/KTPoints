@@ -174,7 +174,7 @@ export default {
             let newUsers = ref.orderBy('uniqname').startAfter(this.last_uniqname);
             var lim = 10;
             var done = false;
-            newUsers.limit(5).get().then((snapshot) => {
+            newUsers.limit(10).get().then((snapshot) => {
             let last = snapshot.docs[snapshot.docs.length - 1];
             this.last_uniqname = last.data().uniqname;
                 
@@ -190,20 +190,38 @@ export default {
                 $state.complete();
             })    
         },
-        searchResults: function(input) {
-            return this.users.filter((user) => {    
-                if (!this.alumShow && user.year == 'Alumni') {
+        searchResults: function(input,$state) {
+            
+            let end_point = input.substring(0, input.length - 1) + String.fromCharCode(input.charCodeAt(input.length - 1) + 1)
+            const ref = db.collection("users");
+            console.log(end_point)
+            let searchUsers = ref.orderBy('uniqname').endAt(input)
+            setTimeout(() => {
+                searchUsers.get().then((snapshot) => {
+                    snapshot.forEach((doc) => {
+                        var user = doc.data();
+                        if (!this.uniqnames.includes(user.uniqname)) {
+                            this.users.push(user);
+                            this.uniqnames.push(user.uniqname)
+                        }
+                        //$state.loaded();
+                    })
+                })
+            },1000)
+            
+            return this.users.filter((user) => {
+                if (!this.alumshow && user.year == 'Alumni') {
                     return false;
-                } 
+                }
                 else if (!this.activeShow && user.year != 'Alumni') {
                     return false;
                 }
                 else {
                     var temp = input.toUpperCase();
-                    return temp === user.name.substring(0,input.length).toUpperCase() ||
-                       temp === user.uniqname.substring(0,input.length).toUpperCase();
+                    return temp === user.name.substring(0,input.length).toUpperCase() || 
+                           temp === user.uniqname.substring(0,input.length).toUpperCase();
                 }
-            })            
+            })         
         },
         toggleActive: function() {
             this.activeShow = !this.activeShow

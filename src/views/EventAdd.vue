@@ -102,20 +102,5 @@ export default {
       });
     },   
   },
-  mounted() {
-    // console.log(firebase.firestore) 
-  }
 }
 </script>
-
-<style lang="scss">
-.card.has-text-centered {
-  .card-header,
-  .card-content,
-  .card-footer {
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-</style>

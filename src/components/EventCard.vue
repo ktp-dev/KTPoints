@@ -114,16 +114,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  .card.has-text-centered {
-    .card-header,
-    .card-content,
-    .card-footer {
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
+<style scoped>
   div .fa-angle-down {
       transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
       transform: none;

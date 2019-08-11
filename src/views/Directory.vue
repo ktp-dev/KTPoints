@@ -1,14 +1,6 @@
 <template>
-        <!--<section id='userDisplay'>
-            <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-                <transition-group name='flip-list' class="columns is-centered is-multiline">
-                <div v-for="directoryInfo in users" :key="directoryInfo.uniqname" class="column is-3">
-                    <directoryCard :key=0 v-bind='directoryInfo'/>
-                </div>
-                </transition-group>
-            </div>
-        </section>-->
         <section id='directory'>
+            <NavBar />
             <section id='searchBar'>
                 <!-- For searching with extra options -->
                 <transition name="slide-right" mode="in-out">
@@ -120,6 +112,7 @@
 <script>
 import DirectoryCard from '@/components/DirectoryCard.vue';
 import InfiniteLoading from 'vue-infinite-loading';
+import NavBar from '@/components/NavBar.vue';
 //import infiniteScroll from 'vue-infinite-scroll';
 import * as firebase from 'firebase/app';
 import {db} from '@/main.js';
@@ -191,23 +184,25 @@ export default {
             })    
         },
         searchResults: function(input,$state) {
-            
-            let end_point = input.substring(0, input.length - 1) + String.fromCharCode(input.charCodeAt(input.length - 1) + 1)
-            const ref = db.collection("users");
-            console.log(end_point)
-            let searchUsers = ref.orderBy('uniqname').endAt(input)
-            setTimeout(() => {
-                searchUsers.get().then((snapshot) => {
-                    snapshot.forEach((doc) => {
-                        var user = doc.data();
-                        if (!this.uniqnames.includes(user.uniqname)) {
-                            this.users.push(user);
-                            this.uniqnames.push(user.uniqname)
-                        }
+            if (this.last_uniqname <  input) {
+                let end_point = input.substring(0, input.length - 1) + String.fromCharCode(input.charCodeAt(input.length - 1) + 1)
+                const ref = db.collection("users");
+                console.log(end_point)
+                let searchUsers = ref.orderBy('uniqname').startAt(input)
+                setTimeout(() => {
+                    searchUsers.limit(10).get().then((snapshot) => {
+                        snapshot.forEach((doc) => {
+                            var user = doc.data();
+                            if (!this.uniqnames.includes(user.uniqname)) {
+                                this.users.push(user);
+                                this.uniqnames.push(user.uniqname)
+                            }
                         //$state.loaded();
+                        })
                     })
-                })
-            },1000)
+                },1000)
+            }
+            
             
             return this.users.filter((user) => {
                 if (!this.alumshow && user.year == 'Alumni') {
@@ -240,7 +235,8 @@ export default {
     },
     components: {
         DirectoryCard, 
-        InfiniteLoading
+        InfiniteLoading,
+        NavBar
     },
     mounted() {
         const ref = db.collection('users');

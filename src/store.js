@@ -16,7 +16,7 @@ export default new Vuex.Store({
     // Use this firestore dictionary object to get information about a user e.g. pledgeclass
     // here is what it looks like
     // USER OBJECTS:
-    // standing, major, meetings_left, name, pledge_class, points, uniqname, year
+    // standing, major, meetings_left, name, pledge_class, points, uniqname, year, 
     userData: null,
   },
 

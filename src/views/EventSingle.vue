@@ -73,40 +73,38 @@
 
 <script>
 import store from '@/store.js'
+import NavBar from '@/components/NavBar'
 import {db, fbOperation} from '@/main.js'
-import NavBar from '@/components/NavBar.vue'
 
 export default {
   store,
-  props: ['event', 'location', 'time', 'points', 'description', 'eventhash', 'attendees'],
+  components: {
+    NavBar
+  },
+  props: ['event', 'location', 'time', 'points', 'description', 'eventhash', 'attendees', 'password'],
   data() {
     return {
-      uniqname: this.$store.state.userData.uniqname,
       ATTENDING: false,
+      EDITING: 0,
+      EDIT_STATUS: ['Edit', 'Confirm'],
+      PASSWORD_MODAL: false,
+      GET_POINTS: false,
+      passwordAttempt: "",
+      eventPassword: "",
+      uniqname: this.$store.state.userData.uniqname,
       checkInStatus: "Check in to event",
+      newTime: "",
+      date: "",
       payload: {
         event: this.event,
         location: this.location,
-        points: this.points,
+        points: parseInt(this.points),
         description: this.description,
         attendees: this.attendees,
         time: this.time,
+        password: this.password,
       },
     }
-  },
-  computed: {
-    attend: function(){
-      if (this.payload.time >  moment().format()) {
-        return "Responded going"
-      }
-      else  {
-        return "Attended"
-      }
-    }
-  },
-
-  components: {
-    NavBar,
   },
   methods: {
     checkInToEvent: function(){
@@ -130,11 +128,64 @@ export default {
           this.checkInStatus = 'Check out of event';
         });
       }
+    },
+    triggerEditView: function(){
+      if (this.EDITING === 1){
+        if (this.date !== "" && this.newTime !== ""){
+
+          let myTimestamp = new Date(this.date + ' ' + this.newTime);
+          myTimestamp = myTimestamp.getTime() / 1000;
+
+          db.collection('events').doc(this.eventhash).update({
+            description: this.payload.description,
+            event: this.payload.event,
+            location: this.payload.location,
+            points: this.payload.points,
+            time: new fbOperation.Timestamp(myTimestamp, 0),
+          })
+
+          let date = new Date(0); 
+          date.setUTCSeconds(myTimestamp);
+          this.payload.time = moment(date).format('MMMM Do YYYY, h:mm:ss a');
+
+        }
+        else {
+          db.collection('events').doc(this.eventhash).update({
+            description: this.payload.description,
+            event: this.payload.event,
+            location: this.payload.location,
+            points: this.payload.points,
+          })
+        }     
+      }
+      this.EDITING = 1 - this.EDITING;
+    },
+    passwordModalToggle: function(){
+      this.PASSWORD_MODAL = !this.PASSWORD_MODAL;
+    },
+    updateEventPassword: function(){
+      db.collection('events').doc(this.eventhash).update({
+        password: this.eventPassword
+      })
+      .then(() => {
+        this.eventPassword = "";
+        this.PASSWORD_MODAL = !this.PASSWORD_MODAL
+      })
+    }
+  },
+
+  computed: {
+    attend: function(){
+      if (this.payload.time >  moment().format()) {
+        return "Responded going"
+      }
+      else  {
+        return "Attended"
+      }
     }
   },
   
   mounted(){
-    console.log(this.payload.attendees)
     if(this.event === undefined){
       // 'event', 'location', 'time', 'points', 'description', 'attendees'
       // make firebase call and set the above information using the eventhash
@@ -150,11 +201,23 @@ export default {
           this.ATTENDING = true;
           this.checkInStatus = 'Check out of event';
         }
+        if (this.$store.state.userData.standing !== 'Guest'){
+          // check if event is in attended event array
+          if (!this.$store.state.userData.attended.includes(this.eventhash)){
+            this.GET_POINTS = true;
+           }
+        }
       })
     }
     else if (this.payload.attendees.includes(this.uniqname)){
       this.ATTENDING = true;
       this.checkInStatus = 'Check out of event';
+    }
+    if (this.$store.state.userData.standing !== 'Guest'){
+      // check if event is in attended event array
+      if (!this.$store.state.userData.attended.includes(this.eventhash)){
+        this.GET_POINTS = true;
+      }
     }
   }
 }

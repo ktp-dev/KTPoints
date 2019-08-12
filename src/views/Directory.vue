@@ -102,7 +102,7 @@
                         <directoryCard :key=0 v-bind='directoryInfo'/>
                     </div>
                 </transition-group>
-                <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+                <!--<infinite-loading @infinite="infiniteHandler"></infinite-loading>-->
             </section>
         </section>
 </template>
@@ -111,7 +111,7 @@
 
 <script>
 import DirectoryCard from '@/components/DirectoryCard.vue';
-import InfiniteLoading from 'vue-infinite-loading';
+//import InfiniteLoading from 'vue-infinite-loading';
 import NavBar from '@/components/NavBar.vue';
 //import infiniteScroll from 'vue-infinite-scroll';
 import * as firebase from 'firebase/app';
@@ -142,12 +142,12 @@ export default {
         }
     },
     methods: {
-        infiniteHandler($state) {
+        /*infiniteHandler($state) {
             const ref = db.collection("users");
             let newUsers = ref.orderBy('uniqname').startAfter(this.last_uniqname);
-            const lim = 5;
+            const lim = 10;
             let done = false;
-            newUsers.limit(5).get().then((snapshot) => {
+            newUsers.limit(lim).get().then((snapshot) => {
             let last = snapshot.docs[snapshot.docs.length - 1];
             this.last_uniqname = last.data().uniqname;
             
@@ -163,15 +163,18 @@ export default {
                 $state.complete();
             })    
         },
+        */
         searchResults: function(input) {
             /*
             if (this.last_uniqname <  input) {
-                let end_point = input.substring(0, input.length - 1) + String.fromCharCode(input.charCodeAt(input.length - 1) + 1)
+                //let end_point = input.substring(0, input.length - 1) + String.fromCharCode(input.charCodeAt(input.length - 1) + 1)
                 const ref = db.collection('users');
                 let searchUsers = ref.orderBy('uniqname').startAt(input)
                 const lim = 3;
                 setTimeout(() => {
                     searchUsers.limit(lim).get().then((snapshot) => {
+                        //let last = snapshot.docs[snapshot.docs.length - 1];
+                        //this.last_uniqname = last.data().uniqname;
                         snapshot.forEach((doc) => {
                             const user = doc.data();
                             if (!this.uniqnames.includes(user.uniqname)) {
@@ -214,11 +217,17 @@ export default {
     },
     components: {
         DirectoryCard, 
-        InfiniteLoading,
+        //InfiniteLoading,
         NavBar
     },
     created() {
         this.users = [];
+        const ref = db.collection('users');
+        ref.onSnapshot((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                this.users.push(doc.data());
+            })
+        })
     }
 }
 

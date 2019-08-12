@@ -1,102 +1,74 @@
 <template>
-<div>
+<div class="gradient pb4">
   <NavBar />
-  <div class="section">
-    <div class="columns is-centered">
-      <div class="column is-6">
-        <div class="card has-text-centered">
-
-          <!-- Not Editing View -->
-          <header v-if="!EDITING" class="card-header title fira-mono">
-            <p>{{payload.event}}</p>
-          </header>
-
-          <!-- Editing View -->
-          <div v-if="EDITING" class="card-content title is-4 fira-sans-light-italic">
-            <div class="slate has-text-left mr2">
-              <p>Title</p>
-            </div>
-            <input class='input is-primary' v-model="payload.event" :placeholder='payload.event'>
-            <div class="divider slate"></div>
-
-            <div class="mt2 slate has-text-left">
-              <p>Location</p>
-            </div>
-            <input class='input is-primary' v-model="payload.location" :placeholder='payload.location'>
-            <div class="divider slate"></div>
-            
-            <div class="mt2 slate has-text-left">
-              Time
-            </div>
-            <input v-model="newTime" class="input is-primary" type="time" placeholder="time">
-            <div class="divider slate"></div>
-
-            <div class="mt2 slate has-text-left">
-              Date
-            </div>
-            <input v-model="date" class="input is-primary" type="date">
-            <div class="divider slate"></div>
-
-            <div class="mt2 slate has-text-left">
-              <p>Points</p>
-            </div>          
-            <input class='input is-primary' v-model="payload.points" :placeholder='payload.points' type="number">
-            <div class="divider slate"></div>
-
-            <div class="mt2 slate has-text-left">
-              <p>Description</p>
-            </div>          
-            <input class='input is-primary' v-model="payload.description" :placeholder='payload.description'>
-            <div class="divider slate"></div>
-          </div>
-
-          <!-- Not Editing View -->
-          <div v-else class="card-content title is-4 fira-sans-light-italic">
-            <p>{{payload.location}}</p>
-            <p>{{payload.time}}</p>
-            <p>{{payload.points}} points</p>
-            <p>{{payload.description}}</p>
-            <div class="divider slate"></div>
-            <p class='mt4 has-text-left'>Attendees</p>
-            <p v-for="(attendee, index) in payload.attendees" :key="index" class='has-text-left'>
-              {{attendee}}
-            </p>
-          </div>
-
-          <!-- show footer if not guest -->
-          <footer v-if="this.$store.state.userData.standing !== 'Guest'" class="card-footer">
-            <a class='card-footer-item'>Add to Calendar</a>
-            <a v-on:click="triggerEditView()" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">{{EDIT_STATUS[EDITING]}}</a>
-            <a v-on:click="passwordModalToggle()" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Set Password</a>
-            <a v-on:click="passwordModalToggle()" v-if="GET_POINTS" class="card-footer-item">Get Points</a>
-            <a class='card-footer-item' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
-          </footer>
+  <div class="container is-centered desktop-width">
+    <div class="mt4">
+      <div class="card landing-card has-text-centered">
+        <div class="fs-s1 fw-bold fira-mono dark-blue">
+          <p>{{payload.event}}</p>
         </div>
+        <div class="card-content pb0 fs-s4 is-4 columns is-multiline">
+          <div class="column is-half">
+            <div class="control is-expanded">
+              <div class="fira-sans-light-italic slate">
+                Where: 
+              </div>
+              <div class=""> {{payload.location}} </div>
+              <div class="divider slate"></div>
+            </div> 
+          </div>
+          <div class="column is-half">
+            <div class="control is-expanded">
+              <div class="fira-sans-light-italic slate">
+                When: 
+              </div>
+              <div class=""> {{payload.time}} </div>
+              <div class="divider slate"></div>
+            </div> 
+          </div>
+          <div class="column is-half">
+            <div class="control is-expanded">
+              <div class="fira-sans-light-italic slate">
+                Points: 
+              </div>
+              <div class=""> {{payload.points}} </div>
+              <div class="divider slate"></div>
+            </div> 
+          </div>
+          <div class="column is-half">
+            <div class="control is-expanded">
+              <div class="fira-sans-light-italic slate">
+                About: 
+              </div>
+              <div class=""> {{payload.description}} </div>
+              <div class="divider slate"></div>
+            </div> 
+          </div>
+        </div>
+        <div class="mt2 ml3 mb3">
+          <p class='mt2 fs-s4 has-text-centered fw-sb pb2'>{{this.attend}}</p>
+          <div class="columns">
+          <p v-for="(attendee, index) in payload.attendees" :key="index" class='fira-sans-light-italic has-text-centered column is-quarter'>
+            {{attendee}}
+          </p>
+          </div>
+        </div>
+        <footer class="fs-s7 ">
+        <div class="divider v-light-grey mb1"></div>
+        <div class="columns is-mobile mb0">
+          <a class='column sky-blue-text p1'>Add to Calendar</a>
+          <a class='column sky-blue-text p1' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
+        </div>
+        <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
+        <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
+          <a  class="column light-green-text pb1 pt0">Edit</a>
+          <a  class="column light-green-text pb1 pt0">Delete</a>
+        </div>
+      </footer>
       </div>
     </div>
   </div>
-  <div class="modal" v-bind:class="{'is-active': PASSWORD_MODAL}">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Set Password</p>
-        <button v-on:click="passwordModalToggle()" class="delete" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
-        <div class="fira-sans-light-italic slate has-text-left">
-          Password
-        </div>
-        <input v-model="eventPassword" class="input is-primary" type="password">
-        <div class="divider slate"></div> 
-      </section>
-      <footer class="modal-card-foot" style="justify-content: flex-end;">
-        <button v-on:click="passwordModalToggle()" class="button">Cancel</button>
-        <button v-on:click="updateEventPassword()" class="button is-success">Set Password</button>
-      </footer>
-    </div>
-</div>
-
-</div>
+  </div>
 </template>
 
 <script>
@@ -201,6 +173,17 @@ export default {
       })
     }
   },
+
+  computed: {
+    attend: function(){
+      if (this.payload.time >  moment().format()) {
+        return "Responded going"
+      }
+      else  {
+        return "Attended"
+      }
+    }
+  },
   
   mounted(){
     if(this.event === undefined){
@@ -222,7 +205,7 @@ export default {
           // check if event is in attended event array
           if (!this.$store.state.userData.attended.includes(this.eventhash)){
             this.GET_POINTS = true;
-          }
+           }
         }
       })
     }

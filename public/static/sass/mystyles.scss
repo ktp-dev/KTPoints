@@ -52,6 +52,9 @@ $primary: $slate;
 .v-light-grey {
     color: $v-light-grey
 }
+.light-grey-bg {
+    background-color: $light-grey
+}
 
 // ===== END COLORS =====
 
@@ -336,6 +339,12 @@ $size4: 32px;
     color: #ffffff!important;
 }
 
+.grey-border {
+    border-style: solid;
+    border-width: 1px;
+    border-color: $light-grey!important;
+}
+
 .button-text {
   font-family: "AvenirNext";
   font-size: 62px!important;
@@ -436,6 +445,9 @@ $size4: 32px;
 }
 
 
+.hide {
+    display: none!important;
+}
 // ===== END CUSTOM CLASSES =====
 
 

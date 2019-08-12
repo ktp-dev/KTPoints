@@ -14,7 +14,7 @@
     <div v-if="expanded">
       <footer class="fs-s7">
         <div class="divider v-light-grey"></div>
-        <div class="columns m1">
+        <div class="columns is-mobile m1">
           <a class="sky-blue-text column p0 border-right" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
           <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees)" class="p0 sky-blue-text column">Event page</a>
         </div>

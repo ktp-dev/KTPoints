@@ -342,7 +342,8 @@ body {
   background-image: radial-gradient(white 5%, #52779c 30%, #2c3e50 40%); }
 
 .gradient {
-  background-image: radial-gradient(white, #2c3e50); }
+  background-image: radial-gradient(white, #2c3e50);
+  min-height: 100vh; }
 
 .landing-card {
   border-radius: 4px;

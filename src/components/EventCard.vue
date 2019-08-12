@@ -22,7 +22,7 @@
       <footer class="card-footer">
         <a class="card-footer-item" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
         <a v-on:click="deleteEvent(id)" v-bind:class="{'delete-color': DELETE_STATUS}" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Delete</a>
-        <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees)" class="card-footer-item">See Event</a>
+        <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees, password)" class="card-footer-item">See Event</a>
       </footer>
     </div>      
 
@@ -39,7 +39,7 @@ import { db } from '@/main.js'
 export default {
   store,
   mixins: [smoothReflow],
-  props: ['event', 'location', 'time', 'points', 'description', 'id', 'attendees'],
+  props: ['event', 'location', 'time', 'points', 'description', 'id', 'attendees', 'password'],
   data(){
     return {
       expanded: false,
@@ -78,7 +78,7 @@ export default {
       window.open(encodedURL, '_blank')
     },
 
-    goToSingleEvent: function(myevent, location, time, points, description, id, attendees){
+    goToSingleEvent: function(myevent, location, time, points, description, id, attendees, password){
       router.push({ name: 'event', 
       params: 
         { 
@@ -88,7 +88,8 @@ export default {
           points: points,
           description: description,
           eventhash: id,
-          attendees: attendees
+          attendees: attendees,
+          password: password
         }
       })
     },

@@ -1,76 +1,101 @@
 <template>
-<div class="section">
+<div>
   <NavBar />
-  <div class="columns is-centered">
-    <div class="column is-6">
-      <div class="card has-text-centered">
+  <div class="section">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div class="card has-text-centered">
 
-        <!-- Not Editing View -->
-        <header v-if="!EDITING" class="card-header title fira-mono">
-          <p>{{payload.event}}</p>
-        </header>
+          <!-- Not Editing View -->
+          <header v-if="!EDITING" class="card-header title fira-mono">
+            <p>{{payload.event}}</p>
+          </header>
 
-        <!-- Editing View -->
-        <div v-if="EDITING" class="card-content title is-4 fira-sans-light-italic">
-          <div class="slate has-text-left mr2">
-            <p>Title</p>
+          <!-- Editing View -->
+          <div v-if="EDITING" class="card-content title is-4 fira-sans-light-italic">
+            <div class="slate has-text-left mr2">
+              <p>Title</p>
+            </div>
+            <input class='input is-primary' v-model="payload.event" :placeholder='payload.event'>
+            <div class="divider slate"></div>
+
+            <div class="mt2 slate has-text-left">
+              <p>Location</p>
+            </div>
+            <input class='input is-primary' v-model="payload.location" :placeholder='payload.location'>
+            <div class="divider slate"></div>
+            
+            <div class="mt2 slate has-text-left">
+              Time
+            </div>
+            <input v-model="newTime" class="input is-primary" type="time" placeholder="time">
+            <div class="divider slate"></div>
+
+            <div class="mt2 slate has-text-left">
+              Date
+            </div>
+            <input v-model="date" class="input is-primary" type="date">
+            <div class="divider slate"></div>
+
+            <div class="mt2 slate has-text-left">
+              <p>Points</p>
+            </div>          
+            <input class='input is-primary' v-model="payload.points" :placeholder='payload.points' type="number">
+            <div class="divider slate"></div>
+
+            <div class="mt2 slate has-text-left">
+              <p>Description</p>
+            </div>          
+            <input class='input is-primary' v-model="payload.description" :placeholder='payload.description'>
+            <div class="divider slate"></div>
           </div>
-          <input class='input is-primary' v-model="payload.event" :placeholder='payload.event'>
-          <div class="divider slate"></div>
 
-          <div class="mt2 slate has-text-left">
-            <p>Location</p>
+          <!-- Not Editing View -->
+          <div v-else class="card-content title is-4 fira-sans-light-italic">
+            <p>{{payload.location}}</p>
+            <p>{{payload.time}}</p>
+            <p>{{payload.points}} points</p>
+            <p>{{payload.description}}</p>
+            <div class="divider slate"></div>
+            <p class='mt4 has-text-left'>Attendees</p>
+            <p v-for="(attendee, index) in payload.attendees" :key="index" class='has-text-left'>
+              {{attendee}}
+            </p>
           </div>
-          <input class='input is-primary' v-model="payload.location" :placeholder='payload.location'>
-          <div class="divider slate"></div>
-          
-          <div class="mt2 slate has-text-left">
-            Time
-          </div>
-          <input v-model="newTime" class="input is-primary" type="time" placeholder="time">
-          <div class="divider slate"></div>
 
-          <div class="mt2 slate has-text-left">
-            Date
-          </div>
-          <input v-model="date" class="input is-primary" type="date">
-          <div class="divider slate"></div>
-
-          <div class="mt2 slate has-text-left">
-            <p>Points</p>
-          </div>          
-          <input class='input is-primary' v-model="payload.points" :placeholder='payload.points' type="number">
-          <div class="divider slate"></div>
-
-          <div class="mt2 slate has-text-left">
-            <p>Description</p>
-          </div>          
-          <input class='input is-primary' v-model="payload.description" :placeholder='payload.description'>
-          <div class="divider slate"></div>
+          <!-- show footer if not guest -->
+          <footer v-if="this.$store.state.userData.standing !== 'Guest'" class="card-footer">
+            <a class='card-footer-item'>Add to Calendar</a>
+            <a v-on:click="triggerEditView()" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">{{EDIT_STATUS[EDITING]}}</a>
+            <a v-on:click="passwordModalToggle()" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">Set Password</a>
+            <a v-on:click="passwordModalToggle()" v-if="GET_POINTS" class="card-footer-item">Get Points</a>
+            <a class='card-footer-item' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
+          </footer>
         </div>
-
-        <!-- Not Editing View -->
-        <div v-else class="card-content title is-4 fira-sans-light-italic">
-          <p>{{payload.location}}</p>
-          <p>{{payload.time}}</p>
-          <p>{{payload.points}} points</p>
-          <p>{{payload.description}}</p>
-          <div class="divider slate"></div>
-          <p class='mt4 has-text-left'>Attendees</p>
-          <p v-for="(attendee, index) in payload.attendees" :key="index" class='has-text-left'>
-            {{attendee}}
-          </p>
-        </div>
-
-        <!-- show footer if not guest -->
-        <footer v-if="this.$store.state.userData.standing !== 'Guest'" class="card-footer">
-          <a class='card-footer-item'>Add to Calendar</a>
-          <a v-on:click="triggerEditView()" v-if="this.$store.state.userData.standing === 'Eboard'" class="card-footer-item">{{EDIT_STATUS[EDITING]}}</a>
-          <a class='card-footer-item' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
-        </footer>
       </div>
     </div>
   </div>
+  <div class="modal" v-bind:class="{'is-active': PASSWORD_MODAL}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Set Password</p>
+        <button v-on:click="passwordModalToggle()" class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="fira-sans-light-italic slate has-text-left">
+          Password
+        </div>
+        <input v-model="eventPassword" class="input is-primary" type="password">
+        <div class="divider slate"></div> 
+      </section>
+      <footer class="modal-card-foot" style="justify-content: flex-end;">
+        <button v-on:click="passwordModalToggle()" class="button">Cancel</button>
+        <button v-on:click="updateEventPassword()" class="button is-success">Set Password</button>
+      </footer>
+    </div>
+</div>
+
 </div>
 </template>
 
@@ -81,12 +106,19 @@ import {db, fbOperation} from '@/main.js'
 
 export default {
   store,
-  props: ['event', 'location', 'time', 'points', 'description', 'eventhash', 'attendees'],
+  components: {
+    NavBar
+  },
+  props: ['event', 'location', 'time', 'points', 'description', 'eventhash', 'attendees', 'password'],
   data() {
     return {
       ATTENDING: false,
       EDITING: 0,
       EDIT_STATUS: ['Edit', 'Confirm'],
+      PASSWORD_MODAL: false,
+      GET_POINTS: false,
+      passwordAttempt: "",
+      eventPassword: "",
       uniqname: this.$store.state.userData.uniqname,
       checkInStatus: "Check in to event",
       newTime: "",
@@ -98,6 +130,7 @@ export default {
         description: this.description,
         attendees: this.attendees,
         time: this.time,
+        password: this.password,
       },
     }
   },
@@ -155,6 +188,18 @@ export default {
       }
       this.EDITING = 1 - this.EDITING;
     },
+    passwordModalToggle: function(){
+      this.PASSWORD_MODAL = !this.PASSWORD_MODAL;
+    },
+    updateEventPassword: function(){
+      db.collection('events').doc(this.eventhash).update({
+        password: this.eventPassword
+      })
+      .then(() => {
+        this.eventPassword = "";
+        this.PASSWORD_MODAL = !this.PASSWORD_MODAL
+      })
+    }
   },
   
   mounted(){
@@ -173,11 +218,23 @@ export default {
           this.ATTENDING = true;
           this.checkInStatus = 'Check out of event';
         }
+        if (this.$store.state.userData.standing !== 'Guest'){
+          // check if event is in attended event array
+          if (!this.$store.state.userData.attended.includes(this.eventhash)){
+            this.GET_POINTS = true;
+          }
+        }
       })
     }
     else if (this.payload.attendees.includes(this.uniqname)){
       this.ATTENDING = true;
       this.checkInStatus = 'Check out of event';
+    }
+    if (this.$store.state.userData.standing !== 'Guest'){
+      // check if event is in attended event array
+      if (!this.$store.state.userData.attended.includes(this.eventhash)){
+        this.GET_POINTS = true;
+      }
     }
   }
 }

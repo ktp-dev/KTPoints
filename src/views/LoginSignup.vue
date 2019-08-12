@@ -336,7 +336,7 @@ export default {
   },
   computed: {
     email: function(){
-      return this.uniqname + "@umich.edu"
+      return this.uniqname.toLowerCase() + "@umich.edu"
     }
   },
   methods: {

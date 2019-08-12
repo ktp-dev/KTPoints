@@ -14,7 +14,7 @@
             <div v-if="current_screen == 'landing'" key="landing" class="mt4 pt4">
               <!-- Button for Logging in -->
               <div class="control">
-                <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+                <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
                   Log In
                 </button>
               </div>

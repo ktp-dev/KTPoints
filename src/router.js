@@ -75,7 +75,7 @@ router.beforeEach((to, from, next) => {
         // Add user to vuex store
         store.commit('addUserAuth', auth.currentUser)
         store.dispatch('addUserData').then(() => {
-          console.log(store.state.userData)
+          // console.log(store.state.userData)
           next()
         })    
       }

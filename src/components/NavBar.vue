@@ -30,9 +30,6 @@
             <router-link to='/KTP/directory' class="navbar-item">
               Directory
             </router-link>
-            <a class="navbar-item">
-              Leaderboard
-            </a>
             <router-link :to="this.profileLink" class="navbar-item">
               Profile
             </router-link>
@@ -70,11 +67,8 @@
           Events
         </router-link>
         <router-link to='/KTP/directory' class="light-green-text fw-sb column grey-border">
-              Directory
+          Directory
         </router-link>
-        <a class="sky-blue-text fw-sb column grey-border">
-          Leaderboard
-        </a>
         <router-link  :to="this.profileLink" class="light-green-text fw-sb column grey-border">
           Profile
         </router-link>

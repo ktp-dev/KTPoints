@@ -96,11 +96,13 @@
           <div class="columns is-mobile mb0">
             <a v-on:click="addToCalendar()" class='column sky-blue-text p1'>Add to Calendar</a>
             <a class='column sky-blue-text p1' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
+            <a class='column sky-blue-text p1'> Get Points </a>
           </div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
             <a v-on:click="triggerEditView()" class="column light-green-text pb1 pt0">{{EDIT_STATUS[EDITING]}}</a>
             <a v-on:click="deleteModalToggle()" class="column light-green-text pb1 pt0">Delete</a>
+            <a v-on:click="passwordModalToggle()" class="column light-green-text pb1 pt0">Edit Password</a>
           </div>
         </footer>
         </div>
@@ -248,7 +250,7 @@ export default {
       })
       .then(() => {
         this.eventPassword = "";
-        this.PASSWORD_MODAL = !this.PASSWORD_MODAL
+        this.passwordModalToggle();
       })
     },
     addToCalendar: function(){

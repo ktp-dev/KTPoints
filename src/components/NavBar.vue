@@ -46,12 +46,12 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <div v-if="this.$store.state.userData.standing === 'rushee' || this.$store.state.userData.standing === 'Guest'"  class="buttons">
+          <div v-if="this.$store.state.userData.standing === 'Guest'"  class="buttons">
             <router-link to="/" class="button is-primary">
               <strong>Sign up</strong>
             </router-link>
           </div>
-          <div v-if="this.$store.state.userData.standing !== 'rushee' && this.$store.state.userData.standing !== 'Guest'"  class="buttons">
+          <div v-if="this.$store.state.userData.standing !== 'Guest'"  class="buttons">
             <router-link :to="this.profileLink" class="button is-primary">
               <strong>{{this.$store.state.userData.name}}</strong>
             </router-link>
@@ -69,13 +69,13 @@
         <router-link to='/directory' class="light-green-text fw-sb column grey-border">
           Directory
         </router-link>
-        <router-link  :to="this.profileLink" class="light-green-text fw-sb column grey-border">
+        <router-link  :to="this.profileLink" class="sky-blue-text fw-sb column grey-border">
           Profile
         </router-link>
-        <a href="https://kappathetapi.com/contact-us" target="_blank" class="sky-blue-text fw-sb column grey-border">
+        <a href="https://kappathetapi.com/contact-us" target="_blank" class="light-green-text fw-sb column grey-border">
           Contact
         </a>
-        <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="light-green-text fw-sb column grey-border">
+        <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="sky-blue-text fw-sb column grey-border">
           Report an issue
         </a>
       </div>
@@ -105,9 +105,7 @@ export default {
   },
   methods: {
     toggleBurger: function(){
-      console.log('getting here')
       this.showBurger = !this.showBurger
-      console.log(this.showBurger)
     },
     getImgURL: function(){
         return this.$store.state.userData.imageURL;
@@ -130,7 +128,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-
-</style>

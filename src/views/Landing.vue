@@ -4,7 +4,7 @@
   <NavBar />
   <div class="container is-centered desktop-width">
     <div class="mt4">
-      <div v-if="this.$store.state.userData.standing === 'Rushee'" class="m1 landing-card p1">
+      <div v-if="this.$store.state.userData.standing === 'Guest'" class="m1 landing-card p1">
         <p class="fw-sb fs-s3 has-text-centered">Welcome</p>
         <p class="fs-s6">
           Thank you for your interest in KTP we’re excited to meet you! 
@@ -32,7 +32,7 @@
             </div>
           </div>
       </div>
-      <div v-if="this.$store.state.userData.standing !== 'Rushee'" class="m1">
+      <div v-if="this.$store.state.userData.standing !== 'Guest'" class="m1">
         <div class="landing-card">
           <div class="card-content">
             <div class="content">

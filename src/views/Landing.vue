@@ -118,7 +118,7 @@ export default {
     RadialProgressBar
   },
   mounted() {
-    console.log(this.$store.state.userData)
+    // console.log(this.$store.state.userData)
     // Firebase Events DB Call
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
@@ -139,8 +139,5 @@ export default {
       }
     })
   },
-  destroyed() {
-    console.log('we out of there')
-  }
 }
 </script>

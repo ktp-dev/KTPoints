@@ -96,7 +96,7 @@
           <div class="columns is-mobile mb0">
             <a v-on:click="addToCalendar()" class='column sky-blue-text p1'>Add to Calendar</a>
             <a class='column sky-blue-text p1' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
-            <a v-on:click="pointsModalToggle()" class='column sky-blue-text p1'>Get Points</a>
+            <a v-if="GET_POINTS_AVAILABLE" v-on:click="pointsModalToggle()" class='column sky-blue-text p1'>Get Points</a>
           </div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
@@ -313,9 +313,10 @@ export default {
           attended: fbOperation.FieldValue.arrayUnion(this.eventhash)
         })
         .then( () => {
-          store.commit('addUserAuth', auth.currentUser)
           this.pointsModalToggle();
-          // commit this to the store
+          this.GET_POINTS_AVAILABLE = false;
+          // this may or may not be required?
+          // store.commit('addAttendedEvent', this.eventhash)
         })
       }
       // check if passwords match

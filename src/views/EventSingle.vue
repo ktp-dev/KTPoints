@@ -96,7 +96,7 @@
           <div class="columns is-mobile mb0">
             <a v-on:click="addToCalendar()" class='column sky-blue-text p1'>Add to Calendar</a>
             <a class='column sky-blue-text p1' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
-            <a class='column sky-blue-text p1'> Get Points </a>
+            <a v-on:click="pointsModalToggle()" class='column sky-blue-text p1'>Get Points</a>
           </div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
@@ -140,6 +140,27 @@
         <footer class="modal-card-foot" style="justify-content: flex-end;">
           <button v-on:click="passwordModalToggle()" class="button">Cancel</button>
           <button v-on:click="updateEventPassword()" class="button is-success">Set Password</button>
+        </footer>
+      </div>
+    </div>
+
+    <div class="modal" v-bind:class="{'is-active': GET_POINTS}">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Receive Points</p>
+          <button v-on:click="pointsModalToggle()" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="fira-sans-light-italic slate has-text-left">
+            Enter Event Password
+          </div>
+          <input v-model="passwordAttempt" class="input is-primary" type="password">
+          <div class="divider slate"></div> 
+        </section>
+        <footer class="modal-card-foot" style="justify-content: flex-end;">
+          <button v-on:click="pointsModalToggle()" class="button">Cancel</button>
+          <button v-on:click="addPointsToUser()" class="button is-success">Get Points</button>
         </footer>
       </div>
     </div>
@@ -244,6 +265,9 @@ export default {
     passwordModalToggle: function(){
       this.PASSWORD_MODAL = !this.PASSWORD_MODAL;
     },
+    pointsModalToggle: function(){
+      this.GET_POINTS = !this.GET_POINTS;
+    },
     updateEventPassword: function(){
       db.collection('events').doc(this.eventhash).update({
         password: this.eventPassword
@@ -278,6 +302,13 @@ export default {
       .catch(function(error) {
           // console.error("Error removing document: ", error);
       });
+    },
+    addPointsToUser: function(){
+      // check if user attended event
+      // check if passwords match
+      // if both true, add this.points to user.points
+      // untoggle modal
+      // make get_points modal disappear so they can't get points again
     }
   },
 
@@ -311,7 +342,7 @@ export default {
         if (this.$store.state.userData.standing !== 'Guest'){
           // check if event is in attended event array
           if (!this.$store.state.userData.attended.includes(this.eventhash)){
-            this.GET_POINTS = true;
+            // this.GET_POINTS = true;
            }
         }
       })
@@ -323,7 +354,7 @@ export default {
     if (this.$store.state.userData.standing !== 'Guest'){
       // check if event is in attended event array
       if (!this.$store.state.userData.attended.includes(this.eventhash)){
-        this.GET_POINTS = true;
+        // this.GET_POINTS = true;
       }
     }
   }

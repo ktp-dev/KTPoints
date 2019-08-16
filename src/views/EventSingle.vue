@@ -94,7 +94,7 @@
           <footer class="fs-s7 ">
           <div class="divider v-light-grey mb1"></div>
           <div class="columns is-mobile mb0">
-            <a class='column sky-blue-text p1'>Add to Calendar</a>
+            <a v-on:click="addToCalendar()" class='column sky-blue-text p1'>Add to Calendar</a>
             <a class='column sky-blue-text p1' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
           </div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
@@ -184,7 +184,7 @@ export default {
 
           let date = new Date(0); 
           date.setUTCSeconds(myTimestamp);
-          this.payload.time = moment(date).format('MMMM Do YYYY, h:mm:ss a');
+          this.payload.time = moment(date).format('h:mm a -- M/D/YY');
 
         }
         else {
@@ -209,7 +209,22 @@ export default {
         this.eventPassword = "";
         this.PASSWORD_MODAL = !this.PASSWORD_MODAL
       })
-    }
+    },
+    addToCalendar: function(){
+      let baseurl = 'https://www.google.com/calendar/event?action=TEMPLATE';
+      let title = '&text=' + this.payload.event;
+      let description = '&details=' + this.payload.description;
+      let location = '&location=' + this.payload.location;
+      
+      let momentDate = new Date(this.payload.time.replace("--", ""))
+      let momentTimeBegin = moment(momentDate).format('YYYYMMDD[T]HHmmss')
+      let momentTimeEnd = moment(momentDate).add('1', 'hours').format('YYYYMMDD[T]HHmmss')
+      let dates = '&dates=' + momentTimeBegin + '/' + momentTimeEnd;
+      let gcalURL = baseurl + title + description + location + dates;
+
+      let encodedURL = encodeURI(gcalURL)
+      window.open(encodedURL, '_blank')
+    },
   },
 
   computed: {
@@ -232,7 +247,7 @@ export default {
         let utcSeconds = this.payload.time.seconds;
         let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
         date.setUTCSeconds(utcSeconds);
-        this.payload.time = moment(date).format('MMMM Do YYYY, h:mm:ss a')
+        this.payload.time = moment(date).format('h:mm a -- M/D/YY')
       })
       .then(() => {
         if (this.payload.attendees.includes(this.uniqname)){

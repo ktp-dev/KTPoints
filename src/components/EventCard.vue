@@ -77,13 +77,13 @@ export default {
       window.open(encodedURL, '_blank')
     },
 
-    goToSingleEvent: function(myevent, location, time, points, description, id, attendees, password){
+    goToSingleEvent: function(myevent, location, datetime, points, description, id, attendees, password){
       router.push({ name: 'event', 
       params: 
         { 
           event: myevent, 
           location: location, 
-          time: time, 
+          time: datetime, 
           points: points,
           description: description,
           eventhash: id,

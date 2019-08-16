@@ -97,7 +97,7 @@ export default {
   },
   computed: {
     profileLink: function(){
-      return "/KTP/users/" + this.$store.state.userData.uniqname
+      return "/users/" + this.$store.state.userData.uniqname
     }
   },
   methods: {

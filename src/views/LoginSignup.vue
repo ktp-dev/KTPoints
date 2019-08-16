@@ -101,6 +101,7 @@
                         <select class="no-border" v-model='payload.standing'>
                           <option value=""></option>
                           <option value="Guest">Rushee</option>
+                          <option value="Guest">Pledge</option>
                           <option>Active</option>
                         </select>
                       </div>  

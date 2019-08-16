@@ -97,6 +97,9 @@ export default {
   },
   computed: {
     profileLink: function(){
+      if (this.$store.state.userData.uniqname === undefined){
+        return '/'
+      }
       return "/users/" + this.$store.state.userData.uniqname
     }
   },

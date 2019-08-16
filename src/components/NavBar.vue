@@ -17,7 +17,7 @@
         <router-link to='/landing' class="navbar-item">
           Home
         </router-link>
-        <router-link to='/KTP/Events' class="navbar-item">
+        <router-link to='/events' class="navbar-item">
           Events
         </router-link>
 
@@ -27,7 +27,7 @@
           </a>
 
           <div class="navbar-dropdown">
-            <router-link to='/KTP/directory' class="navbar-item">
+            <router-link to='/directory' class="navbar-item">
               Directory
             </router-link>
             <router-link :to="this.profileLink" class="navbar-item">
@@ -63,10 +63,10 @@
         <router-link to='/landing' class="light-green-text fw-sb column grey-border">
           Home
         </router-link>
-        <router-link to='/KTP/Events' class="sky-blue-text fw-sb column grey-border">
+        <router-link to='/events' class="sky-blue-text fw-sb column grey-border">
           Events
         </router-link>
-        <router-link to='/KTP/directory' class="light-green-text fw-sb column grey-border">
+        <router-link to='/directory' class="light-green-text fw-sb column grey-border">
           Directory
         </router-link>
         <router-link  :to="this.profileLink" class="light-green-text fw-sb column grey-border">

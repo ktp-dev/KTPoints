@@ -55,6 +55,9 @@
             <router-link :to="this.profileLink" class="button is-primary">
               <strong>{{this.$store.state.userData.name}}</strong>
             </router-link>
+            <router-link :to="'/'" class="button is-primary">
+              <strong v-on:click="logout()">Sign Out</strong>
+            </router-link>
           </div>
         </div>
       </div>
@@ -86,7 +89,7 @@
 
 <script>
 import store from '@/store.js'
-
+import { auth } from '@/main.js'
 export default {
   store,
 
@@ -124,6 +127,11 @@ export default {
     },
     getYear: function(){
         return this.$store.state.userData.year;
+    },
+    logout: function(){
+      auth.signOut().then(()=>{
+        store.commit('signOut')
+      })
     }
   }
 };

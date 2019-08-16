@@ -100,7 +100,7 @@
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
             <a v-on:click="triggerEditView()" class="column light-green-text pb1 pt0">{{EDIT_STATUS[EDITING]}}</a>
-            <a  class="column light-green-text pb1 pt0">Delete</a>
+            <a v-on:click="deleteEvent()" class="column light-green-text pb1 pt0">Delete</a>
           </div>
         </footer>
         </div>
@@ -113,6 +113,7 @@
 import store from '@/store.js'
 import NavBar from '@/components/NavBar'
 import {db, fbOperation} from '@/main.js'
+import router from '@/router.js'
 
 export default {
   store,
@@ -215,7 +216,7 @@ export default {
       let title = '&text=' + this.payload.event;
       let description = '&details=' + this.payload.description;
       let location = '&location=' + this.payload.location;
-      
+
       let momentDate = new Date(this.payload.time.replace("--", ""))
       let momentTimeBegin = moment(momentDate).format('YYYYMMDD[T]HHmmss')
       let momentTimeEnd = moment(momentDate).add('1', 'hours').format('YYYYMMDD[T]HHmmss')
@@ -225,6 +226,16 @@ export default {
       let encodedURL = encodeURI(gcalURL)
       window.open(encodedURL, '_blank')
     },
+    deleteEvent: function(){
+      db.collection("events").doc(this.eventhash).delete()
+      .then(function() {
+        router.push({ name: 'events' })
+        // console.log("Document successfully deleted!");
+      })
+      .catch(function(error) {
+          // console.error("Error removing document: ", error);
+      });
+    }
   },
 
   computed: {

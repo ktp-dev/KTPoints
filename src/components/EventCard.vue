@@ -36,6 +36,7 @@ import store from '@/store.js'
 import { db } from '@/main.js'
 
 export default {
+  
   store,
   mixins: [smoothReflow],
   props: ['event', 'location', 'time', 'points', 'description', 'id', 'attendees', 'password'],
@@ -100,10 +101,10 @@ export default {
       }
       db.collection("events").doc(id).delete()
       .then(function() {
-        console.log("Document successfully deleted!");
+        // console.log("Document successfully deleted!");
       })
       .catch(function(error) {
-          console.error("Error removing document: ", error);
+          // console.error("Error removing document: ", error);
       });
     }
   },

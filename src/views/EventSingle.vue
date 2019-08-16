@@ -1,73 +1,111 @@
 <template>
-<div class="gradient pb4">
-  <NavBar />
-  <div class="container is-centered desktop-width">
-    <div class="mt4">
-      <div class="card landing-card has-text-centered">
-        <div class="fs-s1 fw-bold fira-mono dark-blue">
-          <p>{{payload.event}}</p>
-        </div>
-        <div class="card-content pb0 fs-s4 is-4 columns is-multiline">
-          <div class="column is-half">
-            <div class="control is-expanded">
-              <div class="fira-sans-light-italic slate">
-                Where: 
-              </div>
-              <div class=""> {{payload.location}} </div>
-              <div class="divider slate"></div>
-            </div> 
+  <div class="gradient pb4">
+    <NavBar />
+    <div id='lrpadding' class="container is-centered desktop-width">
+      <div class="mt4">
+        <div class="card landing-card has-text-centered">
+          <div class="fs-s1 fw-bold fira-mono dark-blue">
+            <p>{{payload.event}}</p>
           </div>
-          <div class="column is-half">
-            <div class="control is-expanded">
-              <div class="fira-sans-light-italic slate">
-                When: 
-              </div>
-              <div class=""> {{payload.time}} </div>
-              <div class="divider slate"></div>
-            </div> 
+          <div class="card-content pb0 fs-s4 is-4 columns is-multiline">
+            <div class="column is-half">
+              <div v-if="!EDITING" class="control is-expanded">
+                <div class="fira-sans-light-italic slate">
+                  Where: 
+                </div>
+                <div> {{payload.location}} </div>
+                <div class="divider slate"></div>
+              </div> 
+              <div v-else class="control is-expanded">
+                <div class="fira-sans-light-italic slate">
+                  Event: 
+                </div>
+                <input v-model="payload.event" class="input is-primary fira-mono" type="text">
+                <div class="divider slate"></div>
+                <div class="mt2 fira-sans-light-italic slate">
+                  Where: 
+                </div>
+                <input v-model="payload.location" class="input is-primary fira-mono" type="text">
+                <div class="divider slate"></div>
+              </div> 
+            </div>
+            <div class="column is-half">
+              <div v-if="!EDITING" class="control is-expanded">
+                <div class="fira-sans-light-italic slate">
+                  When: 
+                </div>
+                <div class=""> {{payload.time}} </div>
+                <div class="divider slate"></div>
+              </div> 
+              <div v-else class="control is-expanded">
+                <div class="fira-sans-light-italic slate">
+                  Time (optional): 
+                </div>
+                <input v-model="newTime" class="input is-primary fira-mono" type="time">
+                <div class="divider slate"></div>
+                <div class="mt2 fira-sans-light-italic slate">
+                  Date (optional): 
+                </div>
+                <input v-model="date" class="input is-primary fira-mono" type="date">
+                <div class="divider slate"></div>
+              </div> 
+            </div>
+            <div class="column is-half">
+              <div v-if="!EDITING" class="control is-expanded">
+                <div class="fira-sans-light-italic slate">
+                  Points: 
+                </div>
+                <div class=""> {{payload.points}} </div>
+                <div class="divider slate"></div>
+              </div> 
+              <div v-else class="control is-expanded">
+                <div class="fira-sans-light-italic slate">
+                  Points: 
+                </div>
+                <input v-model="payload.points" class="input is-primary" type="number">
+                <div class="divider slate"></div>
+              </div> 
+            </div>
+            <div class="column is-half">
+              <div v-if="!EDITING" class="control is-expanded">
+                <div class="fira-sans-light-italic slate">
+                  About: 
+                </div>
+                <div class=""> {{payload.description}} </div>
+                <div class="divider slate"></div>
+              </div> 
+              <div v-else class="control is-expanded">
+                <div class="fira-sans-light-italic slate">
+                  About: 
+                </div>
+                <input v-model="payload.description" class="input is-primary" type="text">
+                <div class="divider slate"></div>
+              </div> 
+            </div>
           </div>
-          <div class="column is-half">
-            <div class="control is-expanded">
-              <div class="fira-sans-light-italic slate">
-                Points: 
-              </div>
-              <div class=""> {{payload.points}} </div>
-              <div class="divider slate"></div>
-            </div> 
+          <div class="mt2 ml3 mb3">
+            <p class='mt2 fs-s4 has-text-centered fw-sb pb2'>{{this.attend}}</p>
+            <div class="columns">
+            <p v-for="(attendee, index) in payload.attendees" :key="index" class='fira-sans-light-italic has-text-centered column is-quarter'>
+              {{attendee}}
+            </p>
+            </div>
           </div>
-          <div class="column is-half">
-            <div class="control is-expanded">
-              <div class="fira-sans-light-italic slate">
-                About: 
-              </div>
-              <div class=""> {{payload.description}} </div>
-              <div class="divider slate"></div>
-            </div> 
+          <footer class="fs-s7 ">
+          <div class="divider v-light-grey mb1"></div>
+          <div class="columns is-mobile mb0">
+            <a class='column sky-blue-text p1'>Add to Calendar</a>
+            <a class='column sky-blue-text p1' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
           </div>
-        </div>
-        <div class="mt2 ml3 mb3">
-          <p class='mt2 fs-s4 has-text-centered fw-sb pb2'>{{this.attend}}</p>
-          <div class="columns">
-          <p v-for="(attendee, index) in payload.attendees" :key="index" class='fira-sans-light-italic has-text-centered column is-quarter'>
-            {{attendee}}
-          </p>
+          <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
+          <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
+            <a v-on:click="triggerEditView()" class="column light-green-text pb1 pt0">{{EDIT_STATUS[EDITING]}}</a>
+            <a  class="column light-green-text pb1 pt0">Delete</a>
           </div>
+        </footer>
         </div>
-        <footer class="fs-s7 ">
-        <div class="divider v-light-grey mb1"></div>
-        <div class="columns is-mobile mb0">
-          <a class='column sky-blue-text p1'>Add to Calendar</a>
-          <a class='column sky-blue-text p1' v-on:click="checkInToEvent()">{{checkInStatus}}</a>
-        </div>
-        <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
-        <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
-          <a  class="column light-green-text pb1 pt0">Edit</a>
-          <a  class="column light-green-text pb1 pt0">Delete</a>
-        </div>
-      </footer>
       </div>
     </div>
-  </div>
   </div>
 </template>
 

@@ -100,12 +100,48 @@
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
             <a v-on:click="triggerEditView()" class="column light-green-text pb1 pt0">{{EDIT_STATUS[EDITING]}}</a>
-            <a v-on:click="deleteEvent()" class="column light-green-text pb1 pt0">Delete</a>
+            <a v-on:click="deleteModalToggle()" class="column light-green-text pb1 pt0">Delete</a>
           </div>
         </footer>
         </div>
       </div>
     </div>
+
+    <div class="modal" v-bind:class="{'is-active': DELETE_TOGGLE}">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Are you sure you want to delete this event?</p>
+          <button v-on:click="deleteModalToggle()" class="delete" aria-label="close"></button>
+        </header>
+        <footer class="modal-card-foot" style="justify-content: flex-end;">
+          <button v-on:click="deleteModalToggle()" class="button">Cancel</button>
+          <button v-on:click="deleteEvent()" class="button is-danger">Delete Event</button>
+        </footer>
+      </div>
+    </div>
+    
+    <div class="modal" v-bind:class="{'is-active': PASSWORD_MODAL}">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Set Password</p>
+          <button v-on:click="passwordModalToggle()" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="fira-sans-light-italic slate has-text-left">
+            Password
+          </div>
+          <input v-model="eventPassword" class="input is-primary" type="password">
+          <div class="divider slate"></div> 
+        </section>
+        <footer class="modal-card-foot" style="justify-content: flex-end;">
+          <button v-on:click="passwordModalToggle()" class="button">Cancel</button>
+          <button v-on:click="updateEventPassword()" class="button is-success">Set Password</button>
+        </footer>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -128,6 +164,7 @@ export default {
       EDIT_STATUS: ['Edit', 'Confirm'],
       PASSWORD_MODAL: false,
       GET_POINTS: false,
+      DELETE_TOGGLE: false,
       passwordAttempt: "",
       eventPassword: "",
       uniqname: this.$store.state.userData.uniqname,
@@ -199,6 +236,9 @@ export default {
       }
       this.EDITING = 1 - this.EDITING;
     },
+    deleteModalToggle: function(){
+      this.DELETE_TOGGLE = !this.DELETE_TOGGLE;
+    },
     passwordModalToggle: function(){
       this.PASSWORD_MODAL = !this.PASSWORD_MODAL;
     },
@@ -229,6 +269,7 @@ export default {
     deleteEvent: function(){
       db.collection("events").doc(this.eventhash).delete()
       .then(function() {
+        this.deleteModalToggle();
         router.push({ name: 'events' })
         // console.log("Document successfully deleted!");
       })

@@ -20,20 +20,20 @@
         </div>
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
-          <a v-on:click="modalToggle()" v-if="this.$store.state.userData.standing === 'Eboard'" class="p0 light-green-text column">Delete</a>
+          <a v-on:click="deleteModalToggle()" v-if="this.$store.state.userData.standing === 'Eboard'" class="p0 light-green-text column">Delete</a>
         </div>
       </footer>
     </div>      
 
-    <div class="modal" v-bind:class="{'is-active': MODAL_TOGGLE}">
+    <div class="modal" v-bind:class="{'is-active': DELETE_MODAL_TOGGLE}">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Are you sure you want to delete this event?</p>
-          <button v-on:click="modalToggle()" class="delete" aria-label="close"></button>
+          <button v-on:click="deleteModalToggle()" class="delete" aria-label="close"></button>
         </header>
         <footer class="modal-card-foot" style="justify-content: flex-end;">
-          <button v-on:click="modalToggle()" class="button">Cancel</button>
+          <button v-on:click="deleteModalToggle()" class="button">Cancel</button>
           <button v-on:click="deleteEvent(id)" class="button is-danger">Delete Event</button>
         </footer>
       </div>
@@ -56,7 +56,7 @@ export default {
   data(){
     return {
       expanded: false,
-      MODAL_TOGGLE: false,
+      DELETE_MODAL_TOGGLE: false,
     }
   },
   computed: {
@@ -73,8 +73,8 @@ export default {
       this.expanded = !this.expanded;
     },
 
-    modalToggle: function(){
-      this.MODAL_TOGGLE = !this.MODAL_TOGGLE;
+    deleteModalToggle: function(){
+      this.DELETE_MODAL_TOGGLE = !this.DELETE_MODAL_TOGGLE;
     },
 
     addToCalendar: function(){
@@ -112,7 +112,7 @@ export default {
     },
 
     deleteEvent: function(id){
-      this.modalToggle();
+      this.deleteModalToggle();
       db.collection("events").doc(id).delete()
       .then(function() {
         // console.log("Document successfully deleted!");

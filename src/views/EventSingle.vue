@@ -134,7 +134,7 @@
           <div class="fira-sans-light-italic slate has-text-left">
             Password
           </div>
-          <input v-model="eventPassword" class="input is-primary" type="password">
+          <input v-on:keyup.enter="updateEventPassword()" v-model="eventPassword" class="input is-primary" type="password">
           <div class="divider slate"></div> 
         </section>
         <footer class="modal-card-foot" style="justify-content: flex-end;">
@@ -155,7 +155,7 @@
           <div class="fira-sans-light-italic slate has-text-left">
             Enter Event Password
           </div>
-          <input v-model="passwordAttempt" class="input is-primary" type="password">
+          <input v-on:keyup.enter="addPointsToUser()" v-model="passwordAttempt" class="input is-primary" type="password">
           <div class="divider slate"></div> 
         </section>
         <footer class="modal-card-foot" style="justify-content: flex-end;">
@@ -187,6 +187,7 @@ export default {
       EDIT_STATUS: ['Edit', 'Confirm'],
       PASSWORD_MODAL: false,
       GET_POINTS: false,
+      GET_POINTS_AVAILABLE: false,
       DELETE_TOGGLE: false,
       passwordAttempt: "",
       eventPassword: "",
@@ -304,11 +305,27 @@ export default {
       });
     },
     addPointsToUser: function(){
-      // check if user attended event
+      // need to add error message if wrong password
+      let uniqname = this.$store.state.userData.uniqname
+      if (this.payload.password === this.passwordAttempt){
+        db.collection('users').doc(uniqname).update({
+          points: fbOperation.FieldValue.increment(parseInt(this.payload.points)),
+          attended: fbOperation.FieldValue.arrayUnion(this.eventhash)
+        })
+        .then( () => {
+          store.commit('addUserAuth', auth.currentUser)
+          this.pointsModalToggle();
+          // commit this to the store
+        })
+      }
       // check if passwords match
       // if both true, add this.points to user.points
       // untoggle modal
       // make get_points modal disappear so they can't get points again
+      // might need more than 1 variable
+      // don't want to remove a user from the array, but might be necessary
+      // check recently attended events and if the hash is there, don't allow it
+      // need to add about_me, career interests, and recently attended events for everyone
     }
   },
 
@@ -342,7 +359,7 @@ export default {
         if (this.$store.state.userData.standing !== 'Guest'){
           // check if event is in attended event array
           if (!this.$store.state.userData.attended.includes(this.eventhash)){
-            // this.GET_POINTS = true;
+            this.GET_POINTS_AVAILABLE = true;
            }
         }
       })
@@ -354,7 +371,7 @@ export default {
     if (this.$store.state.userData.standing !== 'Guest'){
       // check if event is in attended event array
       if (!this.$store.state.userData.attended.includes(this.eventhash)){
-        // this.GET_POINTS = true;
+        this.GET_POINTS_AVAILABLE = true;
       }
     }
   }

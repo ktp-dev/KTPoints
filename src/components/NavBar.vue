@@ -56,7 +56,7 @@
               <strong>{{this.$store.state.userData.name}}</strong>
             </router-link>
             <router-link :to="'/'" class="button is-primary">
-              <strong v-on:click="logout()">Sign Out</strong>
+              <strong v-on:click="signOut()">Sign Out</strong>
             </router-link>
           </div>
         </div>
@@ -81,6 +81,9 @@
         <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="sky-blue-text fw-sb column grey-border">
           Report an issue
         </a>
+        <router-link :to="'/'" class="light-green-text fw-sb column grey-border">
+          <p v-on:click="signOut()">Sign Out</p>
+        </router-link>
       </div>
   </nav>
   
@@ -128,7 +131,7 @@ export default {
     getYear: function(){
         return this.$store.state.userData.year;
     },
-    logout: function(){
+    signOut: function(){
       auth.signOut().then(()=>{
         store.commit('signOut')
       })

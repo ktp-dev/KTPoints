@@ -20,10 +20,24 @@
         </div>
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
-          <a v-on:click="deleteEvent(id)" v-bind:class="{'delete-color': DELETE_STATUS}" v-if="this.$store.state.userData.standing === 'Eboard'" class="p0 light-green-text column">Delete</a>
+          <a v-on:click="modalToggle()" v-if="this.$store.state.userData.standing === 'Eboard'" class="p0 light-green-text column">Delete</a>
         </div>
       </footer>
     </div>      
+
+    <div class="modal" v-bind:class="{'is-active': MODAL_TOGGLE}">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Are you sure you want to delete this event?</p>
+          <button v-on:click="modalToggle()" class="delete" aria-label="close"></button>
+        </header>
+        <footer class="modal-card-foot" style="justify-content: flex-end;">
+          <button v-on:click="modalToggle()" class="button">Cancel</button>
+          <button v-on:click="deleteEvent(id)" class="button is-danger">Delete Event</button>
+        </footer>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -36,14 +50,13 @@ import store from '@/store.js'
 import { db } from '@/main.js'
 
 export default {
-  
   store,
   mixins: [smoothReflow],
   props: ['event', 'location', 'time', 'points', 'description', 'id', 'attendees', 'password'],
   data(){
     return {
       expanded: false,
-      DELETE_STATUS: false,
+      MODAL_TOGGLE: false,
     }
   },
   computed: {
@@ -58,6 +71,10 @@ export default {
   methods: {
     toggle: function(){
       this.expanded = !this.expanded;
+    },
+
+    modalToggle: function(){
+      this.MODAL_TOGGLE = !this.MODAL_TOGGLE;
     },
 
     addToCalendar: function(){
@@ -95,10 +112,7 @@ export default {
     },
 
     deleteEvent: function(id){
-      if (this.DELETE_STATUS === false){
-        this.DELETE_STATUS = true;
-        return;
-      }
+      this.modalToggle();
       db.collection("events").doc(id).delete()
       .then(function() {
         // console.log("Document successfully deleted!");
@@ -113,18 +127,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-  div .fa-angle-down {
-      transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-      transform: none;
-  }
-
-  div.expanded .fa-angle-down {
-      transform: rotate(180deg);
-  }
-
-  .delete-color {
-    color: red;
-  }
-</style>

@@ -46,12 +46,12 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <div v-if="this.$store.state.userData.standing === 'Guest'"  class="buttons">
+          <div v-if="this.$store.state.userData.uniqname === null"  class="buttons">
             <router-link to="/" class="button is-primary">
               <strong>Sign up</strong>
             </router-link>
           </div>
-          <div v-if="this.$store.state.userData.standing !== 'Guest'"  class="buttons">
+          <div v-if="this.$store.state.userData.uniqname !== null"  class="buttons">
             <router-link :to="this.profileLink" class="button is-primary">
               <strong>{{this.$store.state.userData.name}}</strong>
             </router-link>

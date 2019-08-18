@@ -2,66 +2,10 @@
         <section id='directory'>
             <NavBar />
             <section id='searchBar'>
-                <!-- For searching with extra options -->
-                <transition name="slide-right" mode="in-out">
-                <transition name="slide-right" mode="out-in">
-                <section v-if="searchOptions" id='optSearch'>
-                    <div class="field is-horizontal">
-                        <div class="field-body">
-                            <!-- Search Bar -->
-                            <div class="field is-expanded is-centered">
-                                <div class="control is-expanded has-icons-left has-icons-right">
-                                    <input v-model='input' class="input" type="text" placeholder="Search">
-                                    <span class="icon is-small is-left">
-                                        <i class="fas fa-user"></i>
-                                    </span>
-                                    <span class="icon is-small is-right">
-                                        <i class="fas fa-search"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Search options and settings button -->
-                        <div v-if="searchOptions" class="field is-pulled-right">
-                            <div class="columns is-mobile is-centered">
-                                <div class="column is-one-third">
-                                    <input id="activeSwitch" type="checkbox" name="activeSwitch" 
-                                        v-on:click="toggleActive()"
-                                        class="switch is-rounded" checked="checked" v-model="activeShow">
-                                    <label for="activeSwitch">Actives</label>
-                                </div>
-
-                                <div class="column is-one-third">
-                                    <input id="alumSwitch" type="checkbox" name="alumSwitch" 
-                                        v-on:click="toggleAlum()"
-                                        class="switch is-rounded" checked="unchecked" v-model="alumShow">
-                                    <label for="activeSwitch">Alumni</label>
-                                </div>
-                                        
-                                <!-- Settings button -->
-                                <div class="column is-one-third">
-                                    <div class="control">
-                                        <a v-on:click="toggleSearchOptions()" class="button">
-                                            <span class="icon is-small is-right">
-                                                <i class="fas fa-cog"></i>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                </transition>
-                </transition>
-                
-
                 <!-- For searching without the extra options -->
                 <transition name="slide-right" mode="in-out">
                 <transition name="slide-right" mode="out-in">
-                <section v-if="notSearchOptions" id='noOptSearch'>
+                <section id='noOptSearch'>
                     <div class="field is-horizontal">
                         <div class="field-label"></div>
                         <div class="field-body is-expanded">
@@ -94,6 +38,132 @@
                 </section>
                 </transition>
                 </transition>
+
+                <section id="searchSettings">
+                <transition name="slide-left" mode="out-in">
+                <aside v-if="searchOptions" class="menu is-pulled-right">
+                    <!--
+                    <p class="menu-label">
+                        Search By
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchName" type="checkbox">
+                                    Name
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchUniqname" type="checkbox">
+                                    Uniqname
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchYear" type="checkbox">
+                                    Year
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchMajor" type="checkbox">
+                                    Major
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchPC" type="checkbox">
+                                    Pledge Class
+                            </label>
+                        </li>
+                    </ul>
+                    <ul class="menu-item">
+                        <div class="button is-rounded" v-on:click="toggleSearchOptions()">
+                            Back
+                        </div>
+                    </ul> -->
+
+                    <div v-on:click="toggleSearchOptions()" class="button">
+                        >>>
+                    </div>
+                    <p class="title fira-sans-light slate has-text-left">
+                        Search Options
+                    </p>
+                    <p class="subtitle fira-sans-light slate has-text-left">
+                        Search By:
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchName" type="checkbox">
+                                    Name
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchUniqname" type="checkbox">
+                                    Uniqname
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchYear" type="checkbox">
+                                    Year
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchMajor" type="checkbox">
+                                    Major
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="searchPC" type="checkbox">
+                                    Pledge Class
+                            </label>
+                        </li>
+                    </ul>
+
+                    <p class="subtitle fira-sans-light slate has-text-left">
+                        View By Year:
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="freshmanshow" type="checkbox">
+                                    Freshmen
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="sophomoreshow" type="checkbox">
+                                    Sophomores
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="juniorshow" type="checkbox">
+                                    Juniors
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="seniorshow" type="checkbox">
+                                    Seniors
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox">
+                                <input v-model="alumshow" type="checkbox">
+                                    Alumni
+                            </label>
+                        </li>
+                    </ul>
+                </aside>
+                </transition>
+                </section>
             
             </section>
             <section id='userDisplay'>
@@ -114,20 +184,25 @@ import DirectoryCard from '@/components/DirectoryCard.vue';
 //import InfiniteLoading from 'vue-infinite-loading';
 import NavBar from '@/components/NavBar.vue';
 //import infiniteScroll from 'vue-infinite-scroll';
-import * as firebase from 'firebase/app';
 import {db} from '@/main.js';
-import { setTimeout } from 'timers';
 
-var count = 0;
 export default {
     name: 'directory',
     //directives: {infiniteScroll},
     data() {
         return {
             input: '',
-            activeShow: true,
-            alumShow: false, 
+            freshmanshow: true,
+            sophomoreshow: true,
+            juniorshow: true, 
+            seniorshow: true,
+            alumshow: false,
             searchOptions: false,
+            searchName: true,
+            searchUniqname: true,
+            searchYear: false,
+            searchMajor: false,
+            searchPC: false,
             busy: false, 
             users:
             [
@@ -142,61 +217,30 @@ export default {
         }
     },
     methods: {
-        /*infiniteHandler($state) {
-            const ref = db.collection("users");
-            let newUsers = ref.orderBy('uniqname').startAfter(this.last_uniqname);
-            const lim = 10;
-            let done = false;
-            newUsers.limit(lim).get().then((snapshot) => {
-            let last = snapshot.docs[snapshot.docs.length - 1];
-            this.last_uniqname = last.data().uniqname;
-            
-            snapshot.forEach((doc) => {
-                var user = doc.data();
-                if (!this.uniqnames.includes(user.uniqname)) {
-                    this.users.push(user);
-                    this.uniqnames.push(user.uniqname)
-                }
-                $state.loaded();
-            })
-            }).catch((error) => {
-                $state.complete();
-            })    
-        },
-        */
         searchResults: function(input) {
-            /*
-            if (this.last_uniqname <  input) {
-                //let end_point = input.substring(0, input.length - 1) + String.fromCharCode(input.charCodeAt(input.length - 1) + 1)
-                const ref = db.collection('users');
-                let searchUsers = ref.orderBy('uniqname').startAt(input)
-                const lim = 3;
-                setTimeout(() => {
-                    searchUsers.limit(lim).get().then((snapshot) => {
-                        //let last = snapshot.docs[snapshot.docs.length - 1];
-                        //this.last_uniqname = last.data().uniqname;
-                        snapshot.forEach((doc) => {
-                            const user = doc.data();
-                            if (!this.uniqnames.includes(user.uniqname)) {
-                                this.users.push(user);
-                                this.uniqnames.push(user.uniqname)
-                            }
-                        })
-                    })
-                },1000)
-            }
-            */
             return this.users.filter((user) => {
                 if (!this.alumshow && user.year == 'Alumni') {
                     return false;
                 }
-                else if (!this.activeShow && user.year != 'Alumni') {
+                else if (!this.freshmanshow && user.year == 'Freshman') {
+                    return false;
+                }
+                else if (!this.sophomoreshow && (user.year == 'Sophomore' || user.year == 'Sophmore')) {
+                    return false;
+                }
+                else if (!this.juniorshow && user.year == 'Junior') {
+                    return false;
+                }
+                else if (!this.seniorshow && user.year == 'Senior') {
                     return false;
                 }
                 else {
                     var temp = input.toUpperCase();
-                    return temp === user.name.substring(0,input.length).toUpperCase() || 
-                           temp === user.uniqname.substring(0,input.length).toUpperCase();
+                    return (this.searchName && temp === user.name.substring(0,input.length).toUpperCase()) || 
+                           (this.searchUniqname && temp === user.uniqname.substring(0,input.length).toUpperCase()) ||
+                           (this.searchYear && temp === user.year.substring(0,input.length).toUpperCase()) ||
+                           (this.searchPC && temp === user.pledge_class.substring(0,input.length).toUpperCase()) ||
+                           (this.searchMajor && temp === user.major.substring(0,input.length).toUpperCase());
                 }
             })         
         },
@@ -217,10 +261,10 @@ export default {
     },
     components: {
         DirectoryCard, 
+        NavBar,
         //InfiniteLoading,
-        NavBar
     },
-    created() {
+    mounted() {
         this.users = [];
         const ref = db.collection('users');
         ref.onSnapshot((querySnapshot) => {
@@ -247,8 +291,19 @@ export default {
       padding-right: 40px; 
       padding-left: 40px;
       padding-top: 20px;
+      position: static;
+      z-index: -1;
   }
-  
+  #searchSettings {
+      position: absolute;
+      right: 0px;
+      z-index: 1;
+      height: 100%;
+  }
+  .menu {
+      background-color: beige;
+      height: 100%;
+  }
   .slide-right-move {
       transition: all .5s cubic-bezier(0.42,0,0.58,1);
   }
@@ -275,7 +330,7 @@ export default {
   }
   .flip-list-leave-active {
     transition: all .5s cubic-bezier(0.42,0,0.58,1);
-    position: absolute;
+    position: fixed;
   }
   .flip-list-enter, .flip-list-leave-to {
     transition: all .5s;

@@ -99,10 +99,10 @@
             <a v-if="GET_POINTS_AVAILABLE" v-on:click="pointsModalToggle()" class='column sky-blue-text p1'>Get Points</a>
           </div>
           <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
-          <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
+          <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns is-mobile m1">
             <a v-on:click="triggerEditView()" class="column light-green-text pb1 pt0">{{EDIT_STATUS[EDITING]}}</a>
             <a v-on:click="deleteModalToggle()" class="column light-green-text pb1 pt0">Delete</a>
-            <a v-on:click="passwordModalToggle()" class="column light-green-text pb1 pt0">Edit Password</a>
+            <a v-on:click="passwordModalToggle()" class="column light-green-text pb1 pt0">Edit Event Password</a>
           </div>
         </footer>
         </div>

@@ -18,7 +18,6 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      // beforeEnter: guard,
       name: 'home',
       component: LoginSignup
     },
@@ -33,29 +32,29 @@ const router = new Router({
       // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/KTP/events',
+      path: '/events',
       name: 'events',
       component: Events
     },
     {
-      path: '/KTP/directory',
+      path: '/directory',
       name: 'directory',
       component: Directory
     },
     {
-      path: '/KTP/users/:uniqname',
+      path: '/users/:uniqname',
       name: 'user',
       component: User,
       props: true
     },
     {
-      path: '/KTP/event/:eventhash',
+      path: '/events/:eventhash',
       name: 'event',
       component: EventSingle,
       props: true
     },
     {
-      path: '/KTP/events/add-event',
+      path: '/events/add-event',
       name: 'add-event',
       component: EventAdd
     },

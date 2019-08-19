@@ -100,10 +100,9 @@
                       <div class="select is-fullwidth no-border">
                         <select class="no-border" v-model='payload.standing'>
                           <option value=""></option>
-                          <option>Rushee</option>
-                          <option>Pledge</option>
+                          <option value="Guest">Rushee</option>
+                          <option value="Guest">Pledge</option>
                           <option>Active</option>
-                          <option>Eboard</option>
                         </select>
                       </div>  
                       <div class="divider slate"></div>      
@@ -322,14 +321,14 @@ export default {
       isSignup4: false,
       link_name: ["Signup now", "Have an account?"],
       payload: {
-        major: "",
+        major: '',
         meetings_left: 0,
-        firstname: "",
-        lastname: "",
+        firstname: '',
+        lastname: '',
         points: 0,
         standing: '',
         year: '',
-        imageURL: ''
+        imageURL: '',
       },
     disablePledgeClass: false
     }
@@ -376,6 +375,9 @@ export default {
         major: this.payload.major,
         points: 0,
         meetings_left: 0,
+        about: '',
+        career_interests: '',
+        attended: [],
         imageURL: 'https://firebasestorage.googleapis.com/v0/b/ktpoints-68071.appspot.com/o/profile_pictures%2Fanon.jpg?alt=media&token=d247e41a-a235-4750-9e08-b78348e54e90'
       })
       .then(() => {

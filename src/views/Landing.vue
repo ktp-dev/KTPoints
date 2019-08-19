@@ -4,7 +4,7 @@
   <NavBar />
   <div class="container is-centered desktop-width">
     <div class="mt4">
-      <div v-if="this.$store.state.userData.standing == 'guest'" class="m1 landing-card p1">
+      <div v-if="this.$store.state.userData.standing === 'Guest'" class="m1 landing-card p1">
         <p class="fw-sb fs-s3 has-text-centered">Welcome</p>
         <p class="fs-s6">
           Thank you for your interest in KTP we’re excited to meet you! 
@@ -32,7 +32,7 @@
             </div>
           </div>
       </div>
-      <div v-if="this.$store.state.userData.standing != 'guest'" class="m1">
+      <div v-if="this.$store.state.userData.standing !== 'Guest'" class="m1">
         <div class="landing-card">
           <div class="card-content">
             <div class="content">
@@ -127,7 +127,7 @@ export default {
     RadialProgressBar
   },
   mounted() {
-    console.log(this.$store.state.userData)
+    // console.log(this.$store.state.userData)
     // Firebase Events DB Call
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
@@ -137,10 +137,11 @@ export default {
       this.events = []
       querySnapshot.forEach((doc) => {
         this.events.push(doc.data())
+        this.events[this.events.length-1].id = doc.id
         // console.log(doc.data().time)
       })
       if (auth.currentUser){
-        console.log("how many times did we go through this")
+        // console.log("how many times did we go through this")
         // console.log(store.state.userData)
         // console.log(auth.currentUser)
         this.show = true;
@@ -171,8 +172,5 @@ export default {
     
 
   },
-  destroyed() {
-    console.log('we out of there')
-  }
 }
 </script>

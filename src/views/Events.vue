@@ -10,7 +10,7 @@
 
       <transition name="flip-list">
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class='field is-grouped'>
-          <router-link to="/KTP/events/add-event">
+          <router-link to="/events/add-event">
             <button class='button is-large'>Add Event</button>
           </router-link>
         </div>

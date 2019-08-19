@@ -17,7 +17,7 @@
         <router-link to='/landing' class="navbar-item">
           Home
         </router-link>
-        <router-link to='/KTP/Events' class="navbar-item">
+        <router-link to='/events' class="navbar-item">
           Events
         </router-link>
 
@@ -27,7 +27,7 @@
           </a>
 
           <div class="navbar-dropdown">
-            <router-link to='/KTP/directory' class="navbar-item">
+            <router-link to='/directory' class="navbar-item">
               Directory
             </router-link>
             <router-link :to="this.profileLink" class="navbar-item">
@@ -46,14 +46,17 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <div v-if="this.$store.state.userData.standing === 'rushee' || this.$store.state.userData.standing === 'Guest'"  class="buttons">
+          <div v-if="this.$store.state.userData.uniqname === null"  class="buttons">
             <router-link to="/" class="button is-primary">
               <strong>Sign up</strong>
             </router-link>
           </div>
-          <div v-if="this.$store.state.userData.standing !== 'rushee' && this.$store.state.userData.standing !== 'Guest'"  class="buttons">
+          <div v-if="this.$store.state.userData.uniqname !== null"  class="buttons">
             <router-link :to="this.profileLink" class="button is-primary">
               <strong>{{this.$store.state.userData.name}}</strong>
+            </router-link>
+            <router-link :to="'/'" class="button is-primary">
+              <strong v-on:click="signOut()">Sign Out</strong>
             </router-link>
           </div>
         </div>
@@ -63,21 +66,24 @@
         <router-link to='/landing' class="light-green-text fw-sb column grey-border">
           Home
         </router-link>
-        <router-link to='/KTP/Events' class="sky-blue-text fw-sb column grey-border">
+        <router-link to='/events' class="sky-blue-text fw-sb column grey-border">
           Events
         </router-link>
-        <router-link to='/KTP/directory' class="light-green-text fw-sb column grey-border">
+        <router-link to='/directory' class="light-green-text fw-sb column grey-border">
           Directory
         </router-link>
-        <router-link  :to="this.profileLink" class="light-green-text fw-sb column grey-border">
+        <router-link  :to="this.profileLink" class="sky-blue-text fw-sb column grey-border">
           Profile
         </router-link>
-        <a href="https://kappathetapi.com/contact-us" target="_blank" class="sky-blue-text fw-sb column grey-border">
+        <a href="https://kappathetapi.com/contact-us" target="_blank" class="light-green-text fw-sb column grey-border">
           Contact
         </a>
-        <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="light-green-text fw-sb column grey-border">
+        <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="sky-blue-text fw-sb column grey-border">
           Report an issue
         </a>
+        <router-link :to="'/'" class="light-green-text fw-sb column grey-border">
+          <p v-on:click="signOut()">Sign Out</p>
+        </router-link>
       </div>
   </nav>
   
@@ -86,7 +92,7 @@
 
 <script>
 import store from '@/store.js'
-
+import { auth } from '@/main.js'
 export default {
   store,
 
@@ -97,14 +103,15 @@ export default {
   },
   computed: {
     profileLink: function(){
-      return "/KTP/users/" + this.$store.state.userData.uniqname
+      if (this.$store.state.userData.uniqname === undefined){
+        return '/'
+      }
+      return "/users/" + this.$store.state.userData.uniqname
     }
   },
   methods: {
     toggleBurger: function(){
-      console.log('getting here')
       this.showBurger = !this.showBurger
-      console.log(this.showBurger)
     },
     getImgURL: function(){
         return this.$store.state.userData.imageURL;
@@ -123,11 +130,12 @@ export default {
     },
     getYear: function(){
         return this.$store.state.userData.year;
+    },
+    signOut: function(){
+      auth.signOut().then(()=>{
+        store.commit('signOut')
+      })
     }
   }
 };
 </script>
-
-<style lang="scss">
-
-</style>

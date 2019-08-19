@@ -16,7 +16,8 @@ export default new Vuex.Store({
     // Use this firestore dictionary object to get information about a user e.g. pledgeclass
     // here is what it looks like
     // USER OBJECTS:
-    // standing, major, meetings_left, name, pledge_class, points, uniqname, year, 
+    // standing, major, meetings_left, name, pledge_class, points
+    // uniqname, year, attened, about_me, career_interests
     userData: null,
   },
 
@@ -34,6 +35,15 @@ export default new Vuex.Store({
       state.userData = {}
       state.userData.name = 'Guest';
       state.userData.standing = 'Guest';
+    },
+
+    // addAttendedEvent(state, eventname){
+    //   state.userData.attended.push(eventname);
+    // }
+
+    signOut(state){
+      state.userAuth = null;
+      state.userData = null;
     }
   },
 

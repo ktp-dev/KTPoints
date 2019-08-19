@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="gradient pb4">
     <NavBar />
     <div class="section">
       <transition-group name='flip-list' class="columns is-centered is-multiline">
@@ -10,7 +10,7 @@
 
       <transition name="flip-list">
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class='field is-grouped'>
-          <router-link to="/events/add-event">
+          <router-link to="/event/add-event">
             <button class='button is-large'>Add Event</button>
           </router-link>
         </div>

@@ -1,5 +1,6 @@
 <template>
         <section id='directory'>
+            <div class="gradient pb4">
             <NavBar />
             <section id='searchBar'>
                 <!-- For searching with extra options -->
@@ -104,6 +105,7 @@
                 </transition-group>
                 <!--<infinite-loading @infinite="infiniteHandler"></infinite-loading>-->
             </section>
+        </div>
         </section>
 </template>
 

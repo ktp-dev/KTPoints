@@ -1,5 +1,6 @@
 <template>
 <div>
+<div class="gradient pb4">
 <NavBar />
 <transition name="slide-right" mode="out-in">
 <section class="section" id = 'UserInfo'>
@@ -144,6 +145,7 @@
     </div>
 </section>
 </transition>
+</div>
 </div>
 
 </template>

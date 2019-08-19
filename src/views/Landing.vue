@@ -74,7 +74,7 @@
               </div>
               <h2 class="has-text-centered"> Recently Attended Events </h2>
                 <div>
-                  <div v-if="this.attendedEmpty"  class="column event-width">
+                  <div v-if="this.attendedEmpty" >
                     <div class="has-text-centered">
                       Oh No! You haven't attended any events yet!
                     </div>

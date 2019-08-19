@@ -74,8 +74,15 @@
               </div>
               <h2 class="has-text-centered"> Recently Attended Events </h2>
                 <div class="columns is-centered">
-                  <div v-for="eventinfo in events" :key="eventinfo.location" class="column event-width">
-                    <EventCard v-bind='eventinfo'/>
+                  <div v-if="this.attendedEmpty"  class="column event-width">
+                    <div class="has-text-centered">
+                      Oh No! You haven't attended any events yet!
+                    </div>
+                  </div>
+                  <div v-if="!this.attendedEmpty">
+                    <div v-for="eventinfo in userEvents" :key="eventinfo.location" class="column event-width">
+                      <EventCard v-bind='eventinfo'/>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -104,6 +111,8 @@ export default {
     return {
       events: [
       ],
+      userEvents: [],
+      attendedEmpty: false,
       show: false,
     }
   },
@@ -137,7 +146,31 @@ export default {
         // console.log(auth.currentUser)
         this.show = true;
       }
-    })
+    });
+    this.userEvents = []
+    if (store.state.userData.attended === undefined || store.state.userData.attended.length === 0) {
+        this.attendedEmpty = true;
+    }
+    else {
+      this.userEvents = []
+      let amount = Math.min(3, store.state.userData.attended.length)
+      for (var i = 0; i < amount; i++) {
+        let docRef = db.collection("events").doc(store.state.userData.attended[i])
+        docRef.get().then((doc) => {
+          if (doc.exists) {
+              this.userEvents.push(doc.data())
+          } else {
+              console.log("No such document!");
+          }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+      }
+      this.attendedEmpty = false;
+    }
+
+    
+
   },
 }
 </script>

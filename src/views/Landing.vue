@@ -73,13 +73,13 @@
                 </div>
               </div>
               <h2 class="has-text-centered"> Recently Attended Events </h2>
-                <div class="columns is-centered">
+                <div>
                   <div v-if="this.attendedEmpty"  class="column event-width">
                     <div class="has-text-centered">
                       Oh No! You haven't attended any events yet!
                     </div>
                   </div>
-                  <div v-if="!this.attendedEmpty">
+                  <div v-if="!this.attendedEmpty" class='columns is-centered'>
                     <div v-for="eventinfo in userEvents" :key="eventinfo.location" class="column event-width">
                       <EventCard v-bind='eventinfo'/>
                     </div>

@@ -6,6 +6,7 @@ import './registerServiceWorker'
 import * as firebase from 'firebase/app';
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 // import bulma and custom styles
 // This file opens up 
@@ -14,12 +15,6 @@ import './../public/static/css/bulma.css';
 import './../public/static/css/style.css';
 
 Vue.config.productionTip = false
-
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
 
 var firebaseConfig = {
   apiKey: "AIzaSyCc4W4annW8hstY99LCBC1IlEyXETrdapE",
@@ -34,3 +29,20 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+const db = firebase.firestore();
+const auth = firebase.auth();
+const storage = firebase.storage();
+const fbOperation = firebase.firestore;
+
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
+
+export {
+  db,
+  auth,
+  fbOperation,
+  storage
+};

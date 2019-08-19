@@ -14,14 +14,14 @@
             <div v-if="current_screen == 'landing'" key="landing" class="mt4 pt4">
               <!-- Button for Logging in -->
               <div class="control">
-                <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
-                  Login
+                <button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
+                  Log In
                 </button>
               </div>
 
               <!-- Button for Signing up -->
               <div class="control mt2">
-                <button v-on:click="goToSignup()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+                <button v-on:click="goToSignup()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
                   Sign up
                 </button>
               </div>
@@ -57,7 +57,7 @@
                 </div>
               </div> 
               <div class="control">
-                <button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+                <button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
                   Log In
                 </button>
               </div>
@@ -100,10 +100,9 @@
                       <div class="select is-fullwidth no-border">
                         <select class="no-border" v-model='payload.standing'>
                           <option value=""></option>
-                          <option>Rushee</option>
-                          <option>Pledge</option>
+                          <option value="Guest">Rushee</option>
+                          <option value="Guest">Pledge</option>
                           <option>Active</option>
-                          <option>Eboard</option>
                         </select>
                       </div>  
                       <div class="divider slate"></div>      
@@ -305,9 +304,11 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import router from '@/router.js'
+import store from '@/store.js'
 import * as firebase from 'firebase/app';
 
 export default {
+  store,
   data: function() {
     return {
       uniqname: '',
@@ -320,20 +321,21 @@ export default {
       isSignup4: false,
       link_name: ["Signup now", "Have an account?"],
       payload: {
-        major: "",
+        major: '',
         meetings_left: 0,
-        firstname: "",
-        lastname: "",
+        firstname: '',
+        lastname: '',
         points: 0,
         standing: '',
         year: '',
+        imageURL: '',
       },
     disablePledgeClass: false
     }
   },
   computed: {
     email: function(){
-      return this.uniqname + "@umich.edu"
+      return this.uniqname.toLowerCase() + "@umich.edu"
     }
   },
   methods: {
@@ -373,6 +375,10 @@ export default {
         major: this.payload.major,
         points: 0,
         meetings_left: 0,
+        about: '',
+        career_interests: '',
+        attended: [],
+        imageURL: 'https://firebasestorage.googleapis.com/v0/b/ktpoints-68071.appspot.com/o/profile_pictures%2Fanon.jpg?alt=media&token=d247e41a-a235-4750-9e08-b78348e54e90'
       })
       .then(() => {
           console.log("New user registered!");
@@ -384,6 +390,9 @@ export default {
     },
 
     goToLogin: function(){
+      if (this.$store.state.userAuth !== null){
+        router.push('/landing');
+      }
       this.current_screen = "login";
     },
 
@@ -419,6 +428,7 @@ export default {
       this.isSignup4 = true;
     },
   },
+
   watch: {
     'payload.standing': function(){
       if (this.payload.standing == 'Rushee'){
@@ -430,6 +440,7 @@ export default {
       }
     },
   },
+
 };
 </script>
 

@@ -29,26 +29,45 @@
 .light-grey {
   color: #C1C1C1; }
 
+.v-light-grey {
+  color: #f4f4f4; }
+
+.light-grey-bg {
+  background-color: #C1C1C1; }
+
+body {
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 12px; }
+
+.fs-s7 {
+  font-size: 0.9em !important; }
+
+.fs-s6 {
+  font-size: 1.1em !important; }
+
+.fs-s5 {
+  font-size: 1.333em !important; }
+
 .fs-s4 {
-  font-size: 20px !important; }
+  font-size: 1.667em !important; }
 
 .fs-s3 {
-  font-size: 24px !important; }
+  font-size: 2em !important; }
 
 .fs-s2 {
-  font-size: 30px !important; }
+  font-size: 2.5em !important; }
 
 .fs-s1 {
-  font-size: 37px !important; }
+  font-size: 3.083em !important; }
 
 .fs-h3 {
-  font-size: 50px !important; }
+  font-size: 4.167em !important; }
 
 .fs-h2 {
-  font-size: 67px !important; }
+  font-size: 5.583em !important; }
 
 .fs-h1 {
-  font-size: 80px !important; }
+  font-size: 6.667em !important; }
 
 .vertically-center {
   margin-top: auto;
@@ -77,6 +96,9 @@
 .fw-sb {
   font-weight: 525 !important; }
 
+.fw-reg {
+  font-weight: 400 !important; }
+
 .fw-light {
   font-weight: 300 !important; }
 
@@ -92,6 +114,9 @@
 .lh1 {
   line-height: 1 !important; }
 
+.p0 {
+  padding: 0px !important; }
+
 .pt0 {
   padding-top: 0px !important; }
 
@@ -103,6 +128,9 @@
 
 .pl0 {
   padding-left: 0px !important; }
+
+.p1 {
+  padding: 8px !important; }
 
 .pt1 {
   padding-top: 8px !important; }
@@ -116,6 +144,9 @@
 .pl1 {
   padding-left: 8px !important; }
 
+.p2 {
+  padding: 16px !important; }
+
 .pt2 {
   padding-top: 16px !important; }
 
@@ -127,6 +158,9 @@
 
 .pl2 {
   padding-left: 16px !important; }
+
+.p3 {
+  padding: 24px !important; }
 
 .pt3 {
   padding-top: 24px !important; }
@@ -140,6 +174,9 @@
 .pl3 {
   padding-left: 24px !important; }
 
+.p4 {
+  padding: 32px !important; }
+
 .pt4 {
   padding-top: 32px !important; }
 
@@ -151,6 +188,9 @@
 
 .pl4 {
   padding-left: 32px !important; }
+
+.m0 {
+  margin: 0px !important; }
 
 .mt0 {
   margin-top: 0px !important; }
@@ -167,6 +207,9 @@
 .mt12 {
   margin-top: 1px !important; }
 
+.m1 {
+  margin: 8px !important; }
+
 .mt1 {
   margin-top: 8px !important; }
 
@@ -178,6 +221,9 @@
 
 .ml1 {
   margin-left: 8px !important; }
+
+.m2 {
+  margin: 16px !important; }
 
 .mt2 {
   margin-top: 16px !important; }
@@ -191,6 +237,9 @@
 .ml2 {
   margin-left: 16px !important; }
 
+.m3 {
+  margin: 24px !important; }
+
 .mt3 {
   margin-top: 24px !important; }
 
@@ -202,6 +251,9 @@
 
 .ml3 {
   margin-left: 24px !important; }
+
+.m4 {
+  margin: 32px !important; }
 
 .mt4 {
   margin-top: 32px !important; }
@@ -221,13 +273,17 @@
   color: #59abe3 !important; }
 
 .sky-blue-button:hover {
-  border-color: #59abe3 !important;
   background-color: #59abe3 !important;
   color: white !important; }
 
 .button-background {
   background-image: linear-gradient(to right, #3db64a, #59abe3);
   color: #ffffff !important; }
+
+.grey-border {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #C1C1C1 !important; }
 
 .button-text {
   font-family: "AvenirNext";
@@ -272,11 +328,46 @@
   border-style: inset;
   border-width: 1px; }
 
+.background-hover-grey {
+  background-color: white; }
+
+.background-hover-grey:hover {
+  background-color: #C1C1C1; }
+
 .no-border {
   border-top-width: 0px !important;
   border-left-width: 0px !important;
   border-bottom-width: 0px !important;
   border-right-width: 0px !important; }
+
+.desktop-width {
+  max-width: 960px !important; }
+
+.event-width {
+  max-width: 480px !important; }
+
+.landing-grad {
+  background-image: radial-gradient(white 5%, #52779c 30%, #2c3e50 40%); }
+
+.gradient {
+  background-image: radial-gradient(white, #2c3e50);
+  min-height: 100vh; }
+
+.landing-card {
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0px, 3px, "rgba(0, 0, 0, 0.16)";
+  border-width: 2px;
+  border-color: #52779c; }
+
+.event-card-border {
+  border-radius: 22px;
+  box-shadow: 0 3px 6px 0 #3c0c0c;
+  border: solid 1px #2c3e50;
+  background-color: white; }
+
+.hide {
+  display: none !important; }
 
 /*! bulma.io v0.7.5 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
@@ -571,7 +662,7 @@ button,
 input,
 select,
 textarea {
-  font-family: "Nunito", sans-serif; }
+  font-family: "Fira Sans", sans-serif; }
 
 code,
 pre {
@@ -1114,13 +1205,13 @@ a.has-text-danger:hover, a.has-text-danger:focus {
   font-weight: 700 !important; }
 
 .is-family-primary {
-  font-family: "Nunito", sans-serif !important; }
+  font-family: "Fira Sans", sans-serif !important; }
 
 .is-family-secondary {
-  font-family: "Nunito", sans-serif !important; }
+  font-family: "Fira Sans", sans-serif !important; }
 
 .is-family-sans-serif {
-  font-family: "Nunito", sans-serif !important; }
+  font-family: "Fira Sans", sans-serif !important; }
 
 .is-family-monospace {
   font-family: monospace !important; }

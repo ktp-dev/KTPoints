@@ -3,8 +3,7 @@
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 //Changing Bulma's global font
-$family-sans-serif: "Nunito", sans-serif;
-
+$family-sans-serif: 'Fira Sans', sans-serif;
 
 // ===== COLORS =====
 $sky-blue: #59abe3;
@@ -14,6 +13,7 @@ $gunmetal-blue: #52779c;
 $dark-blue:#2c3e50;
 $slate: #5c6b7a;
 $light-grey: #C1C1C1;
+$v-light-grey: #f4f4f4;
 
 // Update Bulma's global Colors
 $primary: $slate;
@@ -49,30 +49,49 @@ $primary: $slate;
 .light-grey {
     color: $light-grey;
 }
+.v-light-grey {
+    color: $v-light-grey
+}
+.light-grey-bg {
+    background-color: $light-grey
+}
 
 // ===== END COLORS =====
 
 // ===== FONTS =====
+body{
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 12px;
+}
+.fs-s7 {
+    font-size: 0.9em!important;
+}
+.fs-s6 {
+    font-size: 1.1em!important;
+}
+.fs-s5 {
+    font-size: 1.333em!important;
+}
 .fs-s4 {
-    font-size: 20px!important;
+    font-size: 1.667em!important;
 }
 .fs-s3 {
-    font-size: 24px!important;
+    font-size: 2em!important;
 }
 .fs-s2 {
-    font-size: 30px!important;
+    font-size: 2.5em!important;
 }
 .fs-s1 {
-    font-size: 37px!important;
+    font-size: 3.083em!important;
 }
 .fs-h3 {
-    font-size: 50px!important;
+    font-size: 4.167em!important;
 }
 .fs-h2 {
-    font-size: 67px!important;
+    font-size: 5.583em!important;
 }
 .fs-h1 {
-    font-size: 80px!important;
+    font-size: 6.667em!important;
 }
 
 .vertically-center {
@@ -106,6 +125,9 @@ $primary: $slate;
 .fw-sb {
     font-weight: 525!important;
 }
+.fw-reg {
+    font-weight: 400!important;
+}
 
 .fw-light {
     font-weight: 300!important;
@@ -134,6 +156,9 @@ $size2: 16px;
 $size3: 24px;
 $size4: 32px;
 
+.p0 {
+    padding: $size0!important;
+}
 .pt0 {
     padding-top: $size0!important;
 }
@@ -147,6 +172,9 @@ $size4: 32px;
     padding-left: $size0!important;
 }
 
+.p1 {
+    padding: $size1!important;
+}
 .pt1 {
     padding-top: $size1!important;
 }
@@ -160,6 +188,9 @@ $size4: 32px;
     padding-left: $size1!important;
 }
 
+.p2 {
+    padding: $size2!important;
+}
 .pt2 {
     padding-top: $size2!important;
 }
@@ -173,6 +204,9 @@ $size4: 32px;
     padding-left: $size2!important;
 }
 
+.p3 {
+    padding: $size3!important;
+}
 .pt3 {
     padding-top: $size3!important;
 }
@@ -186,6 +220,9 @@ $size4: 32px;
     padding-left: $size3!important;
 }
 
+.p4 {
+    padding: $size4!important;
+}
 .pt4 {
     padding-top: $size4!important;
 }
@@ -199,6 +236,9 @@ $size4: 32px;
     padding-left: $size4!important;
 }
 
+.m0 {
+    margin: $size0!important;
+}
 .mt0 {
     margin-top: $size0!important;
 }
@@ -211,8 +251,13 @@ $size4: 32px;
 .ml0 {
     margin-left: $size0!important;
 }
+
 .mt12 {
     margin-top: 1px!important;
+}
+
+.m1 {
+    margin: $size1!important;
 }
 .mt1 {
     margin-top: $size1!important;
@@ -227,6 +272,9 @@ $size4: 32px;
     margin-left: $size1!important;
 }
 
+.m2 {
+    margin: $size2!important;
+}
 .mt2 {
     margin-top: $size2!important;
 }
@@ -240,6 +288,9 @@ $size4: 32px;
     margin-left: $size2!important;
 }
 
+.m3 {
+    margin: $size3!important;
+}
 .mt3 {
     margin-top: $size3!important;
 }
@@ -253,6 +304,9 @@ $size4: 32px;
     margin-left: $size3!important;
 }
 
+.m4 {
+    margin: $size4!important;
+}
 .mt4 {
     margin-top: $size4!important;
 }
@@ -276,7 +330,6 @@ $size4: 32px;
 }
 
 .sky-blue-button:hover {
-    border-color: $sky-blue!important;
     background-color: $sky-blue!important;
     color: white!important;
 }
@@ -284,6 +337,12 @@ $size4: 32px;
 .button-background {
     background-image: linear-gradient(to right, $light-green, $sky-blue);
     color: #ffffff!important;
+}
+
+.grey-border {
+    border-style: solid;
+    border-width: 1px;
+    border-color: $light-grey!important;
 }
 
 .button-text {
@@ -336,11 +395,58 @@ $size4: 32px;
     border-width: 1px;
   }
 
+.background-hover-grey {
+    background-color: white;
+}
+.background-hover-grey:hover {
+    background-color: $light-grey;
+}
+
 .no-border {
   border-top-width: 0px!important;
   border-left-width: 0px!important;
   border-bottom-width: 0px!important;
   border-right-width: 0px!important;
+}
+
+.desktop-width {
+    max-width: 960px!important;
+}
+.event-width {
+    max-width: 480px!important;
+}
+
+.landing-grad {
+    background-image: radial-gradient(white 5%, $gunmetal-blue 30%, $dark-blue 40%);
+}
+
+.gradient {
+    background-image:
+      radial-gradient(
+        white,
+        $dark-blue,
+      );
+      min-height: 100vh;
+  }
+
+.landing-card {
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0px, 3px, "rgba(0, 0, 0, 0.16)";
+    border-width: 2px;
+    border-color: $gunmetal-blue;
+  }
+
+.event-card-border {
+    border-radius: 22px;
+    box-shadow: 0 3px 6px 0 #3c0c0c;
+    border: solid 1px $dark-blue;
+    background-color: white;
+}
+
+
+.hide {
+    display: none!important;
 }
 // ===== END CUSTOM CLASSES =====
 

@@ -297,7 +297,6 @@ export default {
 	  userVerifiedError: true,
 	  error_message: '',
 	  sent_email_verification: false,
-	  link_name: ["Signup now", "Have an account?"],
 	  signup_error: false,
 	  payload: {
 		major: "",
@@ -338,7 +337,7 @@ export default {
 			}
 		})
 		.catch((error) => {
-			console.log("Username or password incorrect");
+			console.log(error);
 			this.displayGeneralError(error.code, error.message)
 		 });
 	},
@@ -354,8 +353,6 @@ export default {
 					user.sendEmailVerification()
 					.then(() => {
 						this.displayVerficationEmail();
-						console.log(this.sent_email_verification);
-
 						console.log("Email verification Sent");
 					})
 					.catch((error) => {
@@ -404,7 +401,6 @@ export default {
 	},
 
 	displayGeneralError: function(code, message){
-		console.log(code);
 	  this.error_message = message;
 	  this.signup_error = true;
 	},
@@ -419,7 +415,6 @@ export default {
 	},
 	disableGeneralError: function(){
 	  this.signup_error = !this.signup_error;
-	  // this.passwordsMatch = !this.passwordsMatch;
 	},
 	goToLogin: function(){
 	  if (this.$store.state.userAuth !== null){

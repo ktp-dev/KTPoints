@@ -7,8 +7,8 @@
       <div v-if="this.$store.state.userData.standing == rushee" class="m1 landing-card p1">
         <p class="fw-sb fs-s3 has-text-centered">Welcome</p>
         <p class="fs-s6">
-          Thank you for your interest in KTP we’re excited to meet you! 
-          If you would like to learn more about the fraternity, please visit: 
+          Thank you for your interest in KTP we’re excited to meet you!
+          If you would like to learn more about the fraternity, please visit:
           <a class="fira-sans-light-italic fw-reg .sky-blue-text">kappathetapi.com/</a> <br>
           Otherwise, explore around and find out more about the brothers and
           the events we have!
@@ -130,7 +130,6 @@ export default {
         // console.log(doc.data().time)
       })
       if (auth.currentUser){
-        console.log("how many times did we go through this")
         console.log(store.state.userData)
         // console.log(auth.currentUser)
         this.show = true;

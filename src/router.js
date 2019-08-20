@@ -61,9 +61,9 @@ router.beforeEach((to, from, next) => {
         // Add user to vuex store
         store.commit('addUserAuth', auth.currentUser)
         store.dispatch('addUserData').then(() => {
-          console.log(store.state.userData)
+          // console.log(store.state.userData)
           next()
-        })    
+        })
       }
       // User doesn't exist
       // This is a guest account
@@ -75,7 +75,13 @@ router.beforeEach((to, from, next) => {
   }
 
   else{
-    next()
+      // Only if the user is a verified user then they may casually progress the page
+      if (store.state.userAuth.emailVerified) {
+          next();
+      } else { // Otherwise they will always be redirected to the home page 
+          router.push('/');
+      }
+
   }
 })
 

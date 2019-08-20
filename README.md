@@ -2,6 +2,8 @@
 
 Currently, our site is deployed through Netlify and lives at https://ktp.life
 
+All information about development, codebase, and design live on our notion page at: http://bit.ly/KTPLife
+
 ## Project setup
 ```
 npm install

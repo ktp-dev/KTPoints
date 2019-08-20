@@ -127,14 +127,25 @@
                 </div>
 
                 <h1 class="fs-s2">About Me</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
+                    <div v-if="this.editing">
+                        <p>
+                            {{ payload.topicOne }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <textarea class="textarea" v-model="payload.topicOne" ></textarea>
+                    </div>
+
 
                 <h1 class="fs-s2">Career Interests</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
+                    <div v-if="this.editing">
+                        <p>
+                            {{ payload.topicTwo }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <textarea class="textarea" v-model="payload.topicTwo" ></textarea>
+                    </div>
             </div>
 
 
@@ -172,6 +183,8 @@ export default {
                 year: this.year,
                 imageURL: this.imageURL,
                 image: null,
+                topicOne: '',
+                topicTwo: '',
             },
         }
     },
@@ -186,6 +199,8 @@ export default {
                 pledge_class: this.payload.pledge_class,
                 year: this.payload.year,
                 major: this.payload.major,
+                topicOne: this.payload.topicOne,
+                topicTwo: this.payload.topicTwo,
             })
             .then(() => {
                 this.allChangesSaved = true;

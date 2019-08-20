@@ -86,7 +86,7 @@
         </router-link>
       </div>
   </nav>
-  
+
 </template>
 
 
@@ -113,24 +113,10 @@ export default {
     toggleBurger: function(){
       this.showBurger = !this.showBurger
     },
-    getImgURL: function(){
-        return this.$store.state.userData.imageURL;
-    },
-    getUniqname: function(){
-        return this.$store.state.userData.uniqname;
-    },
-    getMajor: function(){
-        return this.$store.state.userData.major;
-    },
-    getName: function(){
-        return this.$store.state.userData.name;
-    },
-    getPledgeClass: function(){
-        return this.$store.state.userData.pledge_class;
-    },
-    getYear: function(){
-        return this.$store.state.userData.year;
-    },
+    // getImgURL: function(){
+    //     return this.$store.state.userData.imageURL;
+    // },
+
     signOut: function(){
       auth.signOut().then(()=>{
         store.commit('signOut')

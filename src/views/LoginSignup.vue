@@ -366,11 +366,11 @@ export default {
 
     addInfo: function(){
       let db = firebase.firestore();
-      db.collection("users").doc(this.uniqname).set({
+      db.collection("users").doc(this.uniqname.toLowerCase()).set({
         name: this.payload.firstname + " " + this.payload.lastname,
         pledge_class: this.payload.pledge_class,
         standing: this.payload.standing,
-        uniqname: this.uniqname,
+        uniqname: this.uniqname.toLowerCase(),
         year: this.payload.year,
         major: this.payload.major,
         points: 0,

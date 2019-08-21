@@ -46,6 +46,24 @@
 	  </div>
 	  <button class="modal-close is-large" v-on:click="toggleLackingVerification()" aria-label="close"></button>
 	</div>
+	<div class="modal" v-bind:class="{ 'is-active': resetPasswordScreen }">
+	  <div class="modal-background"></div>
+	  <div class="modal-card">
+		<header class="modal-card-head">
+		  <p class="modal-card-title">Let's reset your password</p>
+		</header>
+		<section class="modal-card-body">
+		  Enter your email, click the <span class="has-text-success">Reset Password</span> Button, and follow the directions listed in the email you recieve.
+          <br><br>
+          <InputString label="Uniqname" t="string" :dataLabel="uniqname" @newLabel="uniqname = $event"/>
+		</section>
+		<footer class="modal-card-foot">
+		  <button class="button is-success" v-on:click="resetPassword()">Reset Password</button>
+		  <button class="button" v-on:click="toggleResetPassword()">Close</button>
+		</footer>
+	  </div>
+	  <button class="modal-close is-large" v-on:click="toggleResetPassword()" aria-label="close"></button>
+	</div>
 	<div class="modal" v-bind:class="{ 'is-active': sent_email_verification }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
@@ -92,6 +110,9 @@
 				  or continue <a class="sky-blue-text fw-lb">  Without an Account</a>
 				</div>
 			  </router-link>
+
+              <ResetPassword :RPWScreen="resetPasswordScreen" @toggledVal="resetPasswordScreen = $event" />
+
 			</div>
 
 			<div v-if="current_screen == 'login'" key="login" >
@@ -125,9 +146,7 @@
 				Don't have an Account?
 				<a class="sky-blue-text fw-lb" v-on:click='goToSignup()'>Sign Up Here</a>
 			  </div>
-			  <div class="align-center fira-sans-light-italic mt2">
-				  Forgot Password? <a class="light-green-text fw-lb"> Click here to Reset</a>
-			  </div>
+			  <ResetPassword />
 			</div>
 
 			<div v-if="current_screen == 'signup'" key="signup">
@@ -257,6 +276,7 @@
 					  </div>
 				  </div>
 			  </div>
+
 		  </div>
 
 		  </transition>
@@ -279,6 +299,7 @@ import AlreadyHaveAccount from '@/components/login/alreadyHaveAccount.vue';
 import RightArrow from '@/components/login/rightArrow.vue';
 import LeftArrow from '@/components/login/leftArrow.vue';
 import InputString from '@/components/login/inputString.vue';
+import ResetPassword from '@/components/login/resetPassword.vue';
 
 export default {
   store,
@@ -289,6 +310,7 @@ export default {
 	  confirmPassword: '',
 	  loggedin: false,
 	  current_screen: 'landing',
+      resetPasswordScreen: false,
 	  isSignup1: true,
 	  isSignup2: false,
 	  isSignup3: false,
@@ -316,6 +338,7 @@ export default {
 	  RightArrow,
 	  LeftArrow,
 	  InputString,
+      ResetPassword,
   },
   computed: {
 	email: function(){
@@ -395,11 +418,20 @@ export default {
 		  console.error("Error writing document: ", error);
 	  });
 	},
+    resetPassword(){
+        auth.sendPasswordResetEmail(this.email)
+        .then(() => {
+            window.alert("An email was sent");
+            this.toggleResetPassword();
+        }).catch((error) => {
+            this.toggleResetPassword();
+            this.displayGeneralError(error.code, error.message);
+        });
+    },
 
 	checkPasswords: function(){
 		return this.passwordsMatch = (this.password === this.confirmPassword ? true : false);
 	},
-
 	displayGeneralError: function(code, message){
 	  this.error_message = message;
 	  this.signup_error = true;
@@ -412,6 +444,9 @@ export default {
 	},
 	toggleLackingVerification: function(){
 		this.userVerifiedError = !this.userVerifiedError;
+	},
+	toggleResetPassword(){
+		this.resetPasswordScreen = !this.resetPasswordScreen;
 	},
 	disableGeneralError: function(){
 	  this.signup_error = !this.signup_error;

@@ -166,13 +166,23 @@
                     <div class="select is-fullwidth no-border">
                       <select class="no-border" v-model='payload.pledge_class' :disabled='disablePledgeClass'>
                         <option value="">Pledge Class</option>
-                        <option>Kappa</option>
-                        <option>Lambda</option>
-                        <option>Mu</option>
-                        <option>Nu</option>
-                        <option>Xi</option>
-                        <option>Omicron</option>
-                        <option>Pi</option>
+                          <option>Alpha</option>
+                          <option>Beta</option>
+                          <option>Gamma</option>
+                          <option>Delta</option>
+                          <option>Epsilon</option>
+                          <option>Zeta</option>
+                          <option>Eta</option>
+                          <option>Theta</option>
+                          <option>Iota</option>
+                          <option>Kappa</option>
+                          <option>Lambda</option>
+                          <option>Mu</option>
+                          <option>Nu</option>
+                          <option>Xi</option>
+                          <option>Omicron</option>
+                          <option>Pi</option>
+                          <option>Rushee</option>
                       </select>
                     </div>  
                     <div class="divider slate"></div>  

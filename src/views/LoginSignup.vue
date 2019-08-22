@@ -3,9 +3,7 @@
 	<div class="modal" v-bind:class="{ 'is-active': signup_error }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
-		<header class="modal-card-head">
-		  <p class="modal-card-title">Oops!</p>
-		</header>
+		<modalHeader title="Oops!" />
 		<section class="modal-card-body">
 		  <p>It appears we recieved the error <span class="has-text-danger">"{{this.error_message}}"</span> while trying to sign you up, please try again!</p>
 		</section>
@@ -18,9 +16,7 @@
 	<div class="modal" v-bind:class="{ 'is-active': !passwordsMatch }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
-		<header class="modal-card-head">
-		  <p class="modal-card-title">Oops!</p>
-		</header>
+		<modalHeader title="Passwords do not match" />
 		<section class="modal-card-body">
 		  <p>It appears we recieved the error <span class="has-text-danger">Your passwords did not match! Please try again!</span> while trying to sign you up, please try again!</p>
 		</section>
@@ -33,12 +29,9 @@
 	<div class="modal" v-bind:class="{ 'is-active': !userVerifiedError }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
-		<header class="modal-card-head">
-		  <p class="modal-card-title">Oops!</p>
-		</header>
+		<modalHeader title="Verification Issue" />
 		<section class="modal-card-body">
-		  <p>Your email is not verified. Contact an adminstrator to make sure your email is correct.
-		  </p>
+		  <p>Your email is not verified. Contact an adminstrator to make sure your email is correct.</p>
 		</section>
 		<footer class="modal-card-foot">
 		  <button class="button" v-on:click="toggleLackingVerification()">Close</button>
@@ -49,9 +42,7 @@
 	<div class="modal" v-bind:class="{ 'is-active': resetPasswordScreen }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
-		<header class="modal-card-head">
-		  <p class="modal-card-title">Let's reset your password</p>
-		</header>
+		<modalHeader title="Let's Reset your Password!" />
 		<section class="modal-card-body">
 		  Enter your email, click the <span class="has-text-success">Reset Password</span> Button, and follow the directions listed in the email you recieve.
           <br><br>
@@ -67,10 +58,7 @@
 	<div class="modal" v-bind:class="{ 'is-active': sent_email_verification }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
-		  <!-- <meta http-equiv="refresh" content="2"> -->
-		<header class="modal-card-head">
-		  <p class="modal-card-title">Email Sent!</p>
-		</header>
+		<modalHeader title="Email was Sent!" />
 		<section class="modal-card-body">
 		  <p>A verification email was sent to <span class="light-green">"{{this.email}}"</span> please check your email
 		  and verify your email. Click <span class="has-text-info" @click="refreshPage()">here</span> to refresh the page and login!
@@ -305,6 +293,9 @@ import LeftArrow from '@/components/login/leftArrow.vue';
 import InputString from '@/components/login/inputString.vue';
 import ResetPassword from '@/components/login/resetPassword.vue';
 
+import modalHeader from '@/components/login/modals/modal-error-title.vue';
+
+
 export default {
   store,
   data: function() {
@@ -345,6 +336,7 @@ export default {
 	  LeftArrow,
 	  InputString,
       ResetPassword,
+	  modalHeader,
   },
   computed: {
 	email: function(){

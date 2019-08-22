@@ -38,7 +38,7 @@
 		</header>
 		<section class="modal-card-body">
 		  <p>Your email is not verified. Contact an adminstrator to make sure your email is correct.
-		   <br><br> Not recieving the email? Click <span class="has-text-link">here</span> to resend </p>
+		  </p>
 		</section>
 		<footer class="modal-card-foot">
 		  <button class="button" v-on:click="toggleLackingVerification()">Close</button>
@@ -72,8 +72,8 @@
 		</header>
 		<section class="modal-card-body">
 		  <p>A verification email was sent to <span class="light-green">"{{this.email}}"</span> please check your email
-		  and verify your email. Afterwards, please reload the page and login! <br><br>
-		  Not recieving the email? Click <span class="has-text-link">here</span> to resend</p>
+		  and verify your email. Afterwards, please reload the page and login!
+		  </p>
 		</section>
 	  </div>
 	</div>

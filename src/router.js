@@ -56,8 +56,8 @@ router.beforeEach((to, from, next) => {
   // If the object is null, try to add it
   if (store.state.userAuth === null){
     auth.onAuthStateChanged(function(user) {
-      // if user exists, edit store
-      if (user) {
+      // if user exists and they are a verified user
+      if (user && user.emailVerified) {
         // Add user to vuex store
         store.commit('addUserAuth', auth.currentUser)
         store.dispatch('addUserData').then(() => {
@@ -65,7 +65,6 @@ router.beforeEach((to, from, next) => {
           next()
         })
       }
-      // User doesn't exist
       // This is a guest account
       else {
         store.commit('addGuestData')
@@ -73,15 +72,12 @@ router.beforeEach((to, from, next) => {
       }
     })
   }
-
-  else{
-      // Only if the user is a verified user then they may casually progress the page
-      if (store.state.userAuth.emailVerified) {
-          next();
-      } else { // Otherwise they will always be redirected to the home page 
-          router.push('/');
-      }
-
+  // User Exists
+  else {
+      // Only if the user is a verified user then they may casually progress the pages
+      if (store.state.userAuth.emailVerified) { next(); }
+      // User exists but is not verified so they will not go anywhere
+      else { router.push('/'); }
   }
 })
 

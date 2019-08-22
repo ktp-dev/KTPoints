@@ -67,12 +67,13 @@
 	<div class="modal" v-bind:class="{ 'is-active': sent_email_verification }">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
+		  <!-- <meta http-equiv="refresh" content="2"> -->
 		<header class="modal-card-head">
 		  <p class="modal-card-title">Email Sent!</p>
 		</header>
 		<section class="modal-card-body">
 		  <p>A verification email was sent to <span class="light-green">"{{this.email}}"</span> please check your email
-		  and verify your email. Afterwards, please reload the page and login!
+		  and verify your email. Click <span class="has-text-info" @click="refreshPage()">here</span> to refresh the page and login!
 		  </p>
 		</section>
 	  </div>
@@ -138,7 +139,7 @@
 				</div>
 			  </div>
 			  <div class="control">
-				<button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
+				<button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer" v-bind:class="{'is-loading' : firebaseRunning }">
 				  Log In
 				</button>
 			  </div>
@@ -268,7 +269,10 @@
 						  <Dots :S1="isSignup1" :S2="isSignup2" :S3="isSignup3" :S4="isSignup4" />
 						  <div class="column has-text-centered pointer fira-sans sky-blue-text fw-lb fs-s4" >
 							  <div class="control has-text-centered">
-								  <button v-on:click="signup()" class="button is-small is-rounded fs-s4 fira-sans-light-italic fw-lb sky-blue-button pointer">
+								  <button v-on:click="signup()"
+								  class="button is-small is-rounded fs-s4 fira-sans-light-italic fw-lb sky-blue-button pointer"
+								  v-bind:class="{'is-loading' : firebaseRunning }"
+								  >
 									  Sign up
 								  </button>
 							  </div>
@@ -320,6 +324,8 @@ export default {
 	  error_message: '',
 	  sent_email_verification: false,
 	  signup_error: false,
+	  firebaseRunning: false,
+	  timeToReload: 3,
 	  payload: {
 		major: "",
 		meetings_left: 0,
@@ -347,19 +353,23 @@ export default {
   },
   methods: {
 	login: function(){
+		this.firebaseRunning = true;
 		firebase.auth().signInWithEmailAndPassword(this.email, this.password)
 		.then((credential) => {
 			if (credential.user.emailVerified) {
 				console.log("You're Verified!");
 				console.log('Logged in');
 	  			this.loggedin = true;
+				this.firebaseRunning = false;
 	  			router.push({ name: 'landing', params: { username: this.uniqname } })
 			} else {
+				this.firebaseRunning = false;
 				console.log("You're not verified");
 				this.toggleLackingVerification();
 			}
 		})
 		.catch((error) => {
+			this.firebaseRunning = false;
 			console.log(error);
 			this.displayGeneralError(error.code, error.message)
 		 });
@@ -367,6 +377,7 @@ export default {
 
 	signup: function(){
 		console.log("Signup Initiated");
+		this.firebaseRunning = true;
 		if (this.checkPasswords()) {
 			console.log("Passwords Match");
 			auth.createUserWithEmailAndPassword(this.email, this.password)
@@ -379,6 +390,7 @@ export default {
 						console.log("Email verification Sent");
 					})
 					.catch((error) => {
+						this.firebaseRunning = false;
 						console.log("Email verification could not be sent");
 						console.log(error);
 					})
@@ -389,12 +401,14 @@ export default {
 				this.addInfo();
 			})
 			.catch((error) => {
+				this.firebaseRunning = false;
 				console.log('Bad signup');
 				console.log(this.signup_error);
 				this.displayGeneralError(error.code, error.message);
 		  	});
 		} else {
 			console.log("Passwords do not match");
+			this.firebaseRunning = false;
 		}
 	},
 
@@ -411,11 +425,14 @@ export default {
 	  })
 	  .then(() => {
 		  console.log("New user registered!");
+		  this.firebaseRunning = false;
 		  router.push('/')
 		  // router.push({ name: 'landing', params: { username: this.uniqname } });
 	  })
 	  .catch(function(error) {
 		  console.error("Error writing document: ", error);
+		  this.firebaseRunning = false;
+
 	  });
 	},
     resetPassword(){
@@ -457,10 +474,12 @@ export default {
 	  }
 	  this.current_screen = "login";
 	},
-
 	goToSignup: function(){
 	  this.current_screen = "signup";
 	},
+	refreshPage() {
+		location.reload(true);
+	}
   },
 
   watch: {

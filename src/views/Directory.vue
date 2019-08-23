@@ -352,7 +352,7 @@ export default {
         },
         searchResults: function(input) {
             return this.users.filter((user) => {
-                if (!this.alumshow && user.year == 'Alumni') {
+                if (!this.alumShow && user.year == 'Alumni') {
                     return false;
                 }
                 else if (!this.activeShow && user.year != 'Alumni') {

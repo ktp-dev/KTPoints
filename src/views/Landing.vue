@@ -42,14 +42,14 @@
                   <div class="level">
                     <div class="level-item">
                       <radial-progress-bar :diameter=200
-                              :completed-steps=15
+                              :completed-steps="20 - this.$store.state.userData.meetings_left"
                               :total-steps=20
                               startColor="#59abe3"
                               stop-color="#52779c"
                               inner-stroke-color="#C1C1C1"
                       >
                         <p>Needed: 20</p>
-                        <p>Completed: 15</p>
+                        <p>Completed: {{this.$store.state.userData.meetings_left}}</p>
                       </radial-progress-bar>
                     </div>
                   </div>
@@ -59,14 +59,14 @@
                   <div class="level">
                     <div class="level-item">
                       <radial-progress-bar :diameter="200"
-                                          :completed-steps="45"
+                                          :completed-steps="this.$store.state.userData.points"
                                           :total-steps="100"
                                           startColor="#59abe3"
                                           stop-color="#52779c"
                                           inner-stroke-color="#C1C1C1"
                       >
                         <p>Needed: 100</p>
-                        <p>Completed: 45</p>
+                        <p>Completed: {{this.$store.state.userData.points}}</p>
                       </radial-progress-bar>
                     </div>
                   </div>

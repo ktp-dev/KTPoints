@@ -4,7 +4,7 @@
   <NavBar />
   <div class="container is-centered desktop-width">
     <div class="mt4">
-      <div v-if="this.$store.state.userData.standing == rushee" class="m1 landing-card p1">
+      <div v-if="this.$store.state.userData.standing === 'Guest'" class="m1 landing-card p1">
         <p class="fw-sb fs-s3 has-text-centered">Welcome</p>
         <p class="fs-s6">
           Thank you for your interest in KTP we’re excited to meet you! 
@@ -32,7 +32,7 @@
             </div>
           </div>
       </div>
-      <div v-if="this.$store.state.userData.standing != rushee" class="m1">
+      <div v-if="this.$store.state.userData.standing !== 'Guest'" class="m1">
         <div class="landing-card">
           <div class="card-content">
             <div class="content">
@@ -73,9 +73,16 @@
                 </div>
               </div>
               <h2 class="has-text-centered"> Recently Attended Events </h2>
-                <div class="columns is-centered">
-                  <div v-for="eventinfo in events" :key="eventinfo.location" class="column event-width">
-                    <EventCard v-bind='eventinfo'/>
+                <div>
+                  <div v-if="this.attendedEmpty" >
+                    <div class="has-text-centered">
+                      Oh No! You haven't attended any events yet!
+                    </div>
+                  </div>
+                  <div v-if="!this.attendedEmpty" class='columns is-centered'>
+                    <div v-for="eventinfo in userEvents" :key="eventinfo.location" class="column event-width">
+                      <EventCard v-bind='eventinfo'/>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -104,6 +111,8 @@ export default {
     return {
       events: [
       ],
+      userEvents: [],
+      attendedEmpty: false,
       show: false,
     }
   },
@@ -118,6 +127,7 @@ export default {
     RadialProgressBar
   },
   mounted() {
+    // console.log(this.$store.state.userData)
     // Firebase Events DB Call
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
@@ -127,18 +137,40 @@ export default {
       this.events = []
       querySnapshot.forEach((doc) => {
         this.events.push(doc.data())
+        this.events[this.events.length-1].id = doc.id
         // console.log(doc.data().time)
       })
       if (auth.currentUser){
-        console.log("how many times did we go through this")
-        console.log(store.state.userData)
+        // console.log("how many times did we go through this")
+        // console.log(store.state.userData)
         // console.log(auth.currentUser)
         this.show = true;
       }
-    })
+    });
+    this.userEvents = []
+    if (store.state.userData.attended === undefined || store.state.userData.attended.length === 0) {
+        this.attendedEmpty = true;
+    }
+    else {
+      this.userEvents = []
+      let amount = Math.min(3, store.state.userData.attended.length)
+      for (var i = 0; i < amount; i++) {
+        let docRef = db.collection("events").doc(store.state.userData.attended[i])
+        docRef.get().then((doc) => {
+          if (doc.exists) {
+              this.userEvents.push(doc.data())
+          } else {
+              console.log("No such document!");
+          }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+      }
+      this.attendedEmpty = false;
+    }
+
+    
+
   },
-  destroyed() {
-    console.log('we out of there')
-  }
 }
 </script>

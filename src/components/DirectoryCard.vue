@@ -1,6 +1,5 @@
 <template>
-    <div v-on:click="toggle()" class="card has-text-centered">
-
+    <div v-on:click="toggle()" class="event-card-border card has-text-centered">
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
@@ -9,24 +8,50 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">{{name}}</p>
+                    <p class="title is-5">{{name}}</p>
                     <p class="subtitle is-6">{{year}}</p>
                 </div>
             </div>
         </div>
 
         <div class="content fs-s5">
-            <p> <strong>{{major}}</strong> </p>
             <div v-if="expanded">
-                <p> <strong>{{standing}}</strong> </p>
-                <p> <strong>{{pledge_class}}</strong> </p>
+                <div class="fs-s4 is-4 columns is-multiline">
+                    <div class="ml2 column is-10">
+                        <div class="control is-expanded">
+                        <div class="fira-sans-light-italic slate">
+                            Major: 
+                        </div>
+                        <div class=""> {{major}} </div>
+                        <div class="divider slate"></div>
+                        </div> 
+                    </div>
+                    <div class="ml2 column is-10">
+                        <div class="control is-expanded">
+                        <div class="fira-sans-light-italic slate">
+                            KTP Standing: 
+                        </div>
+                        <div class=""> {{standing}} </div>
+                        <div class="divider slate"></div>
+                        </div> 
+                    </div>
+                    <div class="ml2 column is-10">
+                        <div class="control is-expanded">
+                        <div class="fira-sans-light-italic slate">
+                            Pledge Class: 
+                        </div>
+                        <div class=""> {{pledge_class}} </div>
+                        <div class="divider slate"></div>
+                        </div> 
+                    </div>
+                </div>
             </div>
         </div>
 
-        <footer v-if="expanded" class="card-footer fs-s4">
+        <footer v-if="expanded" class="card-footer pt1 pb1">
             <!--Link to user page, passing all necessary props (including image URL)-->
-            <router-link v-bind:to="{name: 'user1', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imgURL: this.imageURL}}">
-                <a class='card-footer-item is-centered'>View Profile</a>
+            <router-link v-bind:to="{name: 'user', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imageURL: this.imageURL}}">
+                <a class='fs-s6 sky-blue-text is-centered'>View Profile</a>
             </router-link>
         </footer>
     </div>

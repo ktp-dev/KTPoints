@@ -18,8 +18,6 @@
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-bulma-switch": "^2.0.0-alpha.6",
-    "vue-infinite-loading": "^2.4.4",
-    "vue-infinite-scroll": "^2.0.2",
     "vue-radial-progress": "^0.2.10",
     "vue-router": "^3.0.3",
     "vue-smooth-reflow": "^0.1.12",

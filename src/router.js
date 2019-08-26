@@ -5,8 +5,8 @@ import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
 import Directory from './views/Directory.vue'
 import User from './views/User.vue'
-import AddEvent from './views/AddEvent.vue'
-import SingleEvent from './views/SingleEvent.vue'
+import EventAdd from './views/EventAdd.vue'
+import EventSingle from './views/EventSingle.vue'
 import store from '@/store.js'
 import { auth } from '@/main.js'
 
@@ -18,7 +18,6 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      // beforeEnter: guard,
       name: 'home',
       component: LoginSignup
     },
@@ -33,31 +32,31 @@ const router = new Router({
       // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/KTP/events',
+      path: '/events',
       name: 'events',
       component: Events
     },
     {
-      path: '/KTP/directory',
+      path: '/directory',
       name: 'directory',
       component: Directory
     },
     {
-      path: '/KTP/users/:uniqname',
-      name: 'user1',
+      path: '/users/:uniqname',
+      name: 'user',
       component: User,
       props: true
     },
     {
-      path: '/KTP/event/:eventhash',
+      path: '/events/:eventhash',
       name: 'event',
-      component: SingleEvent,
+      component: EventSingle,
       props: true
     },
     {
-      path: '/KTP/events/add-event',
+      path: '/event/add-event',
       name: 'add-event',
-      component: AddEvent
+      component: EventAdd
     },
   ]
 })
@@ -69,13 +68,13 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   // If the object is null, try to add it
   if (store.state.userAuth === null){
-    auth.onAuthStateChanged(function(user) {
+    auth.onAuthStateChanged(function(user_exists) {
       // if user exists, edit store
-      if (user) {
+      if (user_exists) {
         // Add user to vuex store
         store.commit('addUserAuth', auth.currentUser)
         store.dispatch('addUserData').then(() => {
-          console.log(store.state.userData)
+          // console.log(store.state.userData)
           next()
         })    
       }

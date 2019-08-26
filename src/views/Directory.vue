@@ -1,5 +1,6 @@
 <template>
         <section id='directory'>
+            <div class="gradient pb4">
             <NavBar />
             <section id='searchBar'>
                 <!-- For searching without the extra options -->
@@ -153,6 +154,7 @@
                             <button class="button" v-on:click="closeAndCancel">Cancel</button>
                         </footer>
                     </div>
+            </div>
             </div>
         </section>
 </template>

@@ -1,4 +1,6 @@
 <template>
+<div>
+  <NavBar />  
   <div class="section">
     <div class="columns is-centered">
       <div class="column is-4">
@@ -38,6 +40,12 @@
               <input v-model="points" class="input is-primary" type="number">
               <div class="divider slate"></div>
 
+              <!-- <div class="mt2 fira-sans-light-italic has-text-left">
+                Password
+              </div>
+              <input v-model="password" class="input is-primary" type="text">
+              <div class="divider slate"></div> -->
+
               <div class="mt4 fira-sans-light-italic has-text-left">
                 Description
               </div>
@@ -52,16 +60,21 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 
 <script>
 import * as firebase from 'firebase/app';
+import NavBar from '@/components/NavBar'
 import "firebase/firestore";
 import { db } from '@/main.js'
 import router from '@/router.js'
 
 export default {
+  components: {
+    NavBar
+  },
   data() {
     return {
       eventName: "",
@@ -69,7 +82,8 @@ export default {
       date: "",
       time: "",
       points: "",
-      description: ""
+      description: "",
+      // password: ""
     }
   },
   methods: {
@@ -77,7 +91,7 @@ export default {
       router.push({ name: 'events'})
     },
     validate: function(){
-      if (this.eventName != "" && this.location != "" && this.date != "" && this.time != "" && this.points != ""){
+      if (this.eventName !== "" && this.location !== "" && this.date !== "" && this.time !== "" && this.points !== ""){
         return true;
       } 
       else {
@@ -95,27 +109,13 @@ export default {
         points: this.points,
         description: this.description,
         time: new firebase.firestore.Timestamp(myTimestamp, 0),
-        attendees: []
+        attendees: [],
+        password: ""
       })
       .then(() => {
         router.push({ name: 'events'})
       });
     },   
   },
-  mounted() {
-    // console.log(firebase.firestore) 
-  }
 }
 </script>
-
-<style lang="scss">
-.card.has-text-centered {
-  .card-header,
-  .card-content,
-  .card-footer {
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-</style>

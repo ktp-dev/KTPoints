@@ -1,11 +1,11 @@
 <template>
   <nav class="navbar white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
+      <a class="navbar-item" href="https://kappathetapi.com/" target="_blank">
         <img src="@/assets/ktp_logo.png" width="112" height="28">
       </a>
 
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <a role="button" v-on:click="toggleBurger()" v-bind:class="{ 'is-active': this.showBurger }"  class="navbar-burger burger" aria-label="menu" aria-expanded="true" data-target="navbarBasicExample">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -14,10 +14,10 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item">
+        <router-link to='/landing' class="navbar-item">
           Home
-        </a>
-        <router-link to='/KTP/Events' class="navbar-item">
+        </router-link>
+        <router-link to='/events' class="navbar-item">
           Events
         </router-link>
 
@@ -27,20 +27,17 @@
           </a>
 
           <div class="navbar-dropdown">
-            <router-link to='/KTP/directory' class="navbar-item">
+            <router-link to='/directory' class="navbar-item">
               Directory
             </router-link>
-            <a class="navbar-item">
-              Leaderboard
-            </a>
-            <a class="navbar-item">
+            <router-link :to="this.profileLink" class="navbar-item">
               Profile
-            </a>
-            <a class="navbar-item">
+            </router-link>
+            <a href="https://kappathetapi.com/contact-us" target="_blank" class="navbar-item">
               Contact
             </a>
             <hr class="navbar-divider">
-            <a class="navbar-item">
+            <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="navbar-item">
               Report an issue
             </a>
           </div>
@@ -49,34 +46,96 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <div v-if="this.$store.state.userData.standing == rushee"  class="buttons">
-            <a class="button is-primary">
+          <div v-if="this.$store.state.userData.uniqname === null"  class="buttons">
+            <router-link to="/" class="button is-primary">
               <strong>Sign up</strong>
-            </a>
-            <a class="button is-light">
-              Log in
-            </a>
+            </router-link>
           </div>
-          <div v-if="this.$store.state.userData.standing != rushee"  class="buttons">
-            <a class="button is-primary">
+          <div v-if="this.$store.state.userData.uniqname !== null"  class="buttons">
+            <router-link :to="this.profileLink" class="button is-primary">
               <strong>{{this.$store.state.userData.name}}</strong>
-            </a>
+            </router-link>
+            <router-link :to="'/'" class="button is-primary">
+              <strong v-on:click="signOut()">Sign Out</strong>
+            </router-link>
           </div>
         </div>
       </div>
     </div>
+    <div class="pt2 columns has-text-centered is-desktop" v-bind:class="{ 'hide': !this.showBurger }" >
+        <router-link to='/landing' class="light-green-text fw-sb column grey-border">
+          Home
+        </router-link>
+        <router-link to='/events' class="sky-blue-text fw-sb column grey-border">
+          Events
+        </router-link>
+        <router-link to='/directory' class="light-green-text fw-sb column grey-border">
+          Directory
+        </router-link>
+        <router-link  :to="this.profileLink" class="sky-blue-text fw-sb column grey-border">
+          Profile
+        </router-link>
+        <a href="https://kappathetapi.com/contact-us" target="_blank" class="light-green-text fw-sb column grey-border">
+          Contact
+        </a>
+        <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="sky-blue-text fw-sb column grey-border">
+          Report an issue
+        </a>
+        <router-link :to="'/'" class="light-green-text fw-sb column grey-border">
+          <p v-on:click="signOut()">Sign Out</p>
+        </router-link>
+      </div>
   </nav>
+  
 </template>
 
 
 <script>
 import store from '@/store.js'
-
+import { auth } from '@/main.js'
 export default {
   store,
-}
+
+  data: function() {
+    return {
+      showBurger: false,
+    }
+  },
+  computed: {
+    profileLink: function(){
+      if (this.$store.state.userData.uniqname === undefined){
+        return '/'
+      }
+      return "/users/" + this.$store.state.userData.uniqname
+    }
+  },
+  methods: {
+    toggleBurger: function(){
+      this.showBurger = !this.showBurger
+    },
+    getImgURL: function(){
+        return this.$store.state.userData.imageURL;
+    },
+    getUniqname: function(){
+        return this.$store.state.userData.uniqname;
+    },
+    getMajor: function(){
+        return this.$store.state.userData.major;
+    },
+    getName: function(){
+        return this.$store.state.userData.name;
+    },
+    getPledgeClass: function(){
+        return this.$store.state.userData.pledge_class;
+    },
+    getYear: function(){
+        return this.$store.state.userData.year;
+    },
+    signOut: function(){
+      auth.signOut().then(()=>{
+        store.commit('signOut')
+      })
+    }
+  }
+};
 </script>
-
-<style lang="scss">
-
-</style>

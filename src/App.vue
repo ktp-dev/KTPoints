@@ -32,14 +32,15 @@ export default {
         this.transitionName = 'slide-up'
         return;
       }
-      if (from.fullPath === '/KTP/events/add-event'){
+      if (from.fullPath === '/events/add-event'){
         this.transitionName = 'slide-down'
         return;
       }
-      else if (to.fullPath === '/KTP/events/add-event'){
+      else if (to.fullPath === '/events/add-event'){
         this.transitionName = 'slide-up'
         return;
       }
+      
       // if we're moving between pages of different depths
       // transition with a slide-left/right
       const toDepth = to.path.split('/').length

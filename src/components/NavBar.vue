@@ -33,6 +33,9 @@
             <router-link :to="this.profileLink" class="navbar-item">
               Profile
             </router-link>
+            <router-link to='/leaderboard' class="navbar-item">
+              Leaderboard
+            </router-link>
             <a href="https://kappathetapi.com/contact-us" target="_blank" class="navbar-item">
               Contact
             </a>
@@ -75,13 +78,16 @@
         <router-link  :to="this.profileLink" class="sky-blue-text fw-sb column grey-border">
           Profile
         </router-link>
-        <a href="https://kappathetapi.com/contact-us" target="_blank" class="light-green-text fw-sb column grey-border">
+        <router-link to='/leaderboard' class="light-green-text fw-sb column grey-border">
+            Leaderboard
+        </router-link>
+        <a href="https://kappathetapi.com/contact-us" target="_blank" class="sky-blue-text fw-sb column grey-border">
           Contact
         </a>
-        <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="sky-blue-text fw-sb column grey-border">
+        <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="light-green-text fw-sb column grey-border">
           Report an issue
         </a>
-        <router-link :to="'/'" class="light-green-text fw-sb column grey-border">
+        <router-link :to="'/'" class="sky-blue-text fw-sb column grey-border">
           <p v-on:click="signOut()">Sign Out</p>
         </router-link>
       </div>

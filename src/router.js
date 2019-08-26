@@ -7,6 +7,7 @@ import Directory from './views/Directory.vue'
 import User from './views/User.vue'
 import EventAdd from './views/EventAdd.vue'
 import EventSingle from './views/EventSingle.vue'
+import Leaderboard from './views/Leaderboard.vue'
 import store from '@/store.js'
 import { auth } from '@/main.js'
 
@@ -58,6 +59,11 @@ const router = new Router({
       name: 'add-event',
       component: EventAdd
     },
+    {
+      path: '/leaderboard',
+      name: 'leaderboard',
+      component: Leaderboard
+    }
   ]
 })
 

@@ -112,14 +112,13 @@ export default {
     },
 
     deleteEvent: function(id){
-      this.deleteModalToggle();
       db.collection("events").doc(id).delete()
       .then(function() {
-        // console.log("Document successfully deleted!");
+        this.deleteModalToggle();
       })
-      .catch(function(error) {
-          // console.error("Error removing document: ", error);
-      });
+      // .catch(function(error) {
+      //     // console.error("Error removing document: ", error);
+      // });
     }
   },
   mounted() {

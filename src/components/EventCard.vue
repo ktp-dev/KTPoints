@@ -79,9 +79,9 @@ export default {
 
     addToCalendar: function(){
       let baseurl = 'https://www.google.com/calendar/event?action=TEMPLATE';
-      let title = '&text=' + this.event;
-      let description = '&details=' + this.description;
-      let location = '&location=' + this.location;
+      let title = '&text=' + encodeURIComponent(this.event);
+      let description = '&details=' + encodeURIComponent(this.description);
+      let location = '&location=' + encodeURIComponent(this.location);
 
       let date = new Date(0); 
       date.setUTCSeconds(this.time.seconds);
@@ -90,9 +90,9 @@ export default {
       let dates = '&dates=' + momentTimeBegin + '/' + momentTimeEnd;
       let gcalURL = baseurl + title + description + location + dates;
 
-      let encodedURL = encodeURI(gcalURL)
-      // console.log(encodedURL)
-      window.open(encodedURL, '_blank')
+      
+      console.log(gcalURL)
+      window.open(gcalURL, '_blank')
     },
 
     goToSingleEvent: function(myevent, location, datetime, points, description, id, attendees, password){

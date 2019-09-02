@@ -49,7 +49,7 @@
                               inner-stroke-color="#C1C1C1"
                       >
                         <p>Needed: 20</p>
-                        <p>Completed: {{this.$store.state.userData.meetings_left}}</p>
+                        <p>Completed: {{Math.min(this.$store.state.userData.meetings_left, 20)}}</p>
                       </radial-progress-bar>
                     </div>
                   </div>
@@ -59,7 +59,7 @@
                   <div class="level">
                     <div class="level-item">
                       <radial-progress-bar :diameter="200"
-                                          :completed-steps="this.$store.state.userData.points"
+                                          :completed-steps="Math.min(this.$store.state.userData.points, 100)"
                                           :total-steps="100"
                                           startColor="#59abe3"
                                           stop-color="#52779c"
@@ -114,6 +114,8 @@ export default {
       userEvents: [],
       attendedEmpty: false,
       show: false,
+      pointsNeeded: 0,
+      meetingsNeeded: 0,
     }
   },
   methods: {
@@ -129,6 +131,10 @@ export default {
   mounted() {
     // console.log(this.$store.state.userData)
     // Firebase Events DB Call
+    console.log(store.state.userData)
+    if (store.state.userData.standing === "Pledge") {
+      console.log('here')
+    }
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
     //Can change based on specific type of user later

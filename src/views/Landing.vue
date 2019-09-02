@@ -41,14 +41,14 @@
                   <p class="has-text-centered fs-s3 fw-sb mb0 pb1">Meetings</p>
                   <div class="level">
                     <div class="level-item">
-                      <radial-progress-bar :diameter=200
-                              :completed-steps="20 - this.$store.state.userData.meetings_left"
-                              :total-steps=20
+                      <radial-progress-bar :diameter="200"
+                              :completed-steps="Math.min(this.$store.state.userData.meetings_left, this.meetingsNeeded)"
+                              :total-steps="this.meetingsNeeded"
                               startColor="#59abe3"
                               stop-color="#52779c"
                               inner-stroke-color="#C1C1C1"
                       >
-                        <p>Needed: 20</p>
+                        <p>Needed: {{this.meetingsNeeded}}</p>
                         <p>Completed: {{Math.min(this.$store.state.userData.meetings_left, 20)}}</p>
                       </radial-progress-bar>
                     </div>
@@ -59,13 +59,13 @@
                   <div class="level">
                     <div class="level-item">
                       <radial-progress-bar :diameter="200"
-                                          :completed-steps="Math.min(this.$store.state.userData.points, 100)"
-                                          :total-steps="100"
+                                          :completed-steps="Math.min(this.$store.state.userData.points, this.pointsNeeded)"
+                                          :total-steps="this.pointsNeeded"
                                           startColor="#59abe3"
                                           stop-color="#52779c"
                                           inner-stroke-color="#C1C1C1"
                       >
-                        <p>Needed: 100</p>
+                        <p>Needed: {{this.pointsNeeded}}</p>
                         <p>Completed: {{this.$store.state.userData.points}}</p>
                       </radial-progress-bar>
                     </div>
@@ -131,9 +131,13 @@ export default {
   mounted() {
     // console.log(this.$store.state.userData)
     // Firebase Events DB Call
-    console.log(store.state.userData)
     if (store.state.userData.standing === "Pledge") {
-      console.log('here')
+      this.pointsNeeded = 450
+      this.meetingsNeeded = 55
+    }
+    else {
+      this.pointsNeeded = 100
+      this.meetingsNeeded = 20
     }
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)

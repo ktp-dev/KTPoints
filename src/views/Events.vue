@@ -72,10 +72,10 @@
                 <label class="label">Minimum Points</label>
                 <div class="control">
                   <div class="select">
-                    <select>
-                      <option>0 Points</option>
-                      <option>10 Points</option>
-                      <option>15 Points</option>
+                    <select v-model="minPoints">
+                      <option>0</option>
+                      <option>10</option>
+                      <option>15</option>
                     </select>
                   </div>
                 </div>
@@ -204,9 +204,6 @@ export default {
         return (temp === event.event.substring(0,input.length).toUpperCase());
       })
     },
-    setMinPoints: function(minPoints) {
-      this.MinPoints = minPoints;
-    },
     launch: function() {
       this.modalActive = true;
     },
@@ -239,23 +236,21 @@ export default {
   .flip-list-move {
     transition: transform .5s;
   }
-
   .flip-list-enter-active {
     transition: all .5s cubic-bezier(0.42, 0, 0.58, 1);
   }
-
   .flip-list-leave-active {
     transition: all .5s cubic-bezier(0.42,0,0.58,1);
-    position: absolute;
+    position: fixed;
   }
-
   .flip-list-enter, .flip-list-leave-to {
+    transition: all .5s;
     opacity: 0;
     transform: translateY(-30px);
   }
-
   .flip-list-item {
-    transition: all .5s cubic-bezier(0.42,0,0.58,1);
-    display: inline-block;
+  transition: all .5s cubic-bezier(0.42,0,0.58,1);
+  display: inline-block;
   }
+
 </style>

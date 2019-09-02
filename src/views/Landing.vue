@@ -132,7 +132,7 @@ export default {
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
     //Can change based on specific type of user later
-    db.collection("events").where('start_time', '>=', fbtime).limit(3)
+    db.collection("events").where('time', '>=', fbtime).limit(3)
     .onSnapshot((querySnapshot) => {
       this.events = []
       querySnapshot.forEach((doc) => {

@@ -3,78 +3,98 @@
             <div class="gradient pb4">
             <NavBar />
             <section id='searchBar'>
+                <!-- For searching with extra options -->
+                <transition name="slide-right" mode="in-out">
+                <transition name="slide-right" mode="out-in">
+                <section v-if="searchOptions" id='optSearch'>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <!-- Search Bar -->
+                            <div class="field is-expanded is-centered">
+                                <div class="control is-expanded has-icons-left has-icons-right">
+                                    <input v-model='input' class="input" type="text" placeholder="Search">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <span class="icon is-small is-right">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search options and settings button -->
+                        <div v-if="searchOptions" class="field is-pulled-right">
+                            <div class="columns is-mobile is-centered">
+                                <div class="column is-one-third">
+                                    <input id="activeSwitch" type="checkbox" name="activeSwitch" 
+                                        v-on:click="toggleActive()"
+                                        class="switch is-rounded" checked="checked" v-model="activeShow">
+                                    <label for="activeSwitch">Actives</label>
+                                </div>
+
+                                <div class="column is-one-third">
+                                    <input id="alumSwitch" type="checkbox" name="alumSwitch" 
+                                        v-on:click="toggleAlum()"
+                                        class="switch is-rounded" checked="unchecked" v-model="alumShow">
+                                    <label for="activeSwitch">Alumni</label>
+                                </div>
+                                        
+                                <!-- Settings button -->
+                                <div class="column is-one-third">
+                                    <div class="control">
+                                        <a v-on:click="toggleSearchOptions()" class="button">
+                                            <span class="icon is-small is-right">
+                                                <i class="fas fa-cog"></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                </transition>
+                </transition>
+                
+
                 <!-- For searching without the extra options -->
                 <transition name="slide-right" mode="in-out">
                 <transition name="slide-right" mode="out-in">
-                <section id='noOptSearch'>
-                    <div class="field">
-                        <!--<div class="field-body is-expanded">-->
+                <section v-if="notSearchOptions" id='noOptSearch'>
+                    <div class="field is-horizontal">
+                        <div class="field-label"></div>
+                        <div class="field-body is-expanded">
                             <!-- Search Bar -->
-                            
-                            <div class="columns is-centered is-mobile">
-                                <div class="column is-four-fifths">
-                                    <div class="field is-expanded is-centered">
-                                        <div class="control is-expanded has-icons-left has-icons-right">
-                                            <input v-model='input' class="input" type="text" placeholder="Search">
-                                            <span class="icon is-small is-left">
-                                                <i class="fas fa-user"></i>
-                                            </span>
-                                            <span class="icon is-small is-right">
-                                                <i class="fas fa-search"></i>
-                                            </span>
-                                        </div>
-                                    </div>
+                            <div class="field is-expanded is-centered">
+                                <div class="control is-expanded has-icons-left has-icons-right">
+                                    <input v-model='input' class="input" type="text" placeholder="Search">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <span class="icon is-small is-right">
+                                        <i class="fas fa-search"></i>
+                                    </span>
                                 </div>
-                                <div class="column">
-                                    <a v-on:click="launch" class="button">
+                            </div>
+
+                            <!-- Settings Button -->
+                            <div class="field is-pulled-right">
+                                <div class="control">
+                                    <a v-on:click="toggleSearchOptions()" class="button">
                                         <span class="icon is-small is-right">
                                             <i class="fas fa-cog"></i>
                                         </span>
                                     </a>
                                 </div>
-                                <!--<div class="column">
-                                    <div class="field is-expanded is-grouped">
-                                        <div class="field is-grouped pl2" v-if="searchOptions">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchYear"/>
-                                            </p>
-                                            <p> Year </p>
-                                        </div>
-                                        <div class="field is-grouped pl2" v-if="searchOptions">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchMajor"/>
-                                            </p>
-                                            <p> Major </p>
-                                        </div>
-                                        <div class="field is-grouped pl2" v-if="searchOptions">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchUniqname"/>
-                                            </p>
-                                            <p> Uniqname </p>
-                                        </div>
-                                        <div class="field is-grouped pl2 pr2" v-if="searchOptions">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchPC"/>
-                                            </p>
-                                            <p> Pledge Class </p>
-                                        </div>
-                                        <div class="button is-rounded is-small pl2" v-on:click="toggleSearchOptions" v-if="searchOptions">
-                                            Close Options
-                                        </div>
-                                        <div class="button is-rounded is-small pl2" v-on:click="toggleSearchOptions" v-if="!searchOptions">
-                                            Search Options
-                                        </div>
-                                    </div>
-                                </div>-->
                             </div>
-                            
-                        <!--</div>-->
+
+                        </div>
                     </div>
                 </section>
                 </transition>
                 </transition>
-
-               
             
             </section>
             <section id='userDisplay'>
@@ -85,242 +105,31 @@
                 </transition-group>
                 <!--<infinite-loading @infinite="infiniteHandler"></infinite-loading>-->
             </section>
-            <div class="modal" v-bind:class="{'is-active':modalActive}">
-                <div class="modal-background"></div>
-                    <div class="modal-card">
-                        <header class="modal-card-head">
-                            <p class="modal-card-title">Directory Options</p>
-                            <button class="delete" aria-label="close" v-on:click="close"></button>
-                        </header>
-                        <section class="modal-card-body">
-                            <section class="modal-card-content">
-                                <header class="text fs-s5">Search By: </header>
-                                <div class="columns is-centered is-mobile">
-                                    <div class="column">
-                                        <div class="field is-grouped pl2">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchYear"/>
-                                            </p>
-                                            <p> Year </p>
-                                        </div>
-                                        <div class="field is-grouped pl2">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchMajor"/>
-                                            </p>
-                                            <p> Major </p>
-                                        </div>
-                                    </div>
-                                    <div class="column">
-                                        <div class="field is-grouped pl2">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchUniqname"/>
-                                            </p>
-                                            <p> Uniqname </p>
-                                        </div>
-                                        <div class="field is-grouped pl2">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchPC"/>
-                                            </p>
-                                            <p> Pledge Class </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="divider slate"></div>
-                                <header class="text fs-s5">Display in Directory: </header>
-                                <div class="columns is-centered is-mobile">
-                                    <div class="column">
-                                        <div class="field is-grouped pl2">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="activeShow"/>
-                                            </p>
-                                            <p> Actives </p>
-                                        </div>
-                                    </div>
-                                    <div class="column">
-                                        <div class="field is-grouped pl2">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="alumShow"/>
-                                            </p>
-                                            <p> Alumni </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </section>
-                        
-                        <footer class="modal-card-foot">
-                            <button class="button is-success" v-on:click="close">Apply</button>
-                            <button class="button" v-on:click="closeAndCancel">Cancel</button>
-                        </footer>
-                    </div>
-            </div>
-            </div>
+        </div>
         </section>
 </template>
 
 
 
 <script>
-
-
-
-
-/*
- <section id="searchSettings">
-                <transition name="slide-left" mode="out-in">
-                <!--<aside v-if="searchOptions" class="menu is-pulled-right">
-                    <!--
-                    <p class="menu-label">
-                        Search By
-                    </p>
-                    <ul class="menu-list">
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchName" type="checkbox">
-                                    Name
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchUniqname" type="checkbox">
-                                    Uniqname
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchYear" type="checkbox">
-                                    Year
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchMajor" type="checkbox">
-                                    Major
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchPC" type="checkbox">
-                                    Pledge Class
-                            </label>
-                        </li>
-                    </ul>
-                    <ul class="menu-item">
-                        <div class="button is-rounded" v-on:click="toggleSearchOptions()">
-                            Back
-                        </div>
-                    </ul> -->
-
-                    <div v-on:click="toggleSearchOptions()" class="button">
-                        >>>
-                    </div>
-                    <p class="title fira-sans-light slate has-text-left">
-                        Search Options
-                    </p>
-                    <p class="subtitle fira-sans-light slate has-text-left">
-                        Search By:
-                    </p>
-                    <ul class="menu-list">
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchName" type="checkbox">
-                                    Name
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchUniqname" type="checkbox">
-                                    Uniqname
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchYear" type="checkbox">
-                                    Year
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchMajor" type="checkbox">
-                                    Major
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchPC" type="checkbox">
-                                    Pledge Class
-                            </label>
-                        </li>
-                    </ul>
-
-                    <p class="subtitle fira-sans-light slate has-text-left">
-                        View By Year:
-                    </p>
-                    <ul class="menu-list">
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="freshmanshow" type="checkbox">
-                                    Freshmen
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="sophomoreshow" type="checkbox">
-                                    Sophomores
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="juniorshow" type="checkbox">
-                                    Juniors
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="seniorshow" type="checkbox">
-                                    Seniors
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="alumshow" type="checkbox">
-                                    Alumni
-                            </label>
-                        </li>
-                    </ul>
-                </aside>-->
-                </transition>
-                </section>
-*/
-
-
-
 import DirectoryCard from '@/components/DirectoryCard.vue';
 //import InfiniteLoading from 'vue-infinite-loading';
 import NavBar from '@/components/NavBar.vue';
-import VbSwitch from 'vue-bulma-switch';
+//import infiniteScroll from 'vue-infinite-scroll';
+import * as firebase from 'firebase/app';
 import {db} from '@/main.js';
+import { setTimeout } from 'timers';
 
+var count = 0;
 export default {
     name: 'directory',
     //directives: {infiniteScroll},
     data() {
         return {
             input: '',
-            modalActive: false,
             activeShow: true,
-            alumShow: false,
+            alumShow: false, 
             searchOptions: false,
-            searchName: true,
-            searchUniqname: true,
-            searchUniqnameTemp: true,
-            searchYear: false,
-            searchYearTemp: false,
-            searchMajor: false,
-            searchMajorTemp: false,
-            searchPC: false,
-            searchPCTemp: false,
             busy: false, 
             users:
             [
@@ -335,26 +144,52 @@ export default {
         }
     },
     methods: {
-        launch: function() {
-            this.searchUniqnameTemp = this.searchUniqname;
-            this.searchYearTemp = this.searchYear;
-            this.searchPCTemp = this.searchPC;
-            this.searchMajorTemp = this.searchMajor;
-            this.modalActive = true;
+        /*infiniteHandler($state) {
+            const ref = db.collection("users");
+            let newUsers = ref.orderBy('uniqname').startAfter(this.last_uniqname);
+            const lim = 10;
+            let done = false;
+            newUsers.limit(lim).get().then((snapshot) => {
+            let last = snapshot.docs[snapshot.docs.length - 1];
+            this.last_uniqname = last.data().uniqname;
+            
+            snapshot.forEach((doc) => {
+                var user = doc.data();
+                if (!this.uniqnames.includes(user.uniqname)) {
+                    this.users.push(user);
+                    this.uniqnames.push(user.uniqname)
+                }
+                $state.loaded();
+            })
+            }).catch((error) => {
+                $state.complete();
+            })    
         },
-        close: function() {
-            this.modalActive = false;
-        },
-        closeAndCancel: function() {
-            this.searchUniqname = this.searchUniqnameTemp;
-            this.searchYear = this.searchYearTemp;
-            this.searchMajor = this.searchMajorTemp;
-            this.searchPC = this.searchPCTemp;
-            this.modalActive = false;
-        },
+        */
         searchResults: function(input) {
+            /*
+            if (this.last_uniqname <  input) {
+                //let end_point = input.substring(0, input.length - 1) + String.fromCharCode(input.charCodeAt(input.length - 1) + 1)
+                const ref = db.collection('users');
+                let searchUsers = ref.orderBy('uniqname').startAt(input)
+                const lim = 3;
+                setTimeout(() => {
+                    searchUsers.limit(lim).get().then((snapshot) => {
+                        //let last = snapshot.docs[snapshot.docs.length - 1];
+                        //this.last_uniqname = last.data().uniqname;
+                        snapshot.forEach((doc) => {
+                            const user = doc.data();
+                            if (!this.uniqnames.includes(user.uniqname)) {
+                                this.users.push(user);
+                                this.uniqnames.push(user.uniqname)
+                            }
+                        })
+                    })
+                },1000)
+            }
+            */
             return this.users.filter((user) => {
-                if (!this.alumShow && user.year == 'Alumni') {
+                if (!this.alumshow && user.year == 'Alumni') {
                     return false;
                 }
                 else if (!this.activeShow && user.year != 'Alumni') {
@@ -362,11 +197,8 @@ export default {
                 }
                 else {
                     var temp = input.toUpperCase();
-                    return (this.searchName && temp === user.name.substring(0,input.length).toUpperCase()) || 
-                           (this.searchUniqname && temp === user.uniqname.substring(0,input.length).toUpperCase()) ||
-                           (this.searchYear && temp === user.year.substring(0,input.length).toUpperCase()) ||
-                           (this.searchPC && temp === user.pledge_class.substring(0,input.length).toUpperCase()) ||
-                           (this.searchMajor && temp === user.major.substring(0,input.length).toUpperCase());
+                    return temp === user.name.substring(0,input.length).toUpperCase() || 
+                           temp === user.uniqname.substring(0,input.length).toUpperCase();
                 }
             })         
         },
@@ -387,10 +219,10 @@ export default {
     },
     components: {
         DirectoryCard, 
-        NavBar,
-        VbSwitch
+        //InfiniteLoading,
+        NavBar
     },
-    mounted() {
+    created() {
         this.users = [];
         const ref = db.collection('users');
         ref.onSnapshot((querySnapshot) => {
@@ -417,19 +249,8 @@ export default {
       padding-right: 40px; 
       padding-left: 40px;
       padding-top: 20px;
-      position: static;
-      z-index: -1;
   }
-  #searchSettings {
-      position: absolute;
-      right: 0px;
-      z-index: 1;
-      height: 100%;
-  }
-  .menu {
-      background-color: beige;
-      height: 100%;
-  }
+  
   .slide-right-move {
       transition: all .5s cubic-bezier(0.42,0,0.58,1);
   }
@@ -456,7 +277,7 @@ export default {
   }
   .flip-list-leave-active {
     transition: all .5s cubic-bezier(0.42,0,0.58,1);
-    position: fixed;
+    position: absolute;
   }
   .flip-list-enter, .flip-list-leave-to {
     transition: all .5s;

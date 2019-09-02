@@ -179,7 +179,7 @@ export default {
   components: {
     NavBar
   },
-  props: ['event', 'location', 'time', 'points', 'description', 'eventhash', 'attendees', 'password', 'startTime', 'endTime', 'category'],
+  props: ['event', 'location', 'time', 'points', 'description', 'eventhash', 'attendees', 'password'],
   data() {
     return {
       ATTENDING: false,
@@ -202,10 +202,7 @@ export default {
         description: this.description,
         attendees: this.attendees,
         time: this.time,
-        start_time: this.startTime,
-        end_time: this.endTime,
         password: this.password,
-        category: this.category,
       },
     }
   },
@@ -341,9 +338,7 @@ export default {
       else  {
         return "Attended"
       }
-    },
-    
-
+    }
   },
   
   mounted(){
@@ -352,15 +347,10 @@ export default {
       // make firebase call and set the above information using the eventhash
       db.collection('events').doc(this.eventhash).get().then((doc)=>{
         this.payload = doc.data();
-        let utcSeconds = this.payload.start_time.seconds;
-        let utcSecondsEnd = this.payload.end_time.seconds;
+        let utcSeconds = this.payload.time.seconds;
         let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
-        let endDate = new Date(0); // The 0 there is the key, which sets the date to the epoch
         date.setUTCSeconds(utcSeconds);
-        endDate.setUTCSeconds(utcSecondsEnd);
-        this.payload.time = moment(date).format('M/D/YY')
-        this.payload.start_time = moment(date).format('h:mm a')
-        this.payload.end_time = moment(endDate).format('h:mm a')
+        this.payload.time = moment(date).format('h:mm a -- M/D/YY')
       })
       .then(() => {
         if (this.payload.attendees.includes(this.uniqname)){

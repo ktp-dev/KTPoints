@@ -16,6 +16,24 @@
               <input v-model="eventName" class="input is-primary" type="text">
               <div class="divider slate"></div>
 
+              <div class="fira-sans-light-italic slate has-text-left">
+                Category
+              </div>
+              <div class="select is-fullwidth no-border">
+                <select class="no-border" v-model='category'>
+                  <option value=""></option>
+                  <option>Eboard</option>
+                  <option>Chapter</option>
+                  <option>Tech Dev</option>
+                  <option>Pro Dev</option>
+                  <option>Design</option>
+                  <option>Marketing</option>
+                  <option>Membership</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="divider slate"></div>
+
               <div class="mt2 fira-sans-light-italic has-text-left">
                 Location
               </div>
@@ -82,6 +100,7 @@ export default {
       endTime: '',
       points: '',
       description: '',
+      category: '',
     }
   },
   methods: {
@@ -89,7 +108,7 @@ export default {
       router.push({ name: 'events'})
     },
     validate: function(){
-      if (this.eventName !== "" && this.location !== "" && this.date !== "" && this.time !== "" && this.points !== ""){
+      if (this.eventName !== "" && this.location !== "" && this.date !== "" && this.time !== "" && this.points !== "" && this.category !== ""){
         return true;
       } 
       else {
@@ -105,12 +124,13 @@ export default {
         db.collection('events').doc().set({
           event: this.eventName,
           location: this.location,
-          points: this.points,
+          points: parseFloat(this.points),
           description: this.description,
           start_time: new fbOperation.Timestamp(myTimestamp, 0),
           end_time: new fbOperation.Timestamp(myTimestamp + 3600, 0),
           attendees: [],
-          password: Math.random().toString(36).substring(2) // Generates random password
+          password: Math.random().toString(36).substring(2), // Generates random password
+          category: this.category,
         })
         .then(() => {
           router.push({ name: 'events'})
@@ -123,12 +143,13 @@ export default {
         db.collection('events').doc().set({
           event: this.eventName,
           location: this.location,
-          points: this.points,
+          points: parseFloat(this.points),
           description: this.description,
           start_time: new fbOperation.Timestamp(myTimestamp, 0),
           end_time: new fbOperation.Timestamp(endTimestamp, 0),
           attendees: [],
-          password: Math.random().toString(36).substring(2) // Generates random password
+          password: Math.random().toString(36).substring(2), // Generates random password
+          category: this.category
         })
         .then(() => {
           router.push({ name: 'events'})

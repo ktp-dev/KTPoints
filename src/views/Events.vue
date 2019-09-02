@@ -40,15 +40,15 @@ export default {
   },
   mounted() {
     // Firebase Events DB Call
+    // Extra where filter for only events in the next 30 days instead of strict limit
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
-    let subscriber = db.collection("events").where('time', '>=', fbtime).limit(10).onSnapshot((querySnapshot) => {
+    let subscriber = db.collection('events').where('start_time', '>=', fbtime).limit(10).onSnapshot((querySnapshot) => {
       this.events = []
       querySnapshot.forEach((doc) => {
         this.events.push(doc.data())
         this.events[this.events.length-1].id = doc.id
       })
-      console.log(this.events)
     })
   },
 }

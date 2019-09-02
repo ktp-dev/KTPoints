@@ -3,6 +3,7 @@
     <div v-on:click="toggle()" class="card-content p1 ">
       <p class="fs-s4 fw-bold mb1">{{event}}</p>
       <p class="mb1"> {{datetime}}</p>
+      <p class="mb1"> {{startTime}} - {{endTime}}</p>
       <p class="fira-sans-light-italic mb0"> {{points}} Points</p>
       <div v-if="expanded">
         <br>
@@ -16,7 +17,7 @@
         <div class="divider v-light-grey"></div>
         <div class="columns is-mobile m1">
           <a class="sky-blue-text column p0 border-right" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
-          <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees, password)" class="p0 sky-blue-text column">Event page</a>
+          <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees, password, start_time, end_time, category)" class="p0 sky-blue-text column">Event page</a>
         </div>
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
@@ -52,7 +53,7 @@ import { db } from '@/main.js'
 export default {
   store,
   mixins: [smoothReflow],
-  props: ['event', 'location', 'start_time', 'end_time', 'points', 'description', 'id', 'attendees', 'password'],
+  props: ['event', 'location', 'start_time', 'end_time', 'points', 'description', 'id', 'attendees', 'password', 'category'],
   data(){
     return {
       expanded: false,
@@ -64,9 +65,24 @@ export default {
       let utcSeconds = this.start_time.seconds;
       let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
       date.setUTCSeconds(utcSeconds);
-      let momentTime = moment(date).format('h:mm a -- M/D/YY')
+      let momentTime = moment(date).format('M/D/YY')
+      return momentTime;
+    },
+    startTime: function(){
+      let utcSeconds = this.start_time.seconds;
+      let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
+      date.setUTCSeconds(utcSeconds);
+      let momentTime = moment(date).format('h:mm a')
+      return momentTime;
+    },
+    endTime: function(){
+      let utcSeconds = this.end_time.seconds;
+      let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
+      date.setUTCSeconds(utcSeconds);
+      let momentTime = moment(date).format('h:mm a')
       return momentTime;
     }
+
   },
   methods: {
     toggle: function(){
@@ -90,12 +106,11 @@ export default {
       let dates = '&dates=' + momentTimeBegin + '/' + momentTimeEnd;
       let gcalURL = baseurl + title + description + location + dates;
 
-      
       console.log(gcalURL)
       window.open(gcalURL, '_blank')
     },
 
-    goToSingleEvent: function(myevent, location, datetime, points, description, id, attendees, password){
+    goToSingleEvent: function(myevent, location, datetime, points, description, id, attendees, password, startTime, endTime, category){
       router.push({ name: 'event', 
       params: 
         { 
@@ -106,7 +121,10 @@ export default {
           description: description,
           eventhash: id,
           attendees: attendees,
-          password: password
+          password: password,
+          startTime: startTime,
+          endTime: endTime,
+          category: category
         }
       })
     },

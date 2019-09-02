@@ -244,7 +244,7 @@ export default {
             event: this.payload.event,
             location: this.payload.location,
             points: this.payload.points,
-            time: new fbOperation.Timestamp(myTimestamp, 0),
+            start_time: new fbOperation.Timestamp(myTimestamp, 0),
           })
 
           let date = new Date(0); 

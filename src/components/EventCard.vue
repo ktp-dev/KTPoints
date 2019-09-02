@@ -52,7 +52,7 @@ import { db } from '@/main.js'
 export default {
   store,
   mixins: [smoothReflow],
-  props: ['event', 'location', 'time', 'points', 'description', 'id', 'attendees', 'password'],
+  props: ['event', 'location', 'start_time', 'end_time', 'points', 'description', 'id', 'attendees', 'password'],
   data(){
     return {
       expanded: false,
@@ -61,7 +61,7 @@ export default {
   },
   computed: {
     datetime: function(){
-      let utcSeconds = this.time.seconds;
+      let utcSeconds = this.start_time.seconds;
       let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
       date.setUTCSeconds(utcSeconds);
       let momentTime = moment(date).format('h:mm a -- M/D/YY')
@@ -84,7 +84,7 @@ export default {
       let location = '&location=' + encodeURIComponent(this.location);
 
       let date = new Date(0); 
-      date.setUTCSeconds(this.time.seconds);
+      date.setUTCSeconds(this.start_time.seconds);
       let momentTimeBegin = moment(date).format('YYYYMMDD[T]HHmmss')
       let momentTimeEnd = moment(date).add('1', 'hours').format('YYYYMMDD[T]HHmmss')
       let dates = '&dates=' + momentTimeBegin + '/' + momentTimeEnd;

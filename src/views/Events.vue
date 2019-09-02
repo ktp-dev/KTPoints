@@ -48,6 +48,7 @@ export default {
         this.events.push(doc.data())
         this.events[this.events.length-1].id = doc.id
       })
+      console.log(this.events)
     })
   },
 }
@@ -67,7 +68,7 @@ export default {
     position: absolute;
   }
 
-  .flip-list-enter, .flip-list-leave-to{
+  .flip-list-enter, .flip-list-leave-to {
     opacity: 0;
     transform: translateY(-30px);
   }

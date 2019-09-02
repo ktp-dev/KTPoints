@@ -9,9 +9,22 @@
     <div class="columns is-centered is-vcentered">
     <div class="column is-two-fifths">
         <div class="card-image">
-            <figure class="image is-square">
-                <img :src= "payload.imageURL">
-            </figure>
+            <div v-if="this.editing">
+                <figure class="image is-square">
+                    <img :src= "payload.imageURL">
+                </figure>
+            </div>
+            <div v-if="!this.editing" class="cropper-wrapper">
+                <div :style="{backgroundImage: 'url(' + payload.imageURL + ')'}" class="cropper-background"></div>
+                <Cropper
+                    class="cropper"
+                    @change="change"
+                    :src= "payload.imageURL"
+                    :stencilProps="{
+                        aspectRatio: 1/1
+                    }"
+                />
+            </div>
         </div>
         <div class="button-links field is-grouped is-grouped-centered buttons are-large">
             <a v-bind:href="messengerURL" class=" button is-rounded is-info" target="_blank">
@@ -67,8 +80,8 @@
                                     <div v-else class="control ">
                                         <div class="select is-focused is-rounded margin-left-fix">
                                             <select v-model="payload.year">
-                                                <option>Freshmen</option>
-                                                <option>Sophmore</option>
+                                                <option>Freshman</option>
+                                                <option>Sophomore</option>
                                                 <option>Junior</option>
                                                 <option>Senior</option>
                                                 <option>Alumni</option>
@@ -156,6 +169,7 @@
 import store from '@/store.js';
 import {db, storage} from '@/main.js';
 import NavBar from '@/components/NavBar.vue';
+import { Cropper } from 'vue-advanced-cropper'
 
 
 export default {
@@ -173,12 +187,22 @@ export default {
                 imageURL: this.imageURL,
                 image: null,
             },
+            coordinates: {
+				width: 0,
+				height: 0,
+				left: 0,
+				top: 0
+			},
+			image: null
         }
     },
     methods: {
         toggleEditing: function(){
             this.editing = !this.editing;
         },
+        change({coordinates, canvas}) {
+            console.log(coordinates, canvas)
+        }, 
         updateFirebase: function(){
             this.allChangesSaved = false;
             db.collection("users").doc(this.uniqname).update({
@@ -238,6 +262,7 @@ export default {
         },
     },components: {
       NavBar,
+      Cropper,
     },
 
     mounted(){
@@ -279,6 +304,20 @@ export default {
   .margin-fix{
       margin-right: 0.5rem;
   }
+  .cropper-wrapper {
+	position: relative;
+	height: 400px;
+	background: black;
+}
+.cropper-background {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: 50%;
+	filter: blur(5px);
+	opacity: 0.25;
+}
 
 
 

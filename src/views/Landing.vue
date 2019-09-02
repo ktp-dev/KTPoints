@@ -17,7 +17,9 @@
       <div class="m1 landing-card p1">
         <p class="fw-sb fs-s3 has-text-centered">Announcements</p>
         <p class="fs-s6">
-          - No current Announcements
+          <div v-for="announcementinfo in announcements" :key="announcementinfo.id" class="column event-width">
+            <p> - {{announcementinfo.description}}</p>
+          </div>
         </p>
       </div>
       <div class="m1 landing-card">
@@ -111,6 +113,7 @@ export default {
     return {
       events: [
       ],
+      announcements: [],
       userEvents: [],
       attendedEmpty: false,
       show: false,
@@ -138,14 +141,20 @@ export default {
       querySnapshot.forEach((doc) => {
         this.events.push(doc.data())
         this.events[this.events.length-1].id = doc.id
-        // console.log(doc.data().time)
       })
       if (auth.currentUser){
-        // console.log("how many times did we go through this")
-        // console.log(store.state.userData)
-        // console.log(auth.currentUser)
         this.show = true;
       }
+    });
+    db.collection("announcements").where('expires_at', '>=', fbtime)
+    .onSnapshot((querySnapshot) => {
+      this.announcements = []
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data())
+        console.log(doc)
+        this.announcements.push(doc.data())
+        this.announcements[this.announcements.length-1].id = doc.id
+      })
     });
     this.userEvents = []
     if (store.state.userData.attended === undefined || store.state.userData.attended.length === 0) {

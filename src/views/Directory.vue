@@ -8,7 +8,6 @@
                 <transition name="slide-right" mode="out-in">
                 <section id='noOptSearch'>
                     <div class="field">
-                        <!--<div class="field-body is-expanded">-->
                             <!-- Search Bar -->
                             
                             <div class="columns is-centered is-mobile">
@@ -32,43 +31,7 @@
                                         </span>
                                     </a>
                                 </div>
-                                <!--<div class="column">
-                                    <div class="field is-expanded is-grouped">
-                                        <div class="field is-grouped pl2" v-if="searchOptions">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchYear"/>
-                                            </p>
-                                            <p> Year </p>
-                                        </div>
-                                        <div class="field is-grouped pl2" v-if="searchOptions">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchMajor"/>
-                                            </p>
-                                            <p> Major </p>
-                                        </div>
-                                        <div class="field is-grouped pl2" v-if="searchOptions">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchUniqname"/>
-                                            </p>
-                                            <p> Uniqname </p>
-                                        </div>
-                                        <div class="field is-grouped pl2 pr2" v-if="searchOptions">
-                                            <p class="pr1">
-                                                <vb-switch type="success" size="medium" v-model="searchPC"/>
-                                            </p>
-                                            <p> Pledge Class </p>
-                                        </div>
-                                        <div class="button is-rounded is-small pl2" v-on:click="toggleSearchOptions" v-if="searchOptions">
-                                            Close Options
-                                        </div>
-                                        <div class="button is-rounded is-small pl2" v-on:click="toggleSearchOptions" v-if="!searchOptions">
-                                            Search Options
-                                        </div>
-                                    </div>
-                                </div>-->
                             </div>
-                            
-                        <!--</div>-->
                     </div>
                 </section>
                 </transition>
@@ -83,7 +46,6 @@
                         <directoryCard :key=0 v-bind='directoryInfo'/>
                     </div>
                 </transition-group>
-                <!--<infinite-loading @infinite="infiniteHandler"></infinite-loading>-->
             </section>
             <div class="modal" v-bind:class="{'is-active':modalActive}">
                 <div class="modal-background"></div>
@@ -162,137 +124,6 @@
 
 
 <script>
-
-
-
-
-/*
- <section id="searchSettings">
-                <transition name="slide-left" mode="out-in">
-                <!--<aside v-if="searchOptions" class="menu is-pulled-right">
-                    <!--
-                    <p class="menu-label">
-                        Search By
-                    </p>
-                    <ul class="menu-list">
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchName" type="checkbox">
-                                    Name
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchUniqname" type="checkbox">
-                                    Uniqname
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchYear" type="checkbox">
-                                    Year
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchMajor" type="checkbox">
-                                    Major
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchPC" type="checkbox">
-                                    Pledge Class
-                            </label>
-                        </li>
-                    </ul>
-                    <ul class="menu-item">
-                        <div class="button is-rounded" v-on:click="toggleSearchOptions()">
-                            Back
-                        </div>
-                    </ul> -->
-
-                    <div v-on:click="toggleSearchOptions()" class="button">
-                        >>>
-                    </div>
-                    <p class="title fira-sans-light slate has-text-left">
-                        Search Options
-                    </p>
-                    <p class="subtitle fira-sans-light slate has-text-left">
-                        Search By:
-                    </p>
-                    <ul class="menu-list">
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchName" type="checkbox">
-                                    Name
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchUniqname" type="checkbox">
-                                    Uniqname
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchYear" type="checkbox">
-                                    Year
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchMajor" type="checkbox">
-                                    Major
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="searchPC" type="checkbox">
-                                    Pledge Class
-                            </label>
-                        </li>
-                    </ul>
-
-                    <p class="subtitle fira-sans-light slate has-text-left">
-                        View By Year:
-                    </p>
-                    <ul class="menu-list">
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="freshmanshow" type="checkbox">
-                                    Freshmen
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="sophomoreshow" type="checkbox">
-                                    Sophomores
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="juniorshow" type="checkbox">
-                                    Juniors
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="seniorshow" type="checkbox">
-                                    Seniors
-                            </label>
-                        </li>
-                        <li>
-                            <label class="checkbox">
-                                <input v-model="alumshow" type="checkbox">
-                                    Alumni
-                            </label>
-                        </li>
-                    </ul>
-                </aside>-->
-                </transition>
-                </section>
-*/
 
 
 
@@ -394,6 +225,7 @@ export default {
         this.users = [];
         const ref = db.collection('users');
         ref.onSnapshot((querySnapshot) => {
+            this.users = [];
             querySnapshot.forEach((doc) => {
                 this.users.push(doc.data());
             })

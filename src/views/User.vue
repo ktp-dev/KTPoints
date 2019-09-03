@@ -67,8 +67,8 @@
                                     <div v-else class="control ">
                                         <div class="select is-focused is-rounded margin-left-fix">
                                             <select v-model="payload.year">
-                                                <option>Freshmen</option>
-                                                <option>Sophmore</option>
+                                                <option>Freshman</option>
+                                                <option>Sophomore</option>
                                                 <option>Junior</option>
                                                 <option>Senior</option>
                                                 <option>Alumni</option>

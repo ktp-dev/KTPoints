@@ -182,13 +182,23 @@
                     <div class="select is-fullwidth no-border">
                       <select class="no-border" v-model='payload.pledge_class' :disabled='disablePledgeClass'>
                         <option value="">Pledge Class</option>
-                        <option>Kappa</option>
-                        <option>Lambda</option>
-                        <option>Mu</option>
-                        <option>Nu</option>
-                        <option>Xi</option>
-                        <option>Omicron</option>
-                        <option>Pi</option>
+                          <option>Alpha</option>
+                          <option>Beta</option>
+                          <option>Gamma</option>
+                          <option>Delta</option>
+                          <option>Epsilon</option>
+                          <option>Zeta</option>
+                          <option>Eta</option>
+                          <option>Theta</option>
+                          <option>Iota</option>
+                          <option>Kappa</option>
+                          <option>Lambda</option>
+                          <option>Mu</option>
+                          <option>Nu</option>
+                          <option>Xi</option>
+                          <option>Omicron</option>
+                          <option>Pi</option>
+                          <option>Rushee</option>
                       </select>
                     </div>
                     <div class="divider slate"></div>
@@ -386,11 +396,11 @@ export default {
       if (this.tempMajor !== 'Other') {
         this.payload.major = this.tempMajor
       }
-      db.collection("users").doc(this.uniqname).set({
+      db.collection("users").doc(this.uniqname.toLowerCase()).set({
         name: this.payload.firstname + " " + this.payload.lastname,
         pledge_class: this.payload.pledge_class,
         standing: this.payload.standing,
-        uniqname: this.uniqname,
+        uniqname: this.uniqname.toLowerCase(),
         year: this.payload.year,
         major: this.payload.major,
         points: 0,

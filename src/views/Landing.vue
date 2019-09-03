@@ -134,6 +134,7 @@ export default {
 
     // Event Display for eboard members
     if (this.$store.state.userData.standing == 'Eboard') {
+      console.log("Eboard");
       db.collection("events").where('start_time', '>=', fbtime).limit(3)
       .onSnapshot((querySnapshot) => {
         this.events = []
@@ -148,12 +149,15 @@ export default {
     }
     // For non-eboard
     else {
-      db.collection("events").where('start_time', '>=', fbtime).where('category','!=','Eboard').limit(3)
+      console.log("Not EBoard");
+      db.collection("events").where('start_time', '>=', fbtime).limit(10)
       .onSnapshot((querySnapshot) => {
         this.events = []
         querySnapshot.forEach((doc) => {
-          this.events.push(doc.data());
-          this.events[this.events.length-1].id = doc.id;
+          if (doc.data().category != 'Eboard' && this.events.length < 4) {
+            this.events.push(doc.data());
+            this.events[this.events.length-1].id = doc.id;
+          }
         })
         if (auth.currentUser){
           this.show = true;

@@ -20,29 +20,29 @@
                     <div class="ml2 column is-10">
                         <div class="control is-expanded">
                         <div class="fira-sans-light-italic slate">
-                            Major: 
+                            Major:
                         </div>
                         <div class=""> {{major}} </div>
                         <div class="divider slate"></div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="ml2 column is-10">
                         <div class="control is-expanded">
                         <div class="fira-sans-light-italic slate">
-                            KTP Standing: 
+                            KTP Standing:
                         </div>
                         <div class=""> {{standing}} </div>
                         <div class="divider slate"></div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="ml2 column is-10">
                         <div class="control is-expanded">
                         <div class="fira-sans-light-italic slate">
-                            Pledge Class: 
+                            Pledge Class:
                         </div>
                         <div class=""> {{pledge_class}} </div>
                         <div class="divider slate"></div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
 
         <footer v-if="expanded" class="card-footer pt1 pb1">
             <!--Link to user page, passing all necessary props (including image URL)-->
-            <router-link v-bind:to="{name: 'user', params: { uniqname: this.uniqname, major: this.major, name: this.name, pledge_class: this.pledge_class, year: this.year, imageURL: this.imageURL}}">
+            <router-link :to="this.profile_path">
                 <a class='fs-s6 sky-blue-text is-centered'>View Profile</a>
             </router-link>
         </footer>
@@ -67,13 +67,13 @@ export default {
     data() {
         return {
             expanded: false,
-            tag: '@' + this.uniqname, 
+            tag: '@' + this.uniqname,
         }
     },
     computed: {
         profile_path: function() {
-            return '/KTP/users/' + this.uniqname;
-        }
+            return '/users/' + this.uniqname;
+        },
     },
     methods: {
         toggle: function() {
@@ -98,8 +98,3 @@ export default {
   }
 }
 </style>
-
-
-
-
-

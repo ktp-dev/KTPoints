@@ -7,6 +7,7 @@ import Directory from './views/Directory.vue'
 import User from './views/User.vue'
 import EventAdd from './views/EventAdd.vue'
 import EventSingle from './views/EventSingle.vue'
+import AdminTools from './views/AdminTools.vue'
 import store from '@/store.js'
 import { auth } from '@/main.js'
 
@@ -57,6 +58,11 @@ const router = new Router({
       path: '/event/add-event',
       name: 'add-event',
       component: EventAdd
+    },
+    {
+      path: '/admintools',
+      name: 'admintools',
+      component: AdminTools
     },
   ]
 })

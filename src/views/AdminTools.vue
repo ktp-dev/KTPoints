@@ -47,15 +47,15 @@
             </section>
 
             <section id='addAnouncement'>
-                <div class="column is-one-third">
+                <div class="column is-one-third ">
                     <form>
-                    <div class="control">
+                    <div class="control mb1">
                         <textarea class="textarea" placeholder="Announcement" v-model="announcement"></textarea>
                     </div>
-                    <div class="control">
+                    <div class="control mb1">
                         <input type="date" v-model="announcementDate">
                     </div>
-                    <div class="control">
+                    <div class="control mb1">
                         <a v-on:click="addAnnouncement(announcement, announcementDate)" class="button">
                             Add Announcement
                         </a>
@@ -68,8 +68,8 @@
                 <div class="column is-one-third">
                     <form>
                     <div class="field is-grouped">
-                        <input class="input is-success" type="text" placeholder="User" v-model="uniq">
-                        <input class="input is-success" type="number" placeholder="Points" v-model.number="points">
+                        <input class="input is-success mr1" type="text" placeholder="User" v-model="uniq">
+                        <input class="input is-success mr1" type="number" placeholder="Points" v-model.number="points">
                         <div class="control">
                             <a v-on:click="addPoints(uniq, points)" class="button">
                                 Add Points

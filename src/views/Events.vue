@@ -168,7 +168,7 @@ export default {
       events: [],
       input: '',
       show: false,
-      showEboard: false,
+      showEboard: true,
       showChapter: true,
       showTech: true,
       showPro: true,
@@ -220,6 +220,9 @@ export default {
   mounted() {
     // Firebase Events DB Call
     // Extra where filter for only events in the next 30 days instead of strict limit
+    if (this.$store.state.userData.standing != "Eboard") {
+      this.showEboard = false;
+    }
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
     let subscriber = db.collection('events').where('start_time', '>=', fbtime).limit(10).onSnapshot((querySnapshot) => {

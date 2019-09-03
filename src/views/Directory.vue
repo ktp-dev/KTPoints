@@ -11,6 +11,7 @@
                             <!-- Search Bar -->
                             
                             <div class="columns is-centered is-mobile">
+                                <div class="column"></div>
                                 <div class="column is-four-fifths">
                                     <div class="field is-expanded is-centered">
                                         <div class="control is-expanded has-icons-left has-icons-right">

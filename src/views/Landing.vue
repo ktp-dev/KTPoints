@@ -7,7 +7,7 @@
       <div v-if="this.$store.state.userData.standing === 'Guest'" class="m1 landing-card p1">
         <p class="fw-sb fs-s3 has-text-centered">Welcome</p>
         <p class="fs-s6">
-          Thank you for your interest in KTP we’re excited to meet you! 
+          Thank you for your interest in KTP. We’re excited to meet you! 
           If you would like to learn more about the fraternity, please visit: 
           <a class="fira-sans-light-italic fw-reg .sky-blue-text">kappathetapi.com/</a> <br>
           Otherwise, explore around and find out more about the brothers and
@@ -131,22 +131,40 @@ export default {
     // Firebase Events DB Call
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
-    //Can change based on specific type of user later
-    db.collection("events").where('time', '>=', fbtime).limit(3)
-    .onSnapshot((querySnapshot) => {
-      this.events = []
-      querySnapshot.forEach((doc) => {
-        this.events.push(doc.data())
-        this.events[this.events.length-1].id = doc.id
-        // console.log(doc.data().time)
-      })
-      if (auth.currentUser){
-        // console.log("how many times did we go through this")
-        // console.log(store.state.userData)
-        // console.log(auth.currentUser)
-        this.show = true;
-      }
-    });
+
+    // Event Display for eboard members
+    if (this.$store.state.userData.standing == 'Eboard') {
+      console.log("Eboard");
+      db.collection("events").where('start_time', '>=', fbtime).limit(3)
+      .onSnapshot((querySnapshot) => {
+        this.events = []
+        querySnapshot.forEach((doc) => {
+            this.events.push(doc.data());
+            this.events[this.events.length-1].id = doc.id;
+        })
+        if (auth.currentUser) {
+          this.show = true;
+        }
+      });
+    }
+    // For non-eboard
+    else {
+      console.log("Not EBoard");
+      db.collection("events").where('start_time', '>=', fbtime).limit(10)
+      .onSnapshot((querySnapshot) => {
+        this.events = []
+        querySnapshot.forEach((doc) => {
+          if (doc.data().category != 'Eboard' && this.events.length < 4) {
+            this.events.push(doc.data());
+            this.events[this.events.length-1].id = doc.id;
+          }
+        })
+        if (auth.currentUser){
+          this.show = true;
+        }
+      });
+    }
+    
     this.userEvents = []
     if (store.state.userData.attended === undefined || store.state.userData.attended.length === 0) {
         this.attendedEmpty = true;

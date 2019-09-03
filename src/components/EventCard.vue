@@ -3,6 +3,7 @@
     <div v-on:click="toggle()" class="card-content p1 ">
       <p class="fs-s4 fw-bold mb1">{{event}}</p>
       <p class="mb1"> {{datetime}}</p>
+      <p class="mb1"> {{startTime}} - {{endTime}}</p>
       <p class="fira-sans-light-italic mb0"> {{points}} Points</p>
       <div v-if="expanded">
         <br>
@@ -16,7 +17,7 @@
         <div class="divider v-light-grey"></div>
         <div class="columns is-mobile m1">
           <a class="sky-blue-text column p0 border-right" v-on:click="addToCalendar()" target="_blank">Add to Cal</a>
-          <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees, password)" class="p0 sky-blue-text column">Event page</a>
+          <a v-on:click="goToSingleEvent(event, location, datetime, points, description, id, attendees, password, start_time, end_time, category)" class="p0 sky-blue-text column">Event page</a>
         </div>
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class="divider"></div>
         <div v-if="this.$store.state.userData.standing === 'Eboard'" class="columns m1">
@@ -52,7 +53,7 @@ import { db } from '@/main.js'
 export default {
   store,
   mixins: [smoothReflow],
-  props: ['event', 'location', 'time', 'points', 'description', 'id', 'attendees', 'password'],
+  props: ['event', 'location', 'start_time', 'end_time', 'points', 'description', 'id', 'attendees', 'password', 'category'],
   data(){
     return {
       expanded: false,
@@ -61,12 +62,27 @@ export default {
   },
   computed: {
     datetime: function(){
-      let utcSeconds = this.time.seconds;
+      let utcSeconds = this.start_time.seconds;
       let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
       date.setUTCSeconds(utcSeconds);
-      let momentTime = moment(date).format('h:mm a -- M/D/YY')
+      let momentTime = moment(date).format('M/D/YY')
+      return momentTime;
+    },
+    startTime: function(){
+      let utcSeconds = this.start_time.seconds;
+      let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
+      date.setUTCSeconds(utcSeconds);
+      let momentTime = moment(date).format('h:mm a')
+      return momentTime;
+    },
+    endTime: function(){
+      let utcSeconds = this.end_time.seconds;
+      let date = new Date(0); // The 0 there is the key, which sets the date to the epoch
+      date.setUTCSeconds(utcSeconds);
+      let momentTime = moment(date).format('h:mm a')
       return momentTime;
     }
+
   },
   methods: {
     toggle: function(){
@@ -79,23 +95,22 @@ export default {
 
     addToCalendar: function(){
       let baseurl = 'https://www.google.com/calendar/event?action=TEMPLATE';
-      let title = '&text=' + this.event;
-      let description = '&details=' + this.description;
-      let location = '&location=' + this.location;
+      let title = '&text=' + encodeURIComponent(this.event);
+      let description = '&details=' + encodeURIComponent(this.description);
+      let location = '&location=' + encodeURIComponent(this.location);
 
       let date = new Date(0); 
-      date.setUTCSeconds(this.time.seconds);
+      date.setUTCSeconds(this.start_time.seconds);
       let momentTimeBegin = moment(date).format('YYYYMMDD[T]HHmmss')
       let momentTimeEnd = moment(date).add('1', 'hours').format('YYYYMMDD[T]HHmmss')
       let dates = '&dates=' + momentTimeBegin + '/' + momentTimeEnd;
       let gcalURL = baseurl + title + description + location + dates;
 
-      let encodedURL = encodeURI(gcalURL)
-      // console.log(encodedURL)
-      window.open(encodedURL, '_blank')
+      console.log(gcalURL)
+      window.open(gcalURL, '_blank')
     },
 
-    goToSingleEvent: function(myevent, location, datetime, points, description, id, attendees, password){
+    goToSingleEvent: function(myevent, location, datetime, points, description, id, attendees, password, startTime, endTime, category){
       router.push({ name: 'event', 
       params: 
         { 
@@ -106,20 +121,22 @@ export default {
           description: description,
           eventhash: id,
           attendees: attendees,
-          password: password
+          password: password,
+          startTime: startTime,
+          endTime: endTime,
+          category: category
         }
       })
     },
 
     deleteEvent: function(id){
-      this.deleteModalToggle();
       db.collection("events").doc(id).delete()
       .then(function() {
-        // console.log("Document successfully deleted!");
+        this.deleteModalToggle();
       })
-      .catch(function(error) {
-          // console.error("Error removing document: ", error);
-      });
+      // .catch(function(error) {
+      //     // console.error("Error removing document: ", error);
+      // });
     }
   },
   mounted() {

@@ -16,6 +16,24 @@
               <input v-model="eventName" class="input is-primary" type="text">
               <div class="divider slate"></div>
 
+              <div class="fira-sans-light-italic slate has-text-left">
+                Category
+              </div>
+              <div class="select is-fullwidth no-border">
+                <select class="no-border" v-model='category'>
+                  <option value=""></option>
+                  <option>Eboard</option>
+                  <option>Chapter</option>
+                  <option>Tech Dev</option>
+                  <option>Pro Dev</option>
+                  <option>Design</option>
+                  <option>Marketing</option>
+                  <option>Membership</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="divider slate"></div>
+
               <div class="mt2 fira-sans-light-italic has-text-left">
                 Location
               </div>
@@ -23,9 +41,15 @@
               <div class="divider slate"></div>
 
               <div class="mt2 fira-sans-light-italic has-text-left">
-                Time
+                Start Time
               </div>
               <input v-model="time" class="input is-primary" type="time">
+              <div class="divider slate"></div>
+
+              <div class="mt2 fira-sans-light-italic has-text-left">
+                End Time (default is an hour)
+              </div>
+              <input v-model="endTime" class="input is-primary" type="time">
               <div class="divider slate"></div>
 
               <div class="mt2 fira-sans-light-italic has-text-left">
@@ -39,12 +63,6 @@
               </div>
               <input v-model="points" class="input is-primary" type="number">
               <div class="divider slate"></div>
-
-              <!-- <div class="mt2 fira-sans-light-italic has-text-left">
-                Password
-              </div>
-              <input v-model="password" class="input is-primary" type="text">
-              <div class="divider slate"></div> -->
 
               <div class="mt4 fira-sans-light-italic has-text-left">
                 Description
@@ -65,10 +83,8 @@
 
 
 <script>
-import * as firebase from 'firebase/app';
 import NavBar from '@/components/NavBar'
-import "firebase/firestore";
-import { db } from '@/main.js'
+import { db, fbOperation } from '@/main.js'
 import router from '@/router.js'
 
 export default {
@@ -77,13 +93,14 @@ export default {
   },
   data() {
     return {
-      eventName: "",
-      location: "",
-      date: "",
-      time: "",
-      points: "",
-      description: "",
-      // password: ""
+      eventName: '',
+      location: '',
+      date: '',
+      time: '',
+      endTime: '',
+      points: '',
+      description: '',
+      category: '',
     }
   },
   methods: {
@@ -91,7 +108,7 @@ export default {
       router.push({ name: 'events'})
     },
     validate: function(){
-      if (this.eventName !== "" && this.location !== "" && this.date !== "" && this.time !== "" && this.points !== ""){
+      if (this.eventName !== "" && this.location !== "" && this.date !== "" && this.time !== "" && this.points !== "" && this.category !== ""){
         return true;
       } 
       else {
@@ -103,18 +120,41 @@ export default {
       let myTimestamp = new Date(this.date + ' ' + this.time);
       myTimestamp = myTimestamp.getTime() / 1000;
 
-      db.collection('events').doc().set({
-        event: this.eventName,
-        location: this.location,
-        points: this.points,
-        description: this.description,
-        time: new firebase.firestore.Timestamp(myTimestamp, 0),
-        attendees: [],
-        password: ""
-      })
-      .then(() => {
-        router.push({ name: 'events'})
-      });
+      if (this.endTime === ''){
+        db.collection('events').doc().set({
+          event: this.eventName,
+          location: this.location,
+          points: parseFloat(this.points),
+          description: this.description,
+          start_time: new fbOperation.Timestamp(myTimestamp, 0),
+          end_time: new fbOperation.Timestamp(myTimestamp + 3600, 0),
+          attendees: [],
+          password: Math.random().toString(36).substring(2), // Generates random password
+          category: this.category,
+        })
+        .then(() => {
+          router.push({ name: 'events'})
+        });
+      }
+      // if an endtime exists
+      else if (this.endTime !== '') {
+        let endTimestamp = new Date(this.date + ' ' + this.endTime);
+        endTimestamp = endTimestamp.getTime() / 1000;
+        db.collection('events').doc().set({
+          event: this.eventName,
+          location: this.location,
+          points: parseFloat(this.points),
+          description: this.description,
+          start_time: new fbOperation.Timestamp(myTimestamp, 0),
+          end_time: new fbOperation.Timestamp(endTimestamp, 0),
+          attendees: [],
+          password: Math.random().toString(36).substring(2), // Generates random password
+          category: this.category
+        })
+        .then(() => {
+          router.push({ name: 'events'})
+        });
+      }
     },   
   },
 }

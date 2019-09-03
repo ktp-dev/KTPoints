@@ -56,11 +56,11 @@
                         <div class="media-content">
                             <div class="level has-text-weight-bold">
                                 <div class="level-item">
-                                    <p class="title fs-s3 is-capitalized">{{ payload.name }} /</p>
+                                    <p class="title fs-s2 is-capitalized">{{ payload.name }} /</p>
                                 </div>
                                 <div class="level-item">
                                     <div v-if="this.editing">
-                                        <p class="title fs-s3 ">
+                                        <p class="title fs-s2 ">
                                              / {{ payload.year }}
                                         </p>
                                     </div>
@@ -84,20 +84,40 @@
 
             <div class="content">
                 <div class="is-mobile is-centered">
-                    <div class="subtitle fs-s4 has-text-weight-bold">
-                        <div v-if="this.editing">Major: {{ payload.major }}</div>
-                        <div v-else class="level">
-                            <div class="level-left">Major: </div>
-                            <div class="level-item">
-                                <input class="input is-focused is-small is-rounded" type="text" v-model="payload.major">
+                    <div class="subtitle fs-s4">
+                        <div v-if="this.editing">
+                            <span class="fw-sb"> Major: </span>
+                            <span > {{ payload.major }} </span>
+                        </div>
+                        <div v-else class="control">
+                            <div class="select is-focused is-rounded margin-left-fix">
+                                <select v-model='tempMajor'>
+                                    <option value="">Select Major</option>
+                                    <option>Computer Science</option>
+                                    <option>SI - UX</option>
+                                    <option>SI - IA</option>
+                                    <option>Data Science</option>
+                                    <option>Prospective SI</option>
+                                    <option>Computer Engineering</option>
+                                    <option>BBA</option>
+                                    <option>Undeclared</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div v-if="tempMajor === 'Other'" class="mt1">
+                                <input v-model='payload.major' class="input is-primary" type="text" placeholder="Enter other major here">
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <div class="is-mobile is-centered">
-                    <div class="subtitle fs-s4 has-text-weight-bold">
-                        <div v-if="this.editing">Pledge Class: {{ payload.pledge_class }}</div>
+                    <div class="subtitle">
+                        <div v-if="this.editing">
+                            <span class="fs-s5 fw-sb">Pledge Class:</span>
+                            <span class="fs-s5"> {{ payload.pledge_class }} </span>
+                        </div>
                         <div v-else class="level">
                             <div class="level-left">Pledge Class:</div>
                             <div class="level-item pledge-class-select">
@@ -126,32 +146,31 @@
                     </div>
                 </div>
 
-                <h1 class="fs-s2">About Me</h1>
+                <h1 class="fs-s4 fw-sb">About Me</h1>
                     <div v-if="this.editing">
                         <p>
-                            {{ payload.topicOne }}
+                            {{ payload.about }}
                         </p>
                     </div>
                     <div v-else>
-                        <textarea class="textarea" v-model="payload.topicOne" ></textarea>
+                        <textarea class="textarea" v-model="payload.about" ></textarea>
                     </div>
 
 
-                <h1 class="fs-s2">Career Interests</h1>
+                <h1 class="fs-s4 fw-sb">Interests</h1>
                     <div v-if="this.editing">
                         <p>
-                            {{ payload.topicTwo }}
+                            {{ payload.interests }}
                         </p>
                     </div>
                     <div v-else>
-                        <textarea class="textarea" v-model="payload.topicTwo" ></textarea>
+                        <textarea class="textarea" v-model="payload.interests" ></textarea>
                     </div>
             </div>
 
 
 
         </div>
-    </div>
     </div>
     </div>
 </section>
@@ -176,6 +195,7 @@ export default {
         return {
             editing: true,
             allChangesSaved: true,
+            tempMajor: '',
             payload: {
                 name: this.name,
                 major: this.major,
@@ -183,8 +203,8 @@ export default {
                 year: this.year,
                 imageURL: this.imageURL,
                 image: null,
-                topicOne: '',
-                topicTwo: '',
+                about: '',
+                interests: '',
             },
         }
     },
@@ -194,13 +214,16 @@ export default {
         },
         updateFirebase: function(){
             this.allChangesSaved = false;
+            if (this.tempMajor !== 'Other') {
+                this.payload.major = this.tempMajor
+            }
             db.collection("users").doc(this.uniqname).update({
                 imageURL: this.payload.imageURL,
                 pledge_class: this.payload.pledge_class,
                 year: this.payload.year,
                 major: this.payload.major,
-                topicOne: this.payload.topicOne,
-                topicTwo: this.payload.topicTwo,
+                about: this.payload.about,
+                interests: this.payload.interests,
             })
             .then(() => {
                 this.allChangesSaved = true;

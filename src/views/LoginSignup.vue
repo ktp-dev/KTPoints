@@ -138,7 +138,23 @@
                     <div class="fira-sans-light-italic slate">
                       Major
                     </div>
-                    <input v-model='payload.major' class="input is-primary" type="text">
+                    <div class="select is-fullwidth no-border">
+                      <select class="no-border" v-model='tempMajor'>
+                        <option value=""></option>
+                        <option>Computer Science</option>
+                        <option>SI - UX</option>
+                        <option>SI - IA</option>
+                        <option>Data Science</option>
+                        <option>Prospective SI</option>
+                        <option>Computer Engineering</option>
+                        <option>BBA</option>
+                        <option>Undeclared</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                    <div v-if="tempMajor === 'Other'" class="mt1">
+                      <input v-model='payload.major' class="input is-primary" type="text" placeholder="Enter other major here">
+                    </div>
                     <div class="divider slate"></div>
                   </div>
 
@@ -320,6 +336,7 @@ export default {
       isSignup3: false,
       isSignup4: false,
       link_name: ["Signup now", "Have an account?"],
+      tempMajor: '',
       payload: {
         major: '',
         meetings_left: 0,
@@ -366,6 +383,9 @@ export default {
 
     addInfo: function(){
       let db = firebase.firestore();
+      if (this.tempMajor !== 'Other') {
+        this.payload.major = this.tempMajor
+      }
       db.collection("users").doc(this.uniqname).set({
         name: this.payload.firstname + " " + this.payload.lastname,
         pledge_class: this.payload.pledge_class,
@@ -375,8 +395,8 @@ export default {
         major: this.payload.major,
         points: 0,
         meetings_left: 0,
-        topicOne: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        topicTwo: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        about: 'Lorem ipsum dolor amet vice truffaut street art, chillwave hot chicken plaid pabst jianbing salvia keytar. Keffiyeh irony kombucha four dollar toast 90s keytar, I am a lumbersexual flexitarian with a tousled hoodie. Vegan microdosing forage meggings. Succulents photo booth air plant forage leggings. Hoodie aesthetic squid, microdosing tumblr VHS food truck occupy cray try-hard af prism farm-to-table fashion axe shabby chic.',
+        interests: 'Lorem ipsum dolor amet hoodie williamsburg brunch tilde roof party. Poutine vape chillwave butcher twee kitsch. Church-key keytar kickstarter franzen unicorn slow-carb. Knausgaard blog kinfolk migas heirloom enamel pin. Taiyaki brunch poutine selfies, single-origin coffee tofu pour-over iPhone sartorial schlitz authentic.',
         attended: [],
         imageURL: 'https://firebasestorage.googleapis.com/v0/b/ktpoints-68071.appspot.com/o/profile_pictures%2Fanon.jpg?alt=media&token=d247e41a-a235-4750-9e08-b78348e54e90'
       })

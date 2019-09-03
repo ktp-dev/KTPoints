@@ -25,7 +25,7 @@
                   Sign up
                 </button>
               </div>
-              
+
               <!-- Continue as Guest -->
               <router-link to="/landing">
                 <div class="align-center fira-sans-light-italic mt2 dark-blue">
@@ -44,7 +44,7 @@
                   <input v-model='uniqname' class="input is-primary" type="text">
                   <div class="divider slate"></div>
                 </div>
-              </div> 
+              </div>
 
               <!-- Password -->
               <div class="field">
@@ -55,14 +55,14 @@
                   <input v-on:keyup.enter="login()" v-model='password' class="input is-primary" type="password">
                    <div class="divider slate"></div>
                 </div>
-              </div> 
+              </div>
               <div class="control">
                 <button v-on:click="login()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
                   Log In
                 </button>
               </div>
               <div class="align-center fira-sans-light-italic mt3">
-                Don't have an Account? 
+                Don't have an Account?
                 <a class="sky-blue-text fw-lb" v-on:click='goToSignup()'>Sign Up Here</a>
               </div>
               <div class="align-center fira-sans-light-italic mt2">
@@ -83,15 +83,15 @@
                     </div>
                     <input v-model='payload.firstname' class="input is-primary" type="text">
                     <div class="divider slate"></div>
-                  </div>   
-        
+                  </div>
+
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
                       Last Name
                     </div>
                     <input v-model='payload.lastname' class="input is-primary" type="text">
                     <div class="divider slate"></div>
-                  </div> 
+                  </div>
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
@@ -101,12 +101,12 @@
                         <select class="no-border" v-model='payload.standing'>
                           <option value=""></option>
                           <option value="Guest">Rushee</option>
-                          <option value="Guest">Pledge</option>
+                          <option value="Pledge">Pledge</option>
                           <option>Active</option>
                         </select>
-                      </div>  
-                      <div class="divider slate"></div>      
-                  </div>    
+                      </div>
+                      <div class="divider slate"></div>
+                  </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
                     <div class="column is-quarter">
@@ -116,7 +116,7 @@
                         <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i class="column fas fa-circle fa-xs light-grey"></i>
                         <i class="column fas fa-circle fa-xs light-grey"></i>
-                        <i class="column fas fa-circle fa-xs light-grey"></i> 
+                        <i class="column fas fa-circle fa-xs light-grey"></i>
                       </div>
                     </div>
                     <div class="column has-text-centered pointer" v-on:click='goToSignup2()'>
@@ -125,7 +125,7 @@
                   </div>
 
                   <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account? 
+                  Already have an Account?
                   <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
                   </div>
                 </div>
@@ -138,10 +138,26 @@
                     <div class="fira-sans-light-italic slate">
                       Major
                     </div>
-                    <input v-model='payload.major' class="input is-primary" type="text">
+                    <div class="select is-fullwidth no-border">
+                      <select class="no-border" v-model='tempMajor'>
+                        <option value=""></option>
+                        <option>Computer Science</option>
+                        <option>SI - UX</option>
+                        <option>SI - IA</option>
+                        <option>Data Science</option>
+                        <option>Prospective SI</option>
+                        <option>Computer Engineering</option>
+                        <option>BBA</option>
+                        <option>Undeclared</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                    <div v-if="tempMajor === 'Other'" class="mt1">
+                      <input v-model='payload.major' class="input is-primary" type="text" placeholder="Enter other major here">
+                    </div>
                     <div class="divider slate"></div>
-                  </div>   
-        
+                  </div>
+
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
                       Year
@@ -155,9 +171,9 @@
                           <option>Senior</option>
                           <option>Alumni</option>
                         </select>
-                      </div>  
+                      </div>
                     <div class="divider slate"></div>
-                  </div> 
+                  </div>
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
@@ -166,17 +182,27 @@
                     <div class="select is-fullwidth no-border">
                       <select class="no-border" v-model='payload.pledge_class' :disabled='disablePledgeClass'>
                         <option value="">Pledge Class</option>
-                        <option>Kappa</option>
-                        <option>Lambda</option>
-                        <option>Mu</option>
-                        <option>Nu</option>
-                        <option>Xi</option>
-                        <option>Omicron</option>
-                        <option>Pi</option>
+                          <option>Alpha</option>
+                          <option>Beta</option>
+                          <option>Gamma</option>
+                          <option>Delta</option>
+                          <option>Epsilon</option>
+                          <option>Zeta</option>
+                          <option>Eta</option>
+                          <option>Theta</option>
+                          <option>Iota</option>
+                          <option>Kappa</option>
+                          <option>Lambda</option>
+                          <option>Mu</option>
+                          <option>Nu</option>
+                          <option>Xi</option>
+                          <option>Omicron</option>
+                          <option>Pi</option>
+                          <option>Rushee</option>
                       </select>
-                    </div>  
-                    <div class="divider slate"></div>  
-                  </div>    
+                    </div>
+                    <div class="divider slate"></div>
+                  </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
                     <div v-on:click="goToSignup1()" class="column is-quarter has-text-centered pointer">
@@ -187,7 +213,7 @@
                         <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i> 
+                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
                       </div>
                     </div>
                     <div class="column has-text-centered pointer" v-on:click='goToSignup3()'>
@@ -196,7 +222,7 @@
                   </div>
 
                   <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account? 
+                  Already have an Account?
                   <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
                   </div>
                 </div>
@@ -211,8 +237,8 @@
                       Uniqname
                     </div>
                     <input v-model='uniqname'  class="input is-primary" type="text">
-                    <div class="divider slate"></div>  
-                  </div> 
+                    <div class="divider slate"></div>
+                  </div>
 
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
@@ -220,15 +246,15 @@
                     </div>
                     <input v-model='password'  class="input is-primary" type="password">
                     <div class="divider slate"></div>
-                  </div>   
-        
+                  </div>
+
                   <div class="control is-expanded pb3">
                     <div class="fira-sans-light-italic slate">
                       Confirm  Password
                     </div>
                     <input  class="input is-primary" type="password">
                     <div class="divider slate"></div>
-                  </div>    
+                  </div>
 
                   <div class="columns is-centered is-vcentered is-mobile">
                     <div v-on:click='goToSignup2()' class="column is-quarter has-text-centered pointer">
@@ -239,7 +265,7 @@
                         <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i> 
+                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
                       </div>
                     </div>
                     <div class="column has-text-centered pointer" v-on:click='goToSignup4()'>
@@ -248,7 +274,7 @@
                   </div>
 
                   <div class="align-center pb1 fira-sans-light-italic mt1">
-                  Already have an Account? 
+                  Already have an Account?
                   <a class="light-green-text fw-lb" v-on:click='goToLogin()'>Login Here</a>
                   </div>
                 </div>
@@ -259,7 +285,7 @@
                 <div class='field' >
                   <div class="fs-s2 fira-mono fw-bold pb2 has-text-centered">
                     One Last Thing
-                  </div>  
+                  </div>
                   <div class="control fira-sans fs-s4 is-expanded pb2 has-text-centered">
                     If you are an Active or an Alumni, there will be a pending <br>
                     process while we approve your identity.
@@ -278,7 +304,7 @@
                         <i v-bind:class="{ 'sky-blue': isSignup1}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup2}" class="column fas fa-circle fa-xs light-grey"></i>
                         <i v-bind:class="{ 'sky-blue': isSignup3}" class="column fas fa-circle fa-xs light-grey"></i>
-                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i> 
+                        <i v-bind:class="{ 'sky-blue': isSignup4}" class="column fas fa-circle fa-xs light-grey"></i>
                       </div>
                     </div>
                     <div class="column has-text-centered pointer fira-sans sky-blue-text fw-lb fs-s4" >
@@ -320,6 +346,7 @@ export default {
       isSignup3: false,
       isSignup4: false,
       link_name: ["Signup now", "Have an account?"],
+      tempMajor: '',
       payload: {
         major: '',
         meetings_left: 0,
@@ -349,7 +376,7 @@ export default {
       .catch(function(error) {
         console.log('BAD');
         console.log(error);
-      });      
+      });
     },
 
     signup: function(){
@@ -361,22 +388,25 @@ export default {
       .catch(function(error) {
         console.log('bad signup');
         console.log(error);
-      });      
+      });
     },
 
     addInfo: function(){
       let db = firebase.firestore();
-      db.collection("users").doc(this.uniqname).set({
+      if (this.tempMajor !== 'Other') {
+        this.payload.major = this.tempMajor
+      }
+      db.collection("users").doc(this.uniqname.toLowerCase()).set({
         name: this.payload.firstname + " " + this.payload.lastname,
         pledge_class: this.payload.pledge_class,
         standing: this.payload.standing,
-        uniqname: this.uniqname,
+        uniqname: this.uniqname.toLowerCase(),
         year: this.payload.year,
         major: this.payload.major,
         points: 0,
         meetings_left: 0,
-        about: '',
-        career_interests: '',
+        about: 'Lorem ipsum dolor amet vice truffaut street art, chillwave hot chicken plaid pabst jianbing salvia keytar. Keffiyeh irony kombucha four dollar toast 90s keytar, I am a lumbersexual flexitarian with a tousled hoodie. Vegan microdosing forage meggings. Succulents photo booth air plant forage leggings. Hoodie aesthetic squid, microdosing tumblr VHS food truck occupy cray try-hard af prism farm-to-table fashion axe shabby chic.',
+        interests: 'Lorem ipsum dolor amet hoodie williamsburg brunch tilde roof party. Poutine vape chillwave butcher twee kitsch. Church-key keytar kickstarter franzen unicorn slow-carb. Knausgaard blog kinfolk migas heirloom enamel pin. Taiyaki brunch poutine selfies, single-origin coffee tofu pour-over iPhone sartorial schlitz authentic.',
         attended: [],
         imageURL: 'https://firebasestorage.googleapis.com/v0/b/ktpoints-68071.appspot.com/o/profile_pictures%2Fanon.jpg?alt=media&token=d247e41a-a235-4750-9e08-b78348e54e90'
       })
@@ -450,7 +480,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
   }
-    
+
   .slide-left-enter-active {
     transition: all .2s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
@@ -480,4 +510,3 @@ export default {
     opacity: 0;
   }
 </style>
-

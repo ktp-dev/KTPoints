@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://kappathetapi.com/" target="_blank">
-        <img src="@/assets/ktp_logo.png" width="112" height="28">
+      <a class="navbar-item navimage" href="https://kappathetapi.com/" target="_blank">
+        <img src="@/assets/ktp_logo.png" width="112" height="50">
       </a>
 
       <a role="button" v-on:click="toggleBurger()" v-bind:class="{ 'is-active': this.showBurger }"  class="navbar-burger burger" aria-label="menu" aria-expanded="true" data-target="navbarBasicExample">
@@ -36,6 +36,9 @@
             <a href="https://kappathetapi.com/contact-us" target="_blank" class="navbar-item">
               Contact
             </a>
+            <router-link v-if="this.$store.state.userData.standing === 'Eboard'" to='/admintools' class="navbar-item">
+              Admin Tools
+            </router-link>
             <hr class="navbar-divider">
             <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="navbar-item">
               Report an issue
@@ -71,6 +74,9 @@
         </router-link>
         <router-link to='/directory' class="light-green-text fw-sb column grey-border">
           Directory
+        </router-link>
+        <router-link  to='/admintools' class="sky-blue-text fw-sb column grey-border">
+          Admin Tools
         </router-link>
         <router-link  :to="this.profileLink" class="sky-blue-text fw-sb column grey-border">
           Profile
@@ -125,3 +131,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.navimage {
+  width: 105px;
+  height: 55px;
+}
+</style>

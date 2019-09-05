@@ -4,7 +4,7 @@
       <p class="fs-s4 fw-bold mb1">{{event}}</p>
       <p class="mb1"> {{datetime}}</p>
       <p class="mb1"> {{startTime}} - {{endTime}}</p>
-      <p class="fira-sans-light-italic mb0"> {{points}} Points</p>
+      <p v-if="this.$store.state.userData.standing != 'Guest'" class="fira-sans-light-italic mb0"> {{points}} Points</p>
       <div v-if="expanded">
         <br>
         <p class='fs-s5 fw-sb mb1'>About</p>

@@ -22,7 +22,7 @@
             </div>
             
             <div class="column">
-              <a class="button" v-on:click="launch" >
+              <a v-if="this.$store.state.userData.standing != 'Guest'" class="button" v-on:click="launch" >
                 <span class="icon is-small is-right">
                   <i class="fas fa-cog"></i>
                 </span>

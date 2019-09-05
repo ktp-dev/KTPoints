@@ -224,13 +224,13 @@ export default {
     },
     mounted() {
         this.users = [];
-        const ref = db.collection('users');
+
+        // Only actives and e-board members will be displayed in directory
+        const ref = db.collection('users').where("standing","<","Guest");
         ref.onSnapshot((querySnapshot) => {
             this.users = [];
             querySnapshot.forEach((doc) => {
-                if (doc.data().standing == 'Active' || doc.data().standing == 'Eboard') {
-                    this.users.push(doc.data());
-                }
+                this.users.push(doc.data());
             })
         })
     }

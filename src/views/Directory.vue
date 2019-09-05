@@ -228,7 +228,9 @@ export default {
         ref.onSnapshot((querySnapshot) => {
             this.users = [];
             querySnapshot.forEach((doc) => {
-                this.users.push(doc.data());
+                if (doc.data().standing == 'Active' || doc.data().standing == 'Eboard') {
+                    this.users.push(doc.data());
+                }
             })
         })
     }

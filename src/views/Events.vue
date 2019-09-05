@@ -225,8 +225,16 @@ export default {
     let subscriber = db.collection('events').where('start_time', '>=', fbtime).limit(10).onSnapshot((querySnapshot) => {
       this.events = []
       querySnapshot.forEach((doc) => {
-        this.events.push(doc.data())
-        this.events[this.events.length-1].id = doc.id
+        if (this.$store.state.userData.standing === 'Guest') {
+          if (doc.data().category === 'Public') {
+            this.events.push(doc.data())
+            this.events[this.events.length - 1].id = doc.id
+          }
+        }
+        else {
+          this.events.push(doc.data())
+          this.events[this.events.length-1].id = doc.id
+        }
       })
     })
   },

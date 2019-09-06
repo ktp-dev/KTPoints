@@ -6,7 +6,7 @@
 <section class="section" id = 'UserInfo'>
 
     <div class="card" id="user-container">
-    <div class="columns is-centered is-vcentered">
+    <div class="columns is-centered">
     <div class="column is-two-fifths">
         <div class="card-image">
             <figure class="image is-square">
@@ -50,19 +50,14 @@
     </div>
     <div class="column">
         <div class="card-content is-small">
-            <div class="media">
                 <div class="is-mobile is-centered">
                     <div class="">
                         <div class="media-content">
-                            <div class="level has-text-weight-bold">
-                                <div class="level-item">
-                                    <p class="title fs-s2 is-capitalized">{{ payload.name }} /</p>
-                                </div>
-                                <div class="level-item">
+                            <p class="fs-s1 mb2">{{ payload.name }}</p>
+                            <div class="columns">
+                                <div class="column is-4 pr0 pt0">
                                     <div v-if="this.editing">
-                                        <p class="title fs-s2 ">
-                                             / {{ payload.year }}
-                                        </p>
+                                        <p class="fs-s3">{{ payload.year }} //</p>
                                     </div>
                                     <div v-else class="control ">
                                         <div class="select is-focused is-rounded margin-left-fix">
@@ -76,17 +71,44 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="column pt0 pl0">
+                                    <div v-if="this.editing">
+                                        <span class="fs-s3">{{ payload.pledge_class }}</span>
+                                    </div>
+                                    <div v-else class="level">
+                                        <div class="level-left">// </div>
+                                        <div class="level-item pledge-class-select">
+                                            <div class="select is-focused is-rounded is-small pledge-class-select">
+                                                <select v-model="payload.pledge_class">
+                                                    <option>Alpha</option>
+                                                    <option>Beta</option>
+                                                    <option>Gamma</option>
+                                                    <option>Delta</option>
+                                                    <option>Epsilon</option>
+                                                    <option>Zeta</option>
+                                                    <option>Eta</option>
+                                                    <option>Theta</option>
+                                                    <option>Iota</option>
+                                                    <option>Kappa</option>
+                                                    <option>Lambda</option>
+                                                    <option>Mu</option>
+                                                    <option>Nu</option>
+                                                    <option>Xi</option>
+                                                    <option>Omicron</option>
+                                                </select>
+                                            </div>
+                                            <!-- <input class="input is-focused is-small" type="text" v-model="payload.pledge_class"> -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="content">
+            <div class="content mb2">
                 <div class="is-mobile is-centered">
                     <div class="subtitle fs-s4">
                         <div v-if="this.editing">
-                            <span class="fw-sb"> Major: </span>
                             <span > {{ payload.major }} </span>
                         </div>
                         <div v-else class="control">
@@ -113,40 +135,9 @@
             </div>
 
                 <div class="is-mobile is-centered">
-                    <div class="subtitle">
-                        <div v-if="this.editing">
-                            <span class="fs-s5 fw-sb">Pledge Class:</span>
-                            <span class="fs-s5"> {{ payload.pledge_class }} </span>
-                        </div>
-                        <div v-else class="level">
-                            <div class="level-left">Pledge Class:</div>
-                            <div class="level-item pledge-class-select">
-                                <div class="select is-focused is-rounded is-small pledge-class-select">
-                                    <select v-model="payload.pledge_class">
-                                        <option>Alpha</option>
-                                        <option>Beta</option>
-                                        <option>Gamma</option>
-                                        <option>Delta</option>
-                                        <option>Epsilon</option>
-                                        <option>Zeta</option>
-                                        <option>Eta</option>
-                                        <option>Theta</option>
-                                        <option>Iota</option>
-                                        <option>Kappa</option>
-                                        <option>Lambda</option>
-                                        <option>Mu</option>
-                                        <option>Nu</option>
-                                        <option>Xi</option>
-                                        <option>Omicron</option>
-                                    </select>
-                                </div>
-                                <!-- <input class="input is-focused is-small" type="text" v-model="payload.pledge_class"> -->
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
-                <h1 class="fs-s4 fw-sb">About Me</h1>
+                <h1 class="fs-s4 pb2">About Me: </h1>
                     <div v-if="this.editing">
                         <p>
                             {{ payload.about }}
@@ -157,7 +148,7 @@
                     </div>
 
 
-                <h1 class="fs-s4 fw-sb">Interests</h1>
+                <h1 class="fs-s4 pb2 pt2">Interests:</h1>
                     <div v-if="this.editing">
                         <p>
                             {{ payload.interests }}

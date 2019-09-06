@@ -461,7 +461,7 @@ export default {
 
   watch: {
     'payload.standing': function(){
-      if (this.payload.standing == 'Rushee'){
+      if (this.payload.standing == 'Guest'){
         this.disablePledgeClass = true;
         this.payload.pledge_class = '';
       }

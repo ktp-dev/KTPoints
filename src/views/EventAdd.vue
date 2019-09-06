@@ -29,6 +29,7 @@
                   <option>Design</option>
                   <option>Marketing</option>
                   <option>Membership</option>
+                  <option>Public</option>
                   <option>Other</option>
                 </select>
               </div>

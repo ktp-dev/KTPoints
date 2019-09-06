@@ -444,6 +444,11 @@ $size4: 32px;
     background-color: white;
 }
 
+.navbar-user-photo {
+    height: 40px!important;
+    width: 40px!important;
+}
+
 
 .hide {
     display: none!important;
@@ -455,4 +460,4 @@ $size4: 32px;
 @import "../../../node_modules/bulma/bulma.sass";
 
 // to compile:
-// sass --sourcemap=none static/sass/mystyles.scss:static/css/bulma.css
+// npm run css-build

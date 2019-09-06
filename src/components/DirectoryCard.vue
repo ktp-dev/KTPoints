@@ -3,8 +3,8 @@
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
-                    <figure class="image is-48x48">
-                        <img v-bind:src="imageURL"/>
+                    <figure class="image">
+                        <img class="directory-card-photo" v-bind:src="imageURL"/>
                     </figure>
                 </div>
                 <div class="media-content">

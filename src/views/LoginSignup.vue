@@ -32,6 +32,7 @@
 		<modalHeader title="Verification Issue" />
 		<section class="modal-card-body">
 		  <p>Your email is not verified. Contact an adminstrator to make sure your email is correct.</p>
+		  <p>Click here to <span class="sky-blue-text" @click="resendEmail()">resend</span> the email</p>
 		</section>
 		<footer class="modal-card-foot">
 		  <button class="button" v-on:click="toggleLackingVerification()">Close</button>
@@ -437,7 +438,14 @@ export default {
             this.displayGeneralError(error.code, error.message);
         });
     },
-
+	resendEmail(){
+		auth.currentUser.sendEmailVerification().then(function() {
+			alert("We sent the email to: " + this.email + ". Pls check it out")
+		}).catch(function(error) {
+			console.log(error);
+			alert("There was some trouble sending your email. Please talk to an admin")
+		});
+	},
 	checkPasswords: function(){
 		return this.passwordsMatch = (this.password === this.confirmPassword ? true : false);
 	},

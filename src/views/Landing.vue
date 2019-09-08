@@ -141,9 +141,10 @@ export default {
     }
     let myTimestamp = parseInt(new Date().getTime()/1000);
     let fbtime = new firebase.firestore.Timestamp(myTimestamp, 0)
+    let userStanding = this.$store.state.userData.standing
 
     // Event Display for eboard members
-    if (this.$store.state.userData.standing == 'Eboard') {
+    if (userStanding === 'Eboard') {
       console.log("Eboard");
       db.collection("events").where('start_time', '>=', fbtime).limit(3)
       .onSnapshot((querySnapshot) => {
@@ -157,14 +158,15 @@ export default {
         }
       });
     }
-    // For non-eboard
-    else {
-      console.log("Not EBoard");
+    // For non-eboard members
+    else if (userStanding != 'Guest') {
+      console.log("Not EBoard, member");
       db.collection("events").where('start_time', '>=', fbtime).limit(10)
       .onSnapshot((querySnapshot) => {
         this.events = []
         querySnapshot.forEach((doc) => {
-          if (doc.data().category != 'Eboard' && this.events.length < 4) {
+          const category = doc.data().category
+          if (category != 'Eboard' && this.events.length < 4) {
             this.events.push(doc.data());
             this.events[this.events.length-1].id = doc.id;
           }
@@ -172,6 +174,21 @@ export default {
         if (auth.currentUser){
           this.show = true;
         }
+      });
+    }
+    // For guests
+    else {
+      console.log("Guest");
+      db.collection("events").where('start_time', '>=', fbtime).where('category','==','Public').limit(3)
+        .onSnapshot((querySnapshot) => {
+          this.events = []
+          querySnapshot.forEach((doc) => {
+            this.events.push(doc.data());
+            this.events[this.events.length - 1].id = doc.id;
+          })
+          if (auth.currentUser) {
+            this.show = true;
+          }
       });
     }
     

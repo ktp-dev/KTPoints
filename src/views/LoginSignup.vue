@@ -69,11 +69,11 @@
 	</div>
 	<div class="container middle">
 		<div class="columns is-centered inner">
-		<div class="column is-narrow ">
+		<div class="column is-narrow max-width-login">
 			<!-- Level setup to center KTP Logo -->
-			<div class="level mb4">
-			<div class="mt4 level-item has-text-centered">
-				<img src="@/assets/ktp_logo.png" alt="KTP Logo">
+			<div class="mb4">
+			<div class="mt4">
+				<img class="" src="@/assets/ktp_logo.png" alt="KTP Logo">
 			</div>
 			</div>
 			<transition name="slide-left" mode="out-in">

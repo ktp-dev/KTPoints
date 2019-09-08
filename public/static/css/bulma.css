@@ -377,6 +377,9 @@ body {
 .hide {
   display: none !important; }
 
+.max-width-login {
+  max-width: 35%; }
+
 /*! bulma.io v0.7.5 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
   from {

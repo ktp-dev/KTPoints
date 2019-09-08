@@ -82,7 +82,7 @@
 			<div v-if="current_screen == 'landing'" key="landing" class="mt4 pt4">
 			  <!-- Button for Logging in -->
 			  <div class="control">
-				<button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s2 fira-mono fw-bold pointer">
+				<button v-on:click="goToLogin()" class="button is-medium is-rounded button-background is-fullwidth fs-s3 fira-mono fw-bold pointer">
 				  Log In
 				</button>
 			  </div>
@@ -155,10 +155,9 @@
 						  <div class="select is-fullwidth no-border">
 							  <select class="no-border" v-model='payload.standing'>
 								  <option value=""></option>
-								  <option>Rushee</option>
-								  <option>Pledge</option>
+								  <option value="Guest">Rushee</option>
+								  <option value="Pledge">Pledge</option>
 								  <option>Active</option>
-								  <option>Eboard</option>
 							  </select>
 						  </div>
 						  <div class="divider slate"></div>
@@ -179,7 +178,29 @@
 			  <!-- Major, Year, Pledge Class -->
 			  <div v-if="isSignup2" key="signup-2">
 				  <div class='field' >
-					  <InputString label="Major" t="string" :dataLabel="payload.major" @newLabel="payload.major = $event"/>
+            <div class="control is-expanded pb3">
+              <div class="fira-sans-light-italic slate">
+                Major
+              </div>
+              <div class="select is-fullwidth no-border">
+                <select class="no-border" v-model='tempMajor'>
+                  <option value=""></option>
+                  <option>Computer Science</option>
+                  <option>SI - UX</option>
+                  <option>SI - IA</option>
+                  <option>Data Science</option>
+                  <option>Prospective SI</option>
+                  <option>Computer Engineering</option>
+                  <option>BBA</option>
+                  <option>Undeclared</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div v-if="tempMajor === 'Other'" class="mt1">
+                <input v-model='payload.major' class="input is-primary" type="text" placeholder="Enter other major here">
+              </div>
+              <div class="divider slate"></div>
+            </div>
 					  <div class="control is-expanded pb3">
 						  <div class="fira-sans-light-italic slate">
 							  Year
@@ -203,6 +224,15 @@
 						  <div class="select is-fullwidth no-border">
 							  <select class="no-border" v-model='payload.pledge_class' :disabled='disablePledgeClass'>
 								  <option value="">Pledge Class</option>
+                  <option>Alpha</option>
+                  <option>Beta</option>
+                  <option>Gamma</option>
+                  <option>Delta</option>
+                  <option>Epsilon</option>
+                  <option>Zeta</option>
+                  <option>Eta</option>
+                  <option>Theta</option>
+                  <option>Iota</option>
 								  <option>Kappa</option>
 								  <option>Lambda</option>
 								  <option>Mu</option>
@@ -245,7 +275,7 @@
 					  <div class="fs-s2 fira-mono fw-bold pb2 has-text-centered">
 						  One Last Thing
 					  </div>
-					  <div class="control fira-sans fs-s4 is-expanded pb2 has-text-centered">
+					  <div class="control fira-sans fs-s4 is-expanded pb2">
 						  If you are an Active or an Alumni, there will be a pending <br>
 						  process while we approve your identity.
 						  <br><br>
@@ -303,7 +333,8 @@ export default {
 	return {
 	  uniqname: '',
 	  password: '',
-	  confirmPassword: '',
+    confirmPassword: '',
+    tempMajor: '',
 	  loggedin: false,
 	  current_screen: 'landing',
       resetPasswordScreen: false,
@@ -341,7 +372,7 @@ export default {
   },
   computed: {
 	email: function(){
-	  return this.uniqname + "@umich.edu"
+	  return this.uniqname.toLowerCase() + "@umich.edu"
   	}
   },
   methods: {
@@ -406,15 +437,22 @@ export default {
 	},
 
 	addInfo: function(){
-	  db.collection("users").doc(this.uniqname).set({
+    	if (this.tempMajor !== 'Other') {
+        this.payload.major = this.tempMajor
+      }
+	  db.collection("users").doc(this.uniqname.toLowerCase()).set({
 		name: this.payload.firstname + " " + this.payload.lastname,
 		pledge_class: this.payload.pledge_class,
 		standing: this.payload.standing,
-		uniqname: this.uniqname,
+		uniqname: this.uniqname.toLowerCase(),
 		year: this.payload.year,
 		major: this.payload.major,
 		points: 0,
-		meetings_left: 0,
+    meetings_left: 0,
+    about: 'Lorem ipsum dolor amet vice truffaut street art, chillwave hot chicken plaid pabst jianbing salvia keytar. Keffiyeh irony kombucha four dollar toast 90s keytar, I am a lumbersexual flexitarian with a tousled hoodie. Vegan microdosing forage meggings. Succulents photo booth air plant forage leggings. Hoodie aesthetic squid, microdosing tumblr VHS food truck occupy cray try-hard af prism farm-to-table fashion axe shabby chic.',
+    interests: 'Lorem ipsum dolor amet hoodie williamsburg brunch tilde roof party. Poutine vape chillwave butcher twee kitsch. Church-key keytar kickstarter franzen unicorn slow-carb. Knausgaard blog kinfolk migas heirloom enamel pin. Taiyaki brunch poutine selfies, single-origin coffee tofu pour-over iPhone sartorial schlitz authentic.',
+    attended: [],
+    imageURL: 'https://firebasestorage.googleapis.com/v0/b/ktpoints-68071.appspot.com/o/profile_pictures%2Fanon.jpg?alt=media&token=d247e41a-a235-4750-9e08-b78348e54e90'
 	  })
 	  .then(() => {
 		  console.log("New user registered!");
@@ -484,7 +522,7 @@ export default {
 
   watch: {
 	'payload.standing': function(){
-	  if (this.payload.standing == 'Rushee'){
+	  if (this.payload.standing == 'Guest'){
 		this.disablePledgeClass = true;
 		this.payload.pledge_class = '';
 	  }

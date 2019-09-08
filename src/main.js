@@ -6,6 +6,7 @@ import './registerServiceWorker'
 import * as firebase from 'firebase/app';
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 // import bulma and custom styles
 // This file opens up 
@@ -30,6 +31,7 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const auth = firebase.auth();
+const storage = firebase.storage();
 const fbOperation = firebase.firestore;
 
 new Vue({
@@ -41,5 +43,6 @@ new Vue({
 export {
   db,
   auth,
-  fbOperation
+  fbOperation,
+  storage
 };

@@ -3,8 +3,11 @@ import Router from 'vue-router'
 import LoginSignup from './views/LoginSignup.vue'
 import Landing from './views/Landing.vue'
 import Events from './views/Events.vue'
-import AddEvent from './views/AddEvent.vue'
-import SingleEvent from './views/SingleEvent.vue'
+import Directory from './views/Directory.vue'
+import User from './views/User.vue'
+import EventAdd from './views/EventAdd.vue'
+import EventSingle from './views/EventSingle.vue'
+import AdminTools from './views/AdminTools.vue'
 import store from '@/store.js'
 import { auth } from '@/main.js'
 
@@ -16,7 +19,6 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      // beforeEnter: guard,
       name: 'home',
       component: LoginSignup
     },
@@ -31,20 +33,36 @@ const router = new Router({
       // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/KTP/events',
+      path: '/events',
       name: 'events',
       component: Events
     },
     {
-      path: '/KTP/event/:eventhash',
-      name: 'event',
-      component: SingleEvent,
+      path: '/directory',
+      name: 'directory',
+      component: Directory
+    },
+    {
+      path: '/users/:uniqname',
+      name: 'user',
+      component: User,
       props: true
     },
     {
-      path: '/KTP/events/add-event',
+      path: '/events/:eventhash',
+      name: 'event',
+      component: EventSingle,
+      props: true
+    },
+    {
+      path: '/event/add-event',
       name: 'add-event',
-      component: AddEvent
+      component: EventAdd
+    },
+    {
+      path: '/admintools',
+      name: 'admintools',
+      component: AdminTools
     },
   ]
 })
@@ -52,6 +70,7 @@ const router = new Router({
 // This runs before we enter every route
 // Calling next() allows us to enter the route
 // to, from: these can be used if you want to do something special for a specific URL
+// fix user  call it something else
 router.beforeEach((to, from, next) => {
   // If the object is null, try to add it
   if (store.state.userAuth === null){

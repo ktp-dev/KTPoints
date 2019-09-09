@@ -460,6 +460,11 @@ $size4: 32px;
 .max-width-login {
     max-width: 35%;
 }
+@media only screen and (max-width: 770px) {
+    .max-width-login {
+      max-width: 100%;
+    }
+  }
 // ===== END CUSTOM CLASSES =====
 
 

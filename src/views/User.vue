@@ -31,7 +31,7 @@
                 </div>
                 <div v-else  class=" level has-text-centered ">
                     <div class="level-item margin-fix">
-                        <a class="button is-light is-rounded" @click="onPickFile">Upload a file</a>
+                        <a class="button is-light is-rounded" @click="onPickFile">Upload an Image</a>
                         <input type="file"
                             style="display: none;"
                             ref="fileInput"

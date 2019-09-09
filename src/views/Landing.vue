@@ -17,7 +17,14 @@
       <div class="m1 landing-card p1">
         <p class="fw-sb fs-s3 has-text-centered">Announcements</p>
         <p class="fs-s6">
-          - No current Announcements
+          <div v-if="this.announcements.length !== 0">
+            <div v-for="announcementinfo in announcements" :key="announcementinfo.id" >
+              <p>- {{announcementinfo.description}}</p>
+            </div>
+          </div>
+          <div v-else>
+            <p> No Current Announcements </p>
+          </div>
         </p>
       </div>
       <div class="m1 landing-card">
@@ -111,6 +118,7 @@ export default {
     return {
       events: [
       ],
+      announcements: [],
       userEvents: [],
       attendedEmpty: false,
       show: false,
@@ -145,7 +153,6 @@ export default {
 
     // Event Display for eboard members
     if (userStanding === 'Eboard') {
-      console.log("Eboard");
       db.collection("events").where('start_time', '>=', fbtime).limit(3)
       .onSnapshot((querySnapshot) => {
         this.events = []
@@ -160,7 +167,6 @@ export default {
     }
     // For non-eboard members
     else if (userStanding != 'Guest') {
-      console.log("Not EBoard, member");
       db.collection("events").where('start_time', '>=', fbtime).limit(10)
       .onSnapshot((querySnapshot) => {
         this.events = []
@@ -178,7 +184,6 @@ export default {
     }
     // For guests
     else {
-      console.log("Guest");
       db.collection("events").where('start_time', '>=', fbtime).where('category','==','Public').limit(3)
         .onSnapshot((querySnapshot) => {
           this.events = []
@@ -191,7 +196,15 @@ export default {
           }
       });
     }
-    
+    //Getting announcements
+    db.collection("announcements").where('expires_at', '>=', fbtime)
+      .onSnapshot((querySnapshot) => {
+        this.announcements = []
+        querySnapshot.forEach((doc) => {
+          this.announcements.push(doc.data());
+          this.announcements[this.announcements.length - 1].id = doc.id;
+        })
+    });
     this.userEvents = []
     if (store.state.userData.attended === undefined || store.state.userData.attended.length === 0) {
         this.attendedEmpty = true;

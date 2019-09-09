@@ -465,6 +465,11 @@ $size4: 32px;
       max-width: 100%;
     }
   }
+@media only screen and (max-width: 600px) {
+    .signup-button-mobile {
+      font-size: 14px!important;
+    }
+  }
 // ===== END CUSTOM CLASSES =====
 
 

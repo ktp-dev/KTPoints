@@ -259,12 +259,12 @@
 						<div class="fs-s2 fira-mono fw-bold pb2 has-text-centered">
 							One Last Thing
 						</div>
-						<div class="control fira-sans fs-s4 is-expanded pb2">
-							If you are an Active or an Alumni, there will be a pending <br>
+						<div class="control fira-sans fs-s4 is-expanded pb2 signup-button-mobile">
+							If you are an Active or an Alumni, there will be a pending 
 							process while we approve your identity.
 							<br><br>
-							If you are a Pledge or Rushee, welcome! You are able to <br>
-							explore immediately, although you don't have access to <br>
+							If you are a Pledge or Rushee, welcome! You are able to 
+							explore immediately, although you don't have access to 
 							full functionality of the app.
 						</div>
 						<div class="columns is-centered is-vcentered is-mobile pb4">
@@ -273,7 +273,7 @@
 							<div class="column has-text-centered pointer fira-sans sky-blue-text fw-lb fs-s4" >
 								<div class="control has-text-centered">
 									<button v-on:click="signup()"
-										class="button is-small is-rounded fs-s4 fira-sans-light-italic fw-lb sky-blue-button pointer"
+										class="button is-small is-rounded fs-s4 fira-sans-light-italic fw-lb sky-blue-button pointer signup-button-mobile"
 										v-bind:class="{'is-loading' : firebaseRunning }"
 									>
 										Sign up

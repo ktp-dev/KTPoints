@@ -257,14 +257,14 @@
 				<div v-if="isSignup4" key="signup-4">
 					<div class='field' >
 						<div class="fs-s2 fira-mono fw-bold pb2 has-text-centered">
-							One Last Thing
+							One Last Thing!
 						</div>
-						<div class="control fira-sans fs-s4 is-expanded pb2 signup-button-mobile">
+						<div class="control fira-sans fs-s5 is-expanded pb2 signup-button-mobile">
 							If you are an Active or an Alumni, there will be a pending 
 							process while we approve your identity.
 							<br><br>
-							If you are a Pledge or Rushee, welcome! You are able to 
-							explore immediately, although you don't have access to 
+							If you are a Pledge or Rushee, welcome! You will be able to 
+							explore immediately, although you won't have access to 
 							full functionality of the app.
 						</div>
 						<div class="columns is-centered is-vcentered is-mobile pb4">

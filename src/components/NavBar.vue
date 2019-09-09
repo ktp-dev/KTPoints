@@ -111,9 +111,6 @@ export default {
       showBurger: false,
     }
   },
-  mounted() {
-    console.log(this.$store.state.userData)
-  },
   computed: {
     profileLink: function(){
       if (this.$store.state.userData.uniqname === undefined){

@@ -69,6 +69,28 @@ body {
 .fs-h1 {
   font-size: 6.667em !important; }
 
+@media only screen and (max-width: 600px) {
+  .fs-s7 {
+    font-size: 0.7em !important; }
+  .fs-s6 {
+    font-size: 0.9em !important; }
+  .fs-s5 {
+    font-size: 1.1em !important; }
+  .fs-s4 {
+    font-size: 1.333em !important; }
+  .fs-s3 {
+    font-size: 1.667em !important; }
+  .fs-s2 {
+    font-size: 2em !important; }
+  .fs-s1 {
+    font-size: 2.5em !important; }
+  .fs-h3 {
+    font-size: 3.083em !important; }
+  .fs-h2 {
+    font-size: 4.167em !important; }
+  .fs-h1 {
+    font-size: 5.583em !important; } }
+
 .vertically-center {
   margin-top: auto;
   margin-bottom: auto; }
@@ -386,7 +408,11 @@ body {
 
 @media only screen and (max-width: 600px) {
   .signup-button-mobile {
-    font-size: 14px !important; } }
+    font-size: 14px !important; }
+  .user-page-whitespace {
+    width: 100%; }
+  .user-page-pc {
+    padding-left: 16px; } }
 
 /*! bulma.io v0.7.5 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {

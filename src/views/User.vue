@@ -3,10 +3,10 @@
 <div class="gradient pb4">
 <NavBar />
 <transition name="slide-right" mode="out-in">
-<section class="section" id = 'UserInfo'>
+<section class="section p2" id ='UserInfo'>
 
     <div class="card" id="user-container">
-    <div class="columns is-centered">
+    <div class="columns is-centered user-page-whitespace">
     <div class="column is-two-fifths">
         <div class="card-image">
             <figure class="image is-square">
@@ -49,7 +49,7 @@
         </div>
     </div>
     <div class="column">
-        <div class="card-content is-small">
+        <div class="card-content is-small p1">
                 <div class="is-mobile is-centered">
                     <div class="">
                         <div class="media-content">
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="column pt0 pl0">
                                     <div v-if="this.editing">
-                                        <span class="fs-s3">{{ payload.pledge_class }}</span>
+                                        <span class="fs-s3 user-page-pc">{{ payload.pledge_class }}</span>
                                     </div>
                                     <div v-else class="level">
                                         <div class="level-left">// </div>

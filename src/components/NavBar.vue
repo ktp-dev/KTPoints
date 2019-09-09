@@ -44,11 +44,9 @@
               Report an issue
             </a>
             <hr v-if="this.$store.state.userData.uniqname !== undefined" class="navbar-divider">
-            <router-link v-if="this.$store.state.userData.uniqname !== undefined" :to="'/'" class="navbar-item">
-              <p v-on:click="signOut()">
-                Sign out
-              </p>
-            </router-link>
+            <a v-if="this.$store.state.userData.uniqname !== undefined" v-on:click="signOut()" class="navbar-item">
+              Sign out
+            </a>
             
           </div>
         </div>
@@ -92,9 +90,9 @@
         <a href="https://forms.gle/AeGywrUiu4Qqt2zi8" target="_blank" class="light-green-text fw-sb column grey-border">
           Report an issue
         </a>
-        <router-link v-if="this.$store.state.userData.uniqname !== undefined" :to="'/'" class="sky-blue-text fw-sb column grey-border">
-          <p v-on:click="signOut()">Sign Out</p>
-        </router-link>
+        <div v-if="this.$store.state.userData.uniqname !== undefined" class="sky-blue-text fw-sb column grey-border">
+          <a v-on:click="signOut()">Sign Out</a>
+        </div>
       </div>
   </nav>
 
@@ -103,6 +101,7 @@
 
 <script>
 import store from '@/store.js'
+import router from '@/router.js'
 import { auth } from '@/main.js'
 export default {
   store,
@@ -111,6 +110,9 @@ export default {
     return {
       showBurger: false,
     }
+  },
+  mounted() {
+    console.log(this.$store.state.userData)
   },
   computed: {
     profileLink: function(){
@@ -128,6 +130,8 @@ export default {
     signOut: function(){
       auth.signOut().then(()=>{
         store.commit('signOut')
+      }).then(() => {
+        router.push('/')
       })
     }
   }

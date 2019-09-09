@@ -218,10 +218,10 @@ export default {
             })
             .then(() => {
                 this.allChangesSaved = true;
-                console.log("User updated!");
+                // console.log("User updated!");
             })
             .catch(function(error) {
-                console.error("Error writing document: ", error);
+                // console.error("Error writing document: ", error);
             });
         },
         onPickFile(){
@@ -247,7 +247,7 @@ export default {
                     .then((url) => {
                         // Setting the imageURL appropriately
                         this.payload.imageURL = url;
-                        console.log("Image fully uploaded");
+                        // console.log("Image fully uploaded");
                         this.allChangesSaved = true;
                     })
                     // gsImageURL = fileData.metadata.downloadURLs[0];
@@ -277,6 +277,7 @@ export default {
             this.payload = doc.data();
           })
         }
+        this.tempMajor = this.$store.state.userData.major
     }
 }
 </script>

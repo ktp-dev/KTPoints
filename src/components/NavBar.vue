@@ -49,7 +49,7 @@
                 Sign out
               </p>
             </router-link>
-            
+
           </div>
         </div>
       </div>

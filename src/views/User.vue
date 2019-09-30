@@ -4,7 +4,6 @@
 <NavBar />
 <transition name="slide-right" mode="out-in">
 <section class="section" id = 'UserInfo'>
-
     <div class="card" id="user-container">
     <div class="columns is-centered">
     <div class="column is-two-fifths">
@@ -42,75 +41,64 @@
                     <div v-on:click="updateFirebase(); toggleEditing()" class="level-item">
                         <a class="button is-danger is-rounded" v-bind:class="{'is-loading':!this.allChangesSaved}">Save</a>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
     <div class="column">
         <div class="card-content is-small">
-                <div class="is-mobile is-centered">
-                    <div class="">
-                        <div class="media-content">
-                            <p class="fs-s1 mb2">{{ payload.name }}</p>
-                            <div class="columns">
-                                <div class="column is-4 pr0 pt0">
-                                    <div v-if="this.editing">
-                                        <p class="fs-s3">{{ payload.year }} //</p>
-                                    </div>
-                                    <div v-else class="control ">
-                                        <div class="select is-focused is-rounded margin-left-fix">
-                                            <select v-model="payload.year">
-                                                <option>Freshman</option>
-                                                <option>Sophomore</option>
-                                                <option>Junior</option>
-                                                <option>Senior</option>
-                                                <option>Alumni</option>
-                                            </select>
-                                        </div>
-                                    </div>
+            <div class="is-mobile is-centered">
+                <div class="media-content">
+                    <p class="fs-s1 mb2">{{ payload.name }}</p>
+                    <div class="columns">
+                        <div class="column is-4 pr0 pt0">
+                            <p v-if="this.editing" class="fs-s3">{{ payload.year }} //</p>
+                            <div v-else class="control">
+                                <div class="select is-focused is-rounded margin-left-fix">
+                                    <select v-model="payload.year">
+                                        <option>Freshman</option>
+                                        <option>Sophomore</option>
+                                        <option>Junior</option>
+                                        <option>Senior</option>
+                                        <option>Alumni</option>
+                                    </select>
                                 </div>
-                                <div class="column pt0 pl0">
-                                    <div v-if="this.editing">
-                                        <span class="fs-s3">{{ payload.pledge_class }}</span>
-                                    </div>
-                                    <div v-else class="level">
-                                        <div class="level-left">// </div>
-                                        <div class="level-item pledge-class-select">
-                                            <div class="select is-focused is-rounded is-small pledge-class-select">
-                                                <select v-model="payload.pledge_class">
-                                                    <option>Alpha</option>
-                                                    <option>Beta</option>
-                                                    <option>Gamma</option>
-                                                    <option>Delta</option>
-                                                    <option>Epsilon</option>
-                                                    <option>Zeta</option>
-                                                    <option>Eta</option>
-                                                    <option>Theta</option>
-                                                    <option>Iota</option>
-                                                    <option>Kappa</option>
-                                                    <option>Lambda</option>
-                                                    <option>Mu</option>
-                                                    <option>Nu</option>
-                                                    <option>Xi</option>
-                                                    <option>Omicron</option>
-                                                </select>
-                                            </div>
-                                            <!-- <input class="input is-focused is-small" type="text" v-model="payload.pledge_class"> -->
-                                        </div>
+                            </div>
+                        </div>
+                        <div class="column pt0 pl0">
+                            <span v-if="this.editing" class="fs-s3">{{ payload.pledge_class }}</span>
+                            <div v-else class="level">
+                                <div class="level-left">// </div>
+                                <div class="level-item pledge-class-select">
+                                    <div class="select is-focused is-rounded is-small pledge-class-select">
+                                        <select v-model="payload.pledge_class">
+                                            <option>Alpha</option>
+                                            <option>Beta</option>
+                                            <option>Gamma</option>
+                                            <option>Delta</option>
+                                            <option>Epsilon</option>
+                                            <option>Zeta</option>
+                                            <option>Eta</option>
+                                            <option>Theta</option>
+                                            <option>Iota</option>
+                                            <option>Kappa</option>
+                                            <option>Lambda</option>
+                                            <option>Mu</option>
+                                            <option>Nu</option>
+                                            <option>Xi</option>
+                                            <option>Omicron</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             <div class="content mb2">
                 <div class="is-mobile is-centered">
                     <div class="subtitle fs-s4">
-                        <div v-if="this.editing">
-                            <span > {{ payload.major }} </span>
-                        </div>
+                        <span v-if="this.editing"> {{ payload.major }} </span>
                         <div v-else class="control">
                             <div class="select is-focused is-rounded margin-left-fix">
                                 <select v-model='tempMajor'>
@@ -134,34 +122,15 @@
                 </div>
             </div>
 
-                <div class="is-mobile is-centered">
-                </div>
+            <h1 class="fs-s4 pb2">About Me: </h1>
+            <p v-if="this.editing">{{ payload.about }}</p>
+            <textarea v-else class="textarea" v-model="payload.about" ></textarea>
 
-                <h1 class="fs-s4 pb2">About Me: </h1>
-                    <div v-if="this.editing">
-                        <p>
-                            {{ payload.about }}
-                        </p>
-                    </div>
-                    <div v-else>
-                        <textarea class="textarea" v-model="payload.about" ></textarea>
-                    </div>
-
-
-                <h1 class="fs-s4 pb2 pt2">Interests:</h1>
-                    <div v-if="this.editing">
-                        <p>
-                            {{ payload.interests }}
-                        </p>
-                    </div>
-                    <div v-else>
-                        <textarea class="textarea" v-model="payload.interests" ></textarea>
-                    </div>
-            </div>
-
-
-
+            <h1 class="fs-s4 pb2 pt2">Interests:</h1>
+            <p v-if="this.editing">{{ payload.interests }}</p>
+            <textarea v-else class="textarea" v-model="payload.interests" ></textarea>
         </div>
+    </div>
     </div>
     </div>
 </section>
@@ -309,11 +278,6 @@ export default {
       margin-right: 0.5rem;
   }
 
-
-
-</style>
-
-<style>
     .is-horizontal-center {
       justify-content: center
     }

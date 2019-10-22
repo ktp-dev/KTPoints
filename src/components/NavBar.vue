@@ -113,7 +113,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.state.userData)
+    // console.log(this.$store.state.userData)
   },
   computed: {
     profileLink: function(){

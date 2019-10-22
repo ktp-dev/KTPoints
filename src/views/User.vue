@@ -3,7 +3,7 @@
 <div class="gradient pb4">
 <NavBar />
 <transition name="slide-right" mode="out-in">
-<section class="section" id = 'UserInfo'>
+<section class="section" id ='UserInfo' :key="newPageCounter">
     <div class="card" id="user-container">
     <div class="columns is-centered">
     <div class="column is-two-fifths">
@@ -153,6 +153,7 @@ export default {
     props: ['uniqname','major','name','pledge_class','year','imageURL'],
     data(){
         return {
+            newPageCounter: 0,
             editing: true,
             allChangesSaved: true,
             tempMajor: '',
@@ -234,10 +235,17 @@ export default {
         messengerURL: function() {
             return 'https://www.messenger.com/'
         },
-    },components: {
+    },
+    components: {
       NavBar,
     },
-
+    beforeRouteUpdate (to, from, next) {
+        this.newPageCounter += 1;
+        if (this.$store.state.userData.uniqname !== this.payload.uniqname ) {
+            this.payload = this.$store.state.userData;
+        }
+        next();
+    },
     mounted(){
         // If the page is refreshed/redirected to, the values are gathered here
         if(this.name === undefined){

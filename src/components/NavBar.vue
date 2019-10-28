@@ -49,7 +49,7 @@
                 Sign out
               </p>
             </router-link>
-            
+
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.state.userData)
+    // console.log(this.$store.state.userData)
   },
   computed: {
     profileLink: function(){
